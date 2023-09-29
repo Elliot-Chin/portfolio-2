@@ -16,10 +16,10 @@ export default function MissingPage () {
     return (
         <>
         <MyLogo size={150} />
+        {isLoading && <Loader />}
         
-            <div className="flex flex-col items-center justify-center h-screen">
-                {isLoading && <Loader />}
-
+            <div className="flex flex-col items-center justify-center pt-16">
+                
                 <div className="h-fit w-5/6 mx-auto flex flex-col items-center justify-center rounded-md bg-slate-600 bg-opacity-30 glass-effect glass-shadow\
                                 lg:w-1/4">
                     <div className="p-3 border-b-2 w-11/12 mx-auto items-center flex flex-col">

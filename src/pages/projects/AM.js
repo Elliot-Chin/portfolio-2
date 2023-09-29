@@ -17,7 +17,7 @@ export default function AutomatedMusicians ({PROJECTS_AM_DESC, PROJECTS_AM_P1, P
             {isLoading && <Loader /> }   
         
             <div className="flex flex-col p-5 gap-5 font-inclusive-sans
-                            lg:w-1/2 lg:mx-auto lg:flex-row lg:gap-16">
+                            lg:w-2/3 lg:mx-auto lg:flex-row lg:gap-16">
 
                 <MyLogo size={150}/>
 
