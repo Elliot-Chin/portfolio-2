@@ -5,12 +5,21 @@ import Loader from "@/components/Loader"
 import NavMenu from "@/components/NavMenu"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function Contact({EMAIL_SVCID, EMAIL_PUBKEY, EMAIL_TEMPID}) {
 
     const [isLoading, setLoading] = useState(false)
+    const [sent, setSent] = useState(false)
+
+    useEffect(() => {
+        if (sent) {
+            setTimeout(() => {
+                setSent(false)
+            }, 3470)
+        }
+    }, [sent])
 
     return (
         <div className="flex flex-col justify-center
@@ -40,7 +49,8 @@ export default function Contact({EMAIL_SVCID, EMAIL_PUBKEY, EMAIL_TEMPID}) {
                 <div>
                     <div className="flex-col flex items-center p-5 bg-transparent 
                                     lg:flex-row lg:justify-center lg:mx-auto">
-                        <ContactForm EMAIL_SVCID={EMAIL_SVCID} EMAIL_PUBKEY={EMAIL_PUBKEY} EMAIL_TEMPID={EMAIL_TEMPID}/>
+                        
+                        <ContactForm EMAIL_SVCID={EMAIL_SVCID} EMAIL_PUBKEY={EMAIL_PUBKEY} EMAIL_TEMPID={EMAIL_TEMPID} sent={sent} setSent={setSent} />
                         <Links />
                     </div>
 
