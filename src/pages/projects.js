@@ -8,12 +8,12 @@ import { useState } from "react";
 
 
 
-export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_SYS}) {
+export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
 
     const [isLoading, setLoading] = useState(false)
 
     const AM_summary = PROJECTS_SUM_AM.replaceAll('\n', "<br /><br />")
-    const STS_summary = PROJECTS_SUM_SYS.replaceAll('\n', "<br /><br />")
+    const STS_summary = PROJECTS_SUM_STS.replaceAll('\n', "<br /><br />")
 
     return (
         <>
@@ -78,5 +78,5 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_SYS}) {
 }
 
 export async function getServerSideProps() {
-    return fetchEnvVars(['PROJECTS_SUM_AM', 'PROJECTS_SUM_SYS'])
+    return fetchEnvVars(['PROJECTS_SUM_AM', 'PROJECTS_SUM_STS'])
 }
