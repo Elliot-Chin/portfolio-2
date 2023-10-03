@@ -3,6 +3,7 @@ import NavMenu from "@/components/NavMenu"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
 
 import Loader from "@/components/Loader"
+import MyLogo from "@/components/MyLogo"
 import { useState } from "react"
 
 
@@ -16,6 +17,7 @@ export default function Experiences ({EXP_SIEMENS_SUM, EXP_TA_UNB_SUM, EXP_SWD_U
     return (
 
         <>
+            <MyLogo size={150} />
             {isLoading && <Loader />}
             <div className="
                             lg:w-2/3 lg:mx-auto lg:flex lg:flex-row">
@@ -102,7 +104,7 @@ export default function Experiences ({EXP_SIEMENS_SUM, EXP_TA_UNB_SUM, EXP_SWD_U
                 </div>
 
                 <div name='nav-bar-wrapper' className="hidden lg:pt-[6rem] lg:block">
-                    <NavMenu about experience skills contact setLoading={setLoading} verticle />
+                    <NavMenu about projects skills contact setLoading={setLoading} verticle />
                 </div>
             </div>
         </>
