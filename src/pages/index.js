@@ -3,13 +3,15 @@ import MyButton from '@/components/MyButton'
 import MyLogo from '@/components/MyLogo'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-
-
+import { motion } from 'framer-motion'
+import { motionDiv_FloatUp } from '@/components/Config'
 
 export default function Home() {
 
     const [name, setName] = useState('')
     const [isLoading, setLoading] = useState(false)
+
+    
 
     useEffect(() => {
         const n = 'Elliot'
@@ -73,7 +75,7 @@ export default function Home() {
                             </h3>
                         </div>
 
-                        <div name='nav-menu' className='flex flex-col items-center justify-center p-5 gap-7
+                        <motion.div  {...motionDiv_FloatUp} name='nav-menu' className='flex flex-col items-center justify-center p-5 gap-7
                                                         lg:'>
                             <MyButton text={"🧑‍💻 About Me"}
                                 background={'#f2b749'}
@@ -109,7 +111,7 @@ export default function Home() {
                                 link={'/contact'}
                                 onClick={() => setLoading(true)}
                                 bClassName={'lg:w-3/4 lg:text-3xl lg:h-14'}/>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

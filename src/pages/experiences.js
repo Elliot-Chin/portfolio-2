@@ -1,10 +1,11 @@
 import ExperienceCard from "@/components/ExperienceCard"
 import NavMenu from "@/components/NavMenu"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
-
 import Loader from "@/components/Loader"
 import MyLogo from "@/components/MyLogo"
 import { useState } from "react"
+import { motion } from "framer-motion"
+import { motionDiv_FloatUp } from "@/components/Config"
 
 
 
@@ -30,7 +31,7 @@ export default function Experiences ({EXP_SIEMENS_SUM, EXP_TA_UNB_SUM, EXP_SWD_U
                         </h1>
                     </div>
 
-                    <div className="flex flex-col gap-5 mb-3
+                    <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 mb-3
                                     lg:grid lg:grid-cols-2 lg:mx-auto">
                         
 
@@ -96,7 +97,7 @@ export default function Experiences ({EXP_SIEMENS_SUM, EXP_TA_UNB_SUM, EXP_SWD_U
                             size={210}
                             summary={EXP_CAMP_SUM}
                         />
-                    </div>
+                    </motion.div>
                 </div>
 
                 <div className="mx-auto mb-16 lg:hidden">

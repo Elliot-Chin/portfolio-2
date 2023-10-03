@@ -1,10 +1,11 @@
+import { motionDiv_FloatUp } from "@/components/Config"
 import Loader from "@/components/Loader"
 import MyLogo from "@/components/MyLogo"
 import NavMenu from "@/components/NavMenu"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
-
 
 
 
@@ -52,11 +53,11 @@ export default function About({ABOUT_ME}) {
                             </h1>
                         </div>
 
-                        <div className="p-5">
+                        <motion.div {...motionDiv_FloatUp} className="p-5">
                             <p dangerouslySetInnerHTML={{__html: formattedText}}
                                 className="font-inclusive-sans"
                             />
-                        </div>
+                        </motion.div>
 
                         <NavMenu experience skills projects contact setLoading={setLoading}/>
                     </div>

@@ -1,13 +1,14 @@
 
+import { motionDiv_FloatUp } from "@/components/Config"
 import ContactForm from "@/components/ContactForm"
 import Links from "@/components/Links"
 import Loader from "@/components/Loader"
 import MyLogo from "@/components/MyLogo"
 import NavMenu from "@/components/NavMenu"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-
 
 export default function Contact({EMAIL_SVCID, EMAIL_PUBKEY, EMAIL_TEMPID}) {
 
@@ -50,12 +51,12 @@ export default function Contact({EMAIL_SVCID, EMAIL_PUBKEY, EMAIL_TEMPID}) {
                     </div>
 
                     <div>
-                        <div className="flex-col flex items-center p-5 bg-transparent 
+                        <motion.div {...motionDiv_FloatUp} className="flex-col flex items-center p-5 bg-transparent 
                                         lg:flex-row lg:justify-center lg:mx-auto">
                             
                             <ContactForm EMAIL_SVCID={EMAIL_SVCID} EMAIL_PUBKEY={EMAIL_PUBKEY} EMAIL_TEMPID={EMAIL_TEMPID} sent={sent} setSent={setSent} />
                             <Links />
-                        </div>
+                        </motion.div>
 
                         <div className="w-full lg:flex lg:justify-end lg:pr-10">
                             <div name='nav-wrapper' className="

@@ -4,7 +4,8 @@ import NavMenu from "@/components/NavMenu";
 import ProjectCard from "@/components/ProjectCard";
 import { fetchEnvVars } from "@/utils/ServerFetchFunction";
 import { useState } from "react";
-
+import { motion } from "framer-motion";
+import { motionDiv_FloatUp } from "@/components/Config";
 
 
 
@@ -35,7 +36,7 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-5 items-center p-5">
+                <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 items-center p-5">
 
                     <ProjectCard 
                         imgSrc={'/SDP.jpg'}
@@ -61,7 +62,7 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
                         ]}
                     />
 
-                </div>
+                </motion.div>
             </div>
             
             <div name='nav-bar-wrapper' className="lg:pt-[6rem] lg:hidden">
