@@ -8,7 +8,7 @@ export default function Document() {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
             <link href="https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Lato:wght@700&family=Roboto+Condensed&display=swap" rel="stylesheet" />
-            <link rel="icon" type='image/png' href="/logo.png" as='icon' />
+            <link rel="icon" type='image/png' href="/Images/logo.png" as='icon' />
             <title>Elliot Chin</title>
             <Script
                 type="text/javascript"
