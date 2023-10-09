@@ -7,14 +7,14 @@
 }
 
 .index-bg-image {
-    background-image: url('/BG_index.jpg');
+    background-image: url('/Images/BG_index.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .about-bg-image {
-    background-image: url('/BG_about.jpg');
+    background-image: url('/Images/BG_about.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;

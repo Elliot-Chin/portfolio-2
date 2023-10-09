@@ -40,7 +40,7 @@ export default function Contact({EMAIL_SVCID, EMAIL_PUBKEY, EMAIL_TEMPID}) {
                             <div className="relative w-[17.8rem] h-[19.8rem] rounded-full
                                             lg:h-[34.8rem] lg:w-[18.8rem]">
                                 <Image
-                                    src="/contact.jpeg"
+                                    src="/Images/contact.jpeg"
                                     objectFit="cover"
                                     fill
                                     alt="Avatar Image"

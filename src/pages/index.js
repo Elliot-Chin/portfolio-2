@@ -47,7 +47,7 @@ export default function Home() {
                             <div className="relative w-[17.8rem] h-[19.8rem] rounded-full
                                             lg:h-[38.8rem] lg:w-[24.8rem]">
                                 <Image
-                                    src="/avatar.jpeg"
+                                    src="/Images/avatar.jpeg"
                                     objectFit="cover"
                                     fill
                                     unoptimized

@@ -39,7 +39,7 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
                 <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 items-center p-5">
 
                     <ProjectCard 
-                        imgSrc={'/SDP.jpg'}
+                        imgSrc={'/Images/SDP.jpg'}
                         desc={AM_summary}
                         title={'Automated Musicians'}
                         link={'/projects/AM'}
@@ -52,7 +52,7 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
                     />
 
                     <ProjectCard
-                        imgSrc={'/STS.png'}
+                        imgSrc={'/Images/STS.png'}
                         desc={STS_summary}
                         title={'Student Tracking System'}
                         link={'/projects/STS'}

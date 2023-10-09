@@ -42,7 +42,7 @@ export default function Skills ({SKILLS_TECH, SKILLS_LANG, SKILLS_API, SKILLS_TO
                         <div className="absolute w-[17.8rem] h-[19.8rem] rounded-full
                                         lg:h-[34.8rem] lg:w-[18.8rem]">
                             <Image
-                                src="/skills.jpeg"
+                                src="/Images/skills.jpeg"
                                 objectFit="cover"
                                 fill
                                 alt="Avatar Image"

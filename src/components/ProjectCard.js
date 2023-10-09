@@ -20,7 +20,7 @@ export default function ProjectCard({imgSrc, title, desc, link, setLoading, link
 
                 <div className="hidden right-0 w-3/4 justify-end items-center
                                 lg:flex">
-                    <MyButton text="See More" link={link} background={'#6a08bf'} shadowColor={'#c930f0'}  setLoading={setLoading}/>
+                    <MyButton text="See More" link={link} background={'#6a08bf'} shadowColor={'#c930f0'}  onClick={() => setLoading(true)}/>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@ export default function ProjectCard({imgSrc, title, desc, link, setLoading, link
 
             <div className="items-center flex flex-col mt-3
                             lg:hidden">
-                <MyButton text="See More" link={link} background={'#6a08bf'} shadowColor={'#c930f0'}  setLoading={setLoading}/>
+                <MyButton text="See More" link={link} background={'#6a08bf'} shadowColor={'#c930f0'}  onClick={() => setLoading(true)}/>
             </div>
         </div>
     )

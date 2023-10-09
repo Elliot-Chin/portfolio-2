@@ -34,7 +34,7 @@ export default function About({ABOUT_ME}) {
                             <div className="relative w-[17.8rem] h-[19.8rem] rounded-full
                                             lg:h-[34.8rem] lg:w-[18.8rem]">
                                 <Image
-                                    src="/avatar.jpeg"
+                                    src="/Images/avatar.jpeg"
                                     objectFit="cover"
                                     fill
                                     alt="Avatar Image"

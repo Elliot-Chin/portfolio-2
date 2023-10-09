@@ -16,7 +16,7 @@ export default function MyLogo ({className, size, isMain}) {
 
             <div className={`fixed w-fit items-end justify-end right-0 px-10 py-5 hidden lg:block hover:cursor-pointer ${className}`}
                 onClick={() => {if(!isMain) {setLoading(true), router.push('/')}}}>
-                <Image src={'/logo.png'}
+                <Image src={'/images/logo.png'}
                     height={size}
                     width={size}
                 />
