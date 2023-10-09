@@ -19,13 +19,11 @@ export default function Skills ({SKILLS_TECH, SKILLS_LANG, SKILLS_API, SKILLS_TO
     const speak = SKILLS_SPEK.split("|")
     const skills = SKILLS.split("|")
 
-    const listSkills = (key) => {
-        return (
+    const listSkills = (key) => (
             key.map((k, i) => (
                 <span id={i} className="rounded-md border border-lime-600 px-3 py-1 bg-transparent pointer-events-none">{k}</span>
             ))
-        )
-    }
+    )
 
     return (
         <div>
