@@ -1,0 +1,87 @@
+[
+    {
+        "title": "Jr Software Developer",
+        "duration": "JUNE 2023 - PRESENT",
+        "img": "/experiencesLogo/Siemens_Logo.png",
+        "size": "380",
+        "summary": "As a Junior Software Developer, my responsibilities span from conducting quality assurance on an in-house tool to actively learning about cybersecurity, particularly in Operational Technology (OT). I regularly attend webinars to stay updated on cybersecurity trends. Additionally, I administer a Virtual Machine (VM) host used for testing, ensuring its smooth operation and troubleshooting issues. Through these tasks, I am honing my technical skills and contributing to my team and organization.",
+        "current": "true",
+        "coop": "false",
+        "links": []
+    },
+    {
+        "title": "Teaching Assistant",
+        "duration": "SEPT 2022 - DEC 2022",
+        "img": "/experiencesLogo/UNB_Logo.png",
+        "size": "512",
+        "summary": "In my prior role, I supported students by evaluating their work, addressing their inquiries, and offering additional assistance during office hours. I also managed lab issues, ensuring timely marking and error resolution during sessions, which enhanced my communication abilities and Python knowledge. This role enriched me with crucial skills like meticulousness, problem-solving, and interpersonal communication, which I am eager to apply and further develop in a new professional capacity.",
+        "current": "false",
+        "coop": "false",
+        "links": []
+    },
+    {
+        "title": "Software Developer",
+        "duration": "MAY 2022 - DEC 2022",
+        "img": "/experiencesLogo/UNB_Logo.png",
+        "size": "512",
+        "summary": "As the only full-stack developer in the Electrical and Computer Engineering Department at the University of New Brunswick, I independently handled various software projects. I kept my team updated through regular remote and on-site meetings, and coordinated with stakeholders to create two automated tools for academic advising and CEAB accreditation. I made sure these tools were adaptable and easy to maintain, analyzed data to identify possible enhancements, and reported regularly to the Undergraduate Coordinator to ensure the project was in line with departmental goals.",
+        "current": "false",
+        "coop": "true",
+        "links": [
+            {
+                "tooltip": "View Employer Evaluation",
+                "link": "/WorkTermRecords/Software Developer WTR.pdf"
+            }
+        ]
+    },
+    {
+        "title": "Research Assistant",
+        "duration": "MAY 2021 - DEC 2022",
+        "img": "/experiencesLogo/UNB_Logo.png",
+        "size": "512",
+        "summary": "Within the Chemistry Department, my duties encompass learning the recently procured COMSOL (Multiphysics Simulation Software) to virtually model complex physical scenarios, thereby improving our comprehension and fine-tuning of experiments. I engage closely with the <strong><u><a href='https://ignaszakresearch.wordpress.com' title='Dr. Ignaszak Research Group' target='_blank'>Dr. Ignaszak Research Group</a></u></strong>, aiding and instructing them on utilizing this software for their experimental simulations. Moreover, I am in charge of resolving any computer glitches in the lab, participating in weekly meetings to update on my advancements, and am devoted to perpetually refining my skills to contribute to the progression of research within our department.",
+        "current": "false",
+        "coop": "true",
+        "links": [
+            {
+                "tooltip": "View Employer Evaluation",
+                "link": "/WorkTermRecords/Research Assistant WTR.pdf"
+            }
+        ]
+    },
+    {
+        "title": "Student Consultant",
+        "duration": "JAN 2020 - APR 2020",
+        "img": "/experiencesLogo/UNB_Logo.png",
+        "size": "512",
+        "summary": "In my position within the ITS team, I undertake various tasks to ensure the seamless functioning of computer systems. My primary duty involves maintaining and troubleshooting lab printers to ensure their constant operability. I also handle system repairs, conducting diagnostic tests to resolve issues, and carry out flush and fill operations on repaired systems. Furthermore, I assist faculty and staff by setting up new systems they've acquired, ensuring they are user-ready by configuring the necessary software and settings. Lastly, I developed a Java Swing application to aid ITS staff in locating labs with specific software swiftly.",
+        "current": "false",
+        "coop": "true",
+        "links": [
+            {
+                "tooltip": "View Employer Evaluation",
+                "link": "/WorkTermRecords/Student Consultant WTR.pdf"
+            }
+        ]
+    },
+    {
+        "title": "Residence Assistant",
+        "duration": "SEPT 2019 - SEPT 2020",
+        "img": "/experiencesLogo/UNB_Logo.png",
+        "size": "512",
+        "summary": "As a Residence Assistant at UNB, my main duty is to offer support and guidance to resident students, fostering a safe, inclusive, and engaging community that promotes academic and personal growth. I enforce residence rules, address conflicts, and am trained to handle emergencies per established protocols. Additionally, I contribute to the planning and execution of social and educational programs, aiming to enhance community bonding, diversity, and personal development. I maintain an approachable and empathetic demeanor, offering necessary guidance and resources to residents. I also collaborate with other residence staff and university personnel to ensure a smooth residence hall operation, aiming to provide an optimal living experience for all residents.",
+        "current": "false",
+        "coop": "false",
+        "links": []
+    },
+    {
+        "title": "Camp Counselor",
+        "duration": "Summer Of 2018, 2019",
+        "img": "/experiencesLogo/Camp_Logo.png",
+        "size": "210",
+        "summary": "As a counselor, I oversaw campers during eight-week summer sessions, staying in the same cabin and aiding in their daily activities to help them adapt and thrive in the camp environment while ensuring health and safety protocols were adhered to. Besides, I engaged in staff roles, fostered social interactions, and carried out tasks assigned by the Camp Director. This role not only contributed to the campers' development but also enriched me with teamwork, leadership, and communication skills.",
+        "current": "false",
+        "coop": "false",
+        "links": []
+    }
+]
