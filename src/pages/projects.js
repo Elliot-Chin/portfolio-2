@@ -1,20 +1,17 @@
-import Loader from "@/components/Loader";
-import MyLogo from "@/components/MyLogo";
-import NavMenu from "@/components/NavMenu";
-import ProjectCard from "@/components/ProjectCard";
-import { fetchEnvVars } from "@/utils/ServerFetchFunction";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { motionDiv_FloatUp } from "@/components/Config";
+import { motionDiv_FloatUp } from "@/components/Config"
+import Loader from "@/components/Loader"
+import MyLogo from "@/components/MyLogo"
+import NavMenu from "@/components/NavMenu"
+import ProjectCard from "@/components/ProjectCard"
+import { motion } from "framer-motion"
+import D_Projects from "public/projects/Data_Projects.json"
+import { useState } from "react"
 
 
 
-export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
+export default function Projects () {
 
     const [isLoading, setLoading] = useState(false)
-
-    const AM_summary = PROJECTS_SUM_AM.replaceAll('\n', "<br /><br />")
-    const STS_summary = PROJECTS_SUM_STS.replaceAll('\n', "<br /><br />")
 
     return (
         <>
@@ -37,30 +34,19 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
                 </div>
 
                 <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 items-center p-5">
-
-                    <ProjectCard 
-                        imgSrc={'/Images/SDP.jpg'}
-                        desc={AM_summary}
-                        title={'Automated Musicians'}
-                        link={'/projects/AM'}
-                        setLoading={setLoading}
-                        links={[
-                            {title: 'Github', tooltip: 'Github project repository', link: 'https://github.com/edwardchang7/engg4000'},
-                            {title: 'Youtube', tooltip: 'Example song generation', link: 'https://www.youtube.com/watch?v=sYTcTymlJhc&feature=youtu.be'},
-                            {title: 'CBC News', tooltip: 'CBC news article', link: 'https://www.cbc.ca/news/canada/new-brunswick/unb-engineering-design-symposium-1.6411721'}
-                        ]}
-                    />
-
-                    <ProjectCard
-                        imgSrc={'/Images/STS.png'}
-                        desc={STS_summary}
-                        title={'Student Tracking System'}
-                        link={'/projects/STS'}
-                        setLoading={setLoading}
-                        links={[
-                            {title: 'Github', tooltip: 'Github project repository', link: 'https://github.com/Elliot-Chin/StudentTrackingSystem-1'},
-                        ]}
-                    />
+                    
+                    {
+                        D_Projects.map((e, i) => (
+                            <ProjectCard 
+                            imgSrc={e.imgSrc}
+                            desc={e.desc}
+                            title={e.title}
+                            link={e.link}
+                            setLoading={setLoading}
+                            links={e.links}
+                            />
+                        ))
+                    }
 
                 </motion.div>
             </div>
@@ -76,8 +62,4 @@ export default function Projects ({PROJECTS_SUM_AM, PROJECTS_SUM_STS}) {
     </> 
 
     )
-}
-
-export async function getServerSideProps() {
-    return fetchEnvVars(['PROJECTS_SUM_AM', 'PROJECTS_SUM_STS'])
 }

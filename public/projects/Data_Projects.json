@@ -1,0 +1,38 @@
+[
+    {
+        "imgSrc": "/Images/SDP.jpg",
+        "desc": "This project, conducted during our senior year engineering capstone, aimed to explore automated music generation through programmed music theory and pattern recognition. Divided into three key segments: Musical Algorithms, Pattern Recognition and Extraction, and Music Composition Generator, we sought to develop a system capable of autonomously crafting musically coherent compositions, with each segment building the foundation for the next.",
+        "title": "Automated Musicians",
+        "link": "/projects/AM",
+        "links": [
+            {
+                "title": "Github",
+                "tooltip": "Github project repository",
+                "link": "https://github.com/edwardchang7/engg4000"
+            },
+            {
+                "title": "Youtube",
+                "tooltip": "Example song generation",
+                "link": "https://www.youtube.com/watch?v=sYTcTymlJhc&feature=youtu.be"
+            },
+            {
+                "title": "CBC News",
+                "tooltip": "CBC news article",
+                "link": "https://www.cbc.ca/news/canada/new-brunswick/unb-engineering-design-symposium-1.6411721"
+            }
+        ]
+    },
+    {
+        "imgSrc": "/Images/STS.png",
+        "desc": "During the 'Software Quality and Project Management' course at UNB, I engaged in a project to streamline school advisors' management of student and course data. The task entailed processing text files into analytics, presented on a dashboard and evaluated through user testing by the class and professor. Utilizing agile scrum, we held pre-class standups for progress reporting and pair programming for feature development, culminating in a robust solution with a full CI/CD pipeline, live hosting, and comprehensive test coverage. This facilitative dashboard led to my recruitment by the professor to expand a similar tool for broader departmental use, transitioning from a class project to a larger-scale initiative.",
+        "title": "Student Tracking System",
+        "link": "/projects/STS",
+        "links": [
+            {
+                "title": "Github",
+                "tooltip": "Github project repository",
+                "link": "https://github.com/Elliot-Chin/StudentTrackingSystem-1"
+            }
+        ]
+    }
+]
