@@ -35,7 +35,7 @@ export const SummaryCard = ({ summary, button, bg }) => {
                         rows={20}
                         cols={50}
                         disabled
-                        className='mt-2 p-3 resize-none dark:text-slate-200 text-black text-wrap bg-transparent text-lg dark:font-raleway font-montserrat '
+                        className='mt-2 p-3 resize-none dark:text-slate-200 text-black text-wrap bg-transparent text-lg font-raleway '
                         value={summary}
                     />
                 </div>
