@@ -1,13 +1,13 @@
 import "@/styles/globals.css";
-import { NextUIProvider } from "@nextui-org/react";
+import { ThemeProvider } from "@/utils/ThemeProvider";
+import { NextUIProvider } from "@nextui-org/system";
 
 export default function App({ Component, pageProps }) {
-
-
   return (
-    <NextUIProvider>
-      <title>Elliot Chin</title>
-      <Component {...pageProps} />
-    </NextUIProvider>
-  );
+    <ThemeProvider>
+      <NextUIProvider>
+        <Component {...pageProps} />
+      </NextUIProvider>
+    </ThemeProvider>
+  )
 }
