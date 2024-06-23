@@ -1,52 +1,40 @@
-import Loader from "@/components/Loader";
-import MyLogo from "@/components/MyLogo";
-import NavMenu from "@/components/NavMenu";
-import { useState } from "react";
+import { Nav } from "@/components/nav/Navbar";
+import { ModelMissingAnimation } from "@/components/avatar/Model_MissingAnimation.js";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
 
+export default function Custom404() {
 
-
-
-
-
-
-export default function MissingPage () {
-
-    const [isLoading,setLoading] = useState(false)
+    const router = useRouter()
+    const errorMessage = "It looks like the page you're looking for doesn't exist 😱"
 
     return (
-        <>
-        <MyLogo size={150} />
-        {isLoading && <Loader />}
-        
-            <div className="flex flex-col items-center justify-center pt-16">
-                
-                <div className="h-fit w-5/6 mx-auto flex flex-col items-center justify-center rounded-md bg-slate-600 bg-opacity-30 glass-effect glass-shadow\
-                                lg:w-1/4">
-                    <div className="p-3 border-b-2 w-11/12 mx-auto items-center flex flex-col">
-                        <h1 className="text-5xl font-lato text-yellow-400">404</h1>
+        <div>
+            <main className="min-h-screen dark:bg-slate-800 bg-slate-300 border-4 border-transparent flex items-center flex-col relative lg:h-fit">
+                <Nav currentPage={'404'} />
+
+
+                <div className="w-11/12 mx-auto h-96">
+                    <div className="w-full h-full flex items-center justify-center mx-auto">
+                        <ModelMissingAnimation />
                     </div>
 
-                    <div className="p-3">
-                        <img
-                            src={'https://www.programmics.co.in/assets/images/mobileappdevelopement.gif'}
-                            height={512}
-                            width={512}
-                            />
-                    </div>
-
-                    <div className="p-3 flex flex-col items-center justify-center gap-5 text-center font-inclusive-sans text-xl">
-                    <p>Oops, the page you're trying to reach is currently under a little sprucing up or it might have taken a different path.</p>
+                    <div className="absolute top-[40%] bottom-[40%] left-[10%] right-[10%] text-center flex flex-col gap-5 glass-effect bg-opacity-20 rounded-md shadow-lg dark:bg-slate-950 bg-slate-400 px-3 pt-3
+                                    lg:w-1/4 lg:mx-auto lg:h-fit lg:top-96">
+                        <span className="font-montserrat text-xl dark:text-white">{errorMessage}</span>
+                        <Button
+                            size="md"
+                            radius="lg"
+                            variant="solid"
+                            color='warning'
+                            className={`font-oswald text-lg text-white mx-auto fade-in mb-5`}
+                            onClick={() => router.push('/about')}
+                        >
+                            Home
+                        </Button>
                     </div>
                 </div>
-
-                <div className="w-11/12 mt-10 mb-16
-                                lg:flex lg:w-fit">
-                    <div name='nav-wrapper' className="
-                    lg:w-fit lg:right-0">
-                        <NavMenu about experience projects skills contact setLoading={setLoading}/>
-                    </div>
-                </div>
-            </div>
-        </>
+            </main>
+        </div>
     )
 }

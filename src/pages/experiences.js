@@ -1,65 +1,80 @@
-import { motionDiv_FloatUp } from "@/components/Config"
-import ExperienceCard from "@/components/ExperienceCard"
-import Loader from "@/components/Loader"
-import MyLogo from "@/components/MyLogo"
-import NavMenu from "@/components/NavMenu"
-import { motion } from "framer-motion"
-import D_Experience from "public/experiences/Data_Experiences.json"
-import { useState } from "react"
+import { Model2 } from "@/components/avatar/Model_2";
+import { Nav } from "@/components/nav/Navbar";
+import React from "typewriter-effect"
+import { ReactTyped } from "react-typed";
+import { ExpCard } from "@/components/experience/ExpCard";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { Loader } from "@/components/nav/Loader";
+import { BackToTopButton } from "@/components/nav/BackTopTop";
+import { experiences } from "../../public/data/Experiences";
 
 
 
+export default function Experiences({ }) {
 
-export default function Experiences () {
-
-    const [isLoading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
     return (
+        <main className="min-h-screen h-fit dark:bg-slate-800 bg-slate-300 border border-transparent flex flex-col items-center
+						lg:h-fit">
 
-        <>
-            <MyLogo size={150} />
-            {isLoading && <Loader />}
-            <div className="
-                            lg:w-2/3 lg:mx-auto lg:flex lg:flex-row">
-                <div>
-                    <div name='page-title' className="px-5 pt-3 mb-5
-                                                    lg:w-full">  
-                        <h1 className="font-lato text-5xl text-[#429bf5]
-                                        lg:text-7xl lg:w-full">
-                            Experiences
-                        </h1>
-                    </div>
+            {loading && <Loader pageName={'Resume'} />}
 
-                    <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 mb-3
-                                    lg:grid lg:grid-cols-2 lg:mx-auto">
-                                        
-                        {
-                            D_Experience.map((e,i) => (
-                                <ExperienceCard
-                                title={e.title}
-                                duration={e.duration}
-                                img={e.img}
-                                size={e.size}
-                                summary={e.summary}
-                                current={e.current}
-                                coop={e.coop}
-                                links={e.links}
-                                />
-                            ))
-                        }
+            <Nav currentPage={'Experiences'} />
 
-                    </motion.div>
-                </div>
+            <BackToTopButton />
 
-                <div className="mx-auto mb-16 lg:hidden">
-                    <NavMenu about skills projects contact setLoading={setLoading}/>
-                </div>
-
-                <div name='nav-bar-wrapper' className="hidden lg:pt-[6rem] lg:block">
-                    <NavMenu about projects skills contact setLoading={setLoading} verticle />
+            <div className="relative w-11/12 h-40 mx-auto overflow-hidden
+                            lg:h-80">
+                <div className="h-96 flex items-center justify-center mx-auto bg-transparent rounded-full w-full
+                                lg:h-[200%] lg:w-1/2">
+                    <Model2 />
                 </div>
             </div>
-        </>
-        
+
+            <div className="text-white rounded-lg w-11/12 absolute mx-auto top-52 items-center flex justify-center
+                            lg:w-1/2 lg:bg-transparent lg:top-72">
+
+                <ReactTyped
+                    startWhenVisible
+                    strings={["Experiences"]}
+                    typeSpeed={40}
+                    className='dark:text-slate-300 text-warning-600 dark:border-0  px-2 rounded-md text-4xl font-bold capitalize font-montserrat
+                                lg:text-6xl'
+                    showCursor={false}
+                />
+            </div>
+
+            <div className="mt-10">
+                <Button
+                    size="lg"
+                    radius="lg"
+                    variant="flat"
+                    color='success'
+                    className={`font-oswald text-lg dark:text-white text-black mx-auto fade-in lg:text-3xl`}
+                    onClick={() => { setLoading(true), router.push('/resume') }}
+                >
+                    Resume
+                </Button>
+            </div>
+
+            <div className="mt-10 w-11/12 flex flex-col gap-3 fade-in
+                            lg:w-1/2 lg:grid lg:grid-cols-2 lg:gap-x-3 mb-10 ">
+
+                {experiences.experiences.map((experience, index) => (<ExpCard
+                    key={index}
+                    prop={{
+                        ...experience
+                    }}
+                />))}
+            </div>
+
+
+
+
+        </main>
     )
 }

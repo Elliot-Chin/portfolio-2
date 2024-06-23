@@ -1,65 +1,94 @@
-import { motionDiv_FloatUp } from "@/components/Config"
-import Loader from "@/components/Loader"
-import MyLogo from "@/components/MyLogo"
-import NavMenu from "@/components/NavMenu"
-import ProjectCard from "@/components/ProjectCard"
-import { motion } from "framer-motion"
-import D_Projects from "public/projects/Data_Projects.json"
+
+import { Accordion, AccordionItem, Button, Divider } from "@nextui-org/react"
+import { Nav } from "@/components/nav/Navbar"
+import { ReactTyped } from "react-typed"
+import Image from "next/image"
+import { useRouter } from "next/router"
+import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { useState } from "react"
+import { Loader } from "@/components/nav/Loader"
+import { projects } from "../../public/data/Projects"
 
 
 
-export default function Projects () {
 
-    const [isLoading, setLoading] = useState(false)
+
+export default function Projects() {
+
+    const [loading, setLoading] = useState({ state: false, name: '' })
+    const router = useRouter()
+
 
     return (
-        <>
-        {isLoading && <Loader />}
+        <main className="min-h-screen h-fit dark:bg-slate-800 bg-slate-300 border border-transparent flex flex-col items-center pb-10
+        lg:h-fit">
 
-        <MyLogo size={150}/>
+            <Nav currentPage={'Projects'} />
 
-        <div className="h-fit flex flex-col
-                        lg:w-2/3 lg:mx-auto lg:flex-row">
+            {loading.state && <Loader
+                pageName={loading.name}
+            />
+            }
+            <BackToTopButton />
 
-            <div>
-                <div className="lg:w-2/3">
-                    <div name='page-title' className="px-5 pt-3
-                                                    lg:w-full">  
-                        <h1 className="font-lato text-5xl text-[#8f41d4]
-                                        lg:text-7xl lg:w-full">
-                            Projects
-                        </h1>
-                    </div>
-                </div>
+            <div className="text-white rounded-lg mx-auto w-full text-center mt-10 mb-10">
 
-                <motion.div {...motionDiv_FloatUp} className="flex flex-col gap-5 items-center p-5">
-                    
-                    {
-                        D_Projects.map((e, i) => (
-                            <ProjectCard 
-                            imgSrc={e.imgSrc}
-                            desc={e.desc}
-                            title={e.title}
-                            link={e.link}
-                            setLoading={setLoading}
-                            links={e.links}
+                <ReactTyped
+                    startWhenVisible
+                    strings={["Projects"]}
+                    typeSpeed={40}
+                    className='dark:text-slate-300 text-warning-600 bg-transparent text-4xl font-bold capitalize font-montserrat
+                                lg:text-6xl'
+                    showCursor={false}
+                />
+            </div>
+
+            <div className=" w-full float-in
+                                lg:w-1/2">
+                <Accordion variant="light" showDivider={false} >
+                    {projects.map((project, index) => (<AccordionItem key={index} className="glass-effect rounded-md bg-opacity-20 dark:bg-slate-950 bg-gray-500 mb-3"
+                        textValue={project.title}
+                        classNames={{
+                            'indicator': 'mr-3',
+                        }}
+                        title={
+                            <div className="flex items-center gap-2">
+                                <Image
+                                    src={project.imgSrc}
+                                    width={128}
+                                    height={128}
+                                    alt={project.title}
+                                    className="rounded-md overflow-hidden ml-3"
+                                    priority
+                                />
+                                <span className="font-montserrat text-xl dark:text-white text-slate-950 ml-3
+                                                lg:text-3xl">{project.title}</span>
+                            </div>
+                        }
+                    >
+                        <div className="flex flex-col gap-3 ml-1 mr-1 p-1">
+                            <Divider
+                                className="bg-slate-600"
                             />
-                        ))
-                    }
+                            <span className="dark:text-slate-300 text-slate-950 font-oswald
+                                            lg:text-xl">
+                                {project.duration}
+                            </span>
+                            <span className="dark:text-white text-slate-950 dark:font-raleway font-montserrat
+                                            lg:text-xl">
+                                {project.summary}
+                            </span>
 
-                </motion.div>
-            </div>
-            
-            <div name='nav-bar-wrapper' className="lg:pt-[6rem] lg:hidden">
-                <NavMenu about experience skills contact setLoading={setLoading} />
+                            {project.link && <div className="w-full justify-end flex pr-2">
+                                <Button color="success" variant="flat"
+                                    onClick={() => { setLoading({ state: true, name: project.title }), router.push(project.link) }} className="font-oswald lg:text-2xl dark:text-white">See More</Button>
+                            </div>}
+                        </div>
+                    </AccordionItem>))}
+
+                </Accordion>
             </div>
 
-            <div name='nav-bar-wrapper' className="lg:pt-[6rem] hidden lg:block">
-                <NavMenu about experience skills contact setLoading={setLoading} verticle />
-            </div>
-        </div>
-    </> 
-
+        </main>
     )
 }

@@ -1,73 +1,84 @@
-import { motionDiv_FloatUp } from "@/components/Config"
-import Loader from "@/components/Loader"
-import MyLogo from "@/components/MyLogo"
-import NavMenu from "@/components/NavMenu"
-import { fetchEnvVars } from "@/utils/ServerFetchFunction"
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { useState } from "react"
+import { Headshot } from "@/components/avatar/Headshot";
+import { Model } from "@/components/avatar/Model";
+import { SummaryCard } from "@/components/index/SummaryCard";
+import { BackToTopButton } from "@/components/nav/BackTopTop";
+import { Nav } from "@/components/nav/Navbar";
+import { GitHub, LinkedIn, Mail } from "@mui/icons-material";
+import { Button } from "@nextui-org/react";
+import { about_me } from "../../public/data/AboutMe";
+import { emailLink, githubLink, linkedInLink } from "../../public/data/Links";
+import { eChin } from "../../public/data/People";
 
 
+export default function Home() {
 
-export default function About({ABOUT_ME}) {
 
-    const formattedText = ABOUT_ME.replace('\n', '<br /><br />')
+	const handleClick = (url) => {
+		console.log()
+		const link = document.createElement('a');
+		link.href = url;
+		link.target = '_blank';
+		link.rel = 'noopener noreferrer';
+		link.click();
+	};
 
-    const [isLoading, setLoading] = useState(false)
+	return (
+		<main className="min-h-screen h-fit border border-transparent pb-5 bg-slate-300
+						dark:bg-slate-800
+						lg:h-fit">
 
-    return (
-        <>
+			<Nav currentPage={'About Me'} />
 
-            {isLoading && <Loader />}
+			<div className="h-3/4 w-2/3 mx-auto justify-around hidden relative mb-10
+							lg:pt-24 lg:flex">
+				<div className=" w-1/4 rounded-full overflow-hidden bg-gradient-to-r from-blue-400 to-blue-600 shadow-lg shadow-blue-500/50 border-blue-500
+							">
+					<div className="w-full h-full flex items-center justify-center">
+						<Model />
+					</div>
+				</div>
 
-            <div className="scrollbar-none flex-col">
-                <MyLogo size={150} />
+				<div className="w-2/3">
+					<div className="flex flex-col px-5 h-fit mt-0">
+						<SummaryCard
+							summary={about_me.summary}
+						/>
+					</div>
 
-                <div className="mb-16
-                                xl:flex xl:items-center xl:w-3/4 xl:mx-auto xl:mb-0">
-                    <div className="flex justify-center items-center p-5
-                                        lg:w-1/3 lg:h-screen lg:mx-auto">
-                        <div className="glow relative w-72 h-80 bg-[#f2b749] rounded-full flex items-center justify-center
-                                        before:rounded-full
-                                        lg:h-[35rem] lg:w-[19rem]"
-                            style={{'--color': '#f2b749'}}>
-                            <div className="relative w-[17.8rem] h-[19.8rem] rounded-full
-                                            lg:h-[34.8rem] lg:w-[18.8rem]">
-                                <Image
-                                    src="/Images/avatar.jpeg"
-                                    objectFit="cover"
-                                    fill
-                                    alt="Avatar Image"
-                                    className='rounded-full overflow-hidden about-bg-image'
-                                />
-                            </div>
-                        </div>  
-                    </div>
-                
-                    <div className="lg:w-2/3 lg:mx-auto">
-                        <div name='page-title' className="px-5 pt-3 
-                                                        lg:w-2/3">  
-                            <h1 className="font-lato text-5xl text-[#f2b749]
-                                            lg:text-7xl lg:w-full">
-                                About Me
-                            </h1>
-                        </div>
+					<div className="flex gap-5 mt-7 items-center justify-center bottom-0">
+						<Button isIconOnly className="bg-transparent" onClick={() => handleClick(eChin.linkedin)}><LinkedIn htmlColor="dark:white" fontSize="large" /></Button>
+						<Button isIconOnly className="bg-transparent" onClick={() => handleClick(githubLink)}><GitHub htmlColor="dark:white" fontSize="large" /></Button>
+						<Button isIconOnly className="bg-transparent" onClick={() => handleClick(emailLink)}><Mail htmlColor="dark:white" fontSize="large" /></Button>
+					</div>
+				</div>
+			</div>
 
-                        <motion.div {...motionDiv_FloatUp} className="p-5">
-                            <p dangerouslySetInnerHTML={{__html: formattedText}}
-                                className="font-inclusive-sans"
-                            />
-                        </motion.div>
+			<div className="px-2 lg:hidden fade-in h-60 overflow-hidden">
+				<div className="w-full mx-auto rounded-lg overflow-hidden mt-5 h-96
+							lg:hidden">
+					<div className="w-full h-full flex items-center justify-center">
+						<Headshot />
+					</div>
+				</div>
+			</div>
 
-                        <NavMenu experience skills projects contact setLoading={setLoading}/>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
 
-}
+			<div className="lg:hidden px-2 mx-auto fade-in">
+				<div className="flex flex-col gap-5 h-fit">
+					<SummaryCard
+						title={"ABOUT ME"}
+						summary={about_me.summary}
+					/>
+				</div>
 
-export async function getServerSideProps() {
-    return fetchEnvVars(['ABOUT_ME'])
+				<div className="flex gap-5 mt-7 items-center justify-center bottom-0">
+					<Button isIconOnly className="bg-transparent" onClick={() => handleClick(eChin.linkedin)}><LinkedIn fontSize="large" /></Button>
+					<Button isIconOnly className="bg-transparent"onClick={() => handleClick(githubLink)}><GitHub fontSize="large" /></Button>
+					<Button isIconOnly className="bg-transparent"onClick={() => handleClick(emailLink)}><Mail fontSize="large" /></Button>
+				</div>
+			</div>
+
+			<BackToTopButton />
+		</main>
+	);
 }
