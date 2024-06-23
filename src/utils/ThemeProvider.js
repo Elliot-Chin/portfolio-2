@@ -7,22 +7,42 @@ export const ThemeProvider = ({ children }) => {
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
+        const root = document.documentElement;
+
+        root.classList.add('theme-transition');
+        
         if (savedTheme) {
             setTheme(savedTheme);
-            document.documentElement.classList.add(savedTheme);
+            root.classList.add(savedTheme);
         }
+
+        const timer = setTimeout(() => {
+            root.classList.remove('theme-transition');
+        }, 300);
+        
+        return () => clearTimeout(timer);
 
     }, []);
 
-
     useEffect(() => {
+        const root = document.documentElement;
+
+        root.classList.add('theme-transition');
+
         if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
+            root.classList.add('dark');
             localStorage.setItem('theme', 'dark');
         } else {
-            document.documentElement.classList.remove('dark');
+            root.classList.remove('dark');
             localStorage.setItem('theme', 'light');
         }
+
+        const timer = setTimeout(() => {
+            root.classList.remove('theme-transition');
+        }, 300);
+        
+        return () => clearTimeout(timer);
+
     }, [theme]);
 
     const toggleTheme = () => {

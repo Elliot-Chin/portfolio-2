@@ -141,3 +141,11 @@
 .force-white {
     color: white !important;
 }
+
+.theme-transition {
+    transition: background-color 1s ease-in, color 0.5s ease;
+}
+
+html {
+    transition: background-color 1s ease-in, color 0.5s ease;
+}

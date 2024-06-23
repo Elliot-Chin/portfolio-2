@@ -17,6 +17,11 @@ module.exports = {
         spacemono: ['"Space Mono"', 'monospace'],
         rubikmono: ['"Rubik Mono One"', 'monospace']
       },
+      transitionProperty: {
+        'background': 'background-color',
+        'text': 'color',
+        'all': 'background-color, color' // Ensure all properties you want to transition are included
+      },
     },
   },
   darkMode: "class",
