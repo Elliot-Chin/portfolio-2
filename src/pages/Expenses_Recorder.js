@@ -202,7 +202,7 @@ export default function ExpensesRecorder() {
                         </div>
 
 
-                        <div className="w-full px-2 flex flex-col gap-2 mt-5">
+                        <div className="w-full flex flex-col gap-2 mt-5">
                             <span className="dark:text-white text-amber-700 text-3xl font-bold font-rubikmono ">
                                 FINAL THOUGHTS
                             </span>
