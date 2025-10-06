@@ -1,13 +1,14 @@
-import Head from "next/head";
-import { useMemo, useEffect } from "react";
-import { useRouter } from "next/router";
-import Typewriter from "typewriter-effect";
+import Head from "next/head"
+import { useMemo, useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import Typewriter from "typewriter-effect"
 import {
     FaceRetouchingNaturalOutlined,
     ApartmentOutlined,
     AssignmentOutlined,
-} from "@mui/icons-material";
-import { Model2 } from "@/components/avatar/Model_2";
+} from "@mui/icons-material"
+import { Model2 } from "@/components/avatar/Model_2"
+import { Loader } from "@/components/nav/Loader"
 
 export default function Home() {
     const facts = [
@@ -22,40 +23,55 @@ export default function Home() {
         "Curiosity drives my dreams — sometimes my work too.",
         "I call it ‘agile’ when I change my mind mid-project.",
 
-    ];
+    ]
+
+    const [pageLoading, setPageLoading] = useState(false)
+    const [selectedPage, setSelectedPage] = useState('')
 
     const shuffledFacts = useMemo(() => {
-        const arr = [...facts];
+        const arr = [...facts]
         for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
+            const j = Math.floor(Math.random() * (i + 1))
+            const t = arr[i]; arr[i] = arr[j]; arr[j] = t
         }
-        return arr;
-    }, []);
+        return arr
+        // if `facts` is constant, [] is fine otherwise use [facts]
+    }, [])
 
-    const router = useRouter();
+
+    const router = useRouter()
     const links = [
         { label: "About Me", href: "/about", Icon: FaceRetouchingNaturalOutlined },
         { label: "Experiences", href: "/experiences", Icon: ApartmentOutlined },
         { label: "Projects", href: "/projects", Icon: AssignmentOutlined },
-    ];
+    ]
+
+    const handleNavClick = (href, label) => {
+        setSelectedPage(label)
+        setPageLoading(true)                  // show <Loader />
+        router.push(href)
+    }
+
 
     // optional: lock scroll only while on this page
     useEffect(() => {
-        const prev = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
+        const prev = document.body.style.overflow
+        document.body.style.overflow = "hidden"
         return () => {
-            document.body.style.overflow = prev;
-        };
-    }, []);
+            document.body.style.overflow = prev
+        }
+    }, [])
 
     return (
         <main className="h-screen overflow-hidden relative">
             <Head>
                 <title>Elliot Chin — Portfolio</title>
                 <meta name="description" content="Hey — I’m Elliot. I like making things that feel good to use." />
+                <title>Elliot Chin | Portfolio</title>
                 {/* Favicon: PNG */}
             </Head>
+
+            {pageLoading && <Loader pageName={selectedPage} />}
 
             {/* Background model layer */}
             <div className="absolute inset-0 z-0">
@@ -69,7 +85,7 @@ export default function Home() {
                         Hey! I’m Elliot.
                     </h1>
 
-                    <div className="text-xl lg:text-3xl font-spacemono leading-relaxed text-slate-50 min-h-[6rem]">
+                    <div className="text-sm md:text-2xl lg:text-3xl font-spacemono leading-relaxed text-slate-50 min-h-[6rem]">
                         <Typewriter
                             options={{
                                 strings: shuffledFacts,
@@ -90,7 +106,7 @@ export default function Home() {
                         {links.map(({ label, href, Icon }) => (
                             <button
                                 key={href}
-                                onClick={() => router.push(href)}
+                                onClick={() => handleNavClick(href, label)}
                                 className="glass px-4 py-3 rounded-xl flex items-center gap-2 transition transform hover:-translate-y-0.5 active:translate-y-0"
                                 aria-label={label}
                             >
@@ -104,5 +120,5 @@ export default function Home() {
                 </div>
             </div>
         </main>
-    );
+    )
 }
