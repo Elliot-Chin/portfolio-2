@@ -3,60 +3,6 @@
 @tailwind utilities;
 
 
-.btn-3d {
-    background-color: rgb(255, 255, 255);
-    outline: none;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 5px #ffffff;
-    transition: all 0.1s ease-in-out;
-}
-
-.blue-3d-bg {
-    background-color: rgb(0, 123, 255);
-    box-shadow: 0 5px #0056b3;
-}
-
-.green-3d-bg {
-    background-color: rgb(61, 224, 61);
-    box-shadow: 0 5px rgb(51, 175, 51);
-}
-
-.red-3d-bg {
-    background-color: rgb(224, 68, 68);
-    box-shadow: 0 5px rgb(145, 45, 45);
-}
-
-.orange-3d-bg {
-    background-color: rgb(255, 141, 10);
-    box-shadow: 0 5px #cf7d01;
-}
-
-.blue-3d-bg:active {
-    box-shadow: 0 2px #0056b3;
-    transform: translateY(3px);
-}
-
-.green-3d-bg:active {
-    box-shadow: 0 2px rgb(51, 175, 51);
-    transform: translateY(3px);
-}
-
-.red-3d-bg:active {
-    box-shadow: 0 2px rgb(145, 45, 45);
-    transform: translateY(3px);
-}
-
-.orange-3d-bg:active {
-    box-shadow: 0 2px #cf7d01;
-    transform: translateY(3px);
-}
-
-.glass-effect {
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-}
-
 ::-webkit-scrollbar {
     display: none;
 }
@@ -148,4 +94,115 @@
 
 html {
     transition: background-color 1s ease-in, color 0.5s ease;
+}
+
+.glass {
+    /* padding: 2rem 2.5rem; */
+    border-radius: 24px;
+    position: relative;
+    /* translucency + blur */
+    background: radial-gradient(120% 160% at 10% 0%,
+            rgba(255, 255, 255, .20) 0%,
+            rgba(255, 255, 255, .06) 60%,
+            rgba(255, 255, 255, .04) 100%);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+    /* glassy edges */
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .35),
+        inset 0 1px 0 rgba(255, 255, 255, .30);
+    color: #e9f0ff;
+}
+
+/* optional: subtle specular highlight */
+.glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, .35), transparent 40%);
+    mix-blend-mode: soft-light;
+}
+
+.glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: .08;
+    background-image:
+        url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter>\
+<rect width='60' height='60' filter='url(%23n)' opacity='0.4'/>\
+</svg>");
+    background-size: 200px 200px;
+    mix-blend-mode: overlay;
+}
+
+.typewriter-cursor {
+  animation: blink 1s steps(2, start) infinite;
+  opacity: 1;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0;
+  }
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(120deg, rgb(63, 61, 61), rgb(1, 1, 65), rgb(50, 23, 63));
+    background-size: 400% 400%;
+    animation: wave 20s ease infinite;
+    position: relative;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    background-size: 400% 400%;
+    z-index: -1;
+    opacity: 0.6;
+    animation: wave 35s ease-in-out infinite alternate;
+}
+
+body::after {
+    opacity: 0.4;
+    animation: wave 50s ease-in-out infinite alternate-reverse;
+}
+
+
+@keyframes wave {
+    0% {
+        background-position: 0% 20%;
+    }
+
+    25% {
+        background-position: 50% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    75% {
+        background-position: 50% 50%;
+    }
+
+    100% {
+        background-position: 0% 20%;
+    }
 }

@@ -27,13 +27,13 @@ export default function Experiences({ }) {
 
             <BackToTopButton />
 
-            <div className="relative w-11/12 h-40 mx-auto overflow-hidden
+            {/* <div className="relative w-11/12 h-40 mx-auto overflow-hidden
                             lg:h-80">
                 <div className="h-96 flex items-center justify-center mx-auto bg-transparent rounded-full w-full
                                 lg:h-[200%] lg:w-1/2">
                     <Model2 />
                 </div>
-            </div>
+            </div> */}
 
             <div className="text-white rounded-lg w-11/12 absolute mx-auto top-52 items-center flex justify-center
                             lg:w-1/2 lg:bg-transparent lg:top-72">
