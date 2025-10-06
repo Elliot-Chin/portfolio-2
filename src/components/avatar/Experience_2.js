@@ -13,7 +13,7 @@ export const Experience2 = ({ modelScale = 4 }) => {
                 minPolarAngle={Math.PI / 2}
             />
             {/* Position down slightly; scale makes it HUMONGOUS without CSS blur */}
-            <group position-y={-0.90} scale={modelScale}>
+            <group position-y={-0.89} scale={modelScale}>
                 <Avatar2 />
             </group>
             <ambientLight intensity={2} />
