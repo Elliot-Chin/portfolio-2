@@ -5,13 +5,13 @@ import { Avatar2 } from "./Avatar_2";
 export const Experience2 = ({ modelScale = 4 }) => {
     return (
         <>
-            <OrbitControls
+            {/* <OrbitControls
                 screenSpacePanning={false}
                 enableZoom={false}
                 enablePan={false}
                 maxPolarAngle={Math.PI / 2}
                 minPolarAngle={Math.PI / 2}
-            />
+            /> */}
             {/* Position down slightly; scale makes it HUMONGOUS without CSS blur */}
             <group position-y={-0.89} scale={modelScale}>
                 <Avatar2 />
