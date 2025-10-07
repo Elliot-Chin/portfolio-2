@@ -318,8 +318,57 @@ body::after {
 }
 
 
+.animate-slide-left-skills {
+    animation: slide-left 45s linear infinite;
+}
+
+
 
 .snap-none {
     scroll-snap-type: none !important;
     scroll-behavior: auto !important;
+}
+
+@keyframes fadeInFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(8px)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+@keyframes skillIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes skillOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+}
+
+.animate-skill-in {
+    animation: skillIn 0.18s ease-out both;
+}
+
+.animate-skill-out {
+    animation: skillOut 0.18s ease-in both;
 }

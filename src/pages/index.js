@@ -57,6 +57,33 @@ function useScrollProgress(containerRef) {
     }, [containerRef])
 }
 
+function getJobDuration(startDateStr) {
+    const start = new Date(startDateStr)
+    const now = new Date()
+
+    const diffMs = now - start
+    const diffYears = diffMs / (1000 * 60 * 60 * 24 * 365.25)
+    const years = Math.floor(diffYears)
+    const remainder = diffYears - years
+
+    // handle < 1 year case
+    if (years === 0) {
+        if (remainder >= 0.4 && remainder < 0.6) return "half a year"
+        if (remainder >= 0.6) return "almost a year"
+        return `${Math.round(remainder * 12)} months`
+    }
+
+    // handle in-between years
+    if (remainder >= 0.4 && remainder < 0.6)
+        return years === 1 ? "a year and a half" : `${years} and a half years`
+
+    // round to nearest whole year if remainder > 0.8
+    if (remainder >= 0.8) return `${years + 1} years`
+
+    // singular vs plural
+    return years === 1 ? "a year" : `${years} years`
+}
+
 export default function Home() {
     const facts = [
         "I'm Elliot — loves solving weird problems.",
@@ -90,6 +117,88 @@ export default function Home() {
         "☕ Caffeine Philosopher",
     ]
 
+    const [selectedSkill, setSelectedSkill] = useState(null)
+
+    const skills = [
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/react-2.svg', name: 'React',
+            desc: 'Learned through curiosity, boredom, and one too many YouTube tutorials.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/html-1.svg', name: 'HTML5',
+            desc: 'Built my first projects with it — still the foundation of everything.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg', name: 'Tailwind',
+            desc: 'My favorite for turning ideas into clean, responsive UIs fast.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/css-3.svg', name: 'CSS',
+            desc: 'Where the frustration started — and the fun of design too.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/pandas.svg', name: 'Pandas',
+            desc: 'Learned in class, refined at work — my go-to for data wrangling.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/python-5.svg', name: 'Python',
+            desc: 'Hands-down my favorite language — even if it runs a little slow.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/postgresql.svg', name: 'Postgres',
+            desc: 'Learned at work, now my favorite database for personal projects.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/flask.svg', name: 'Flask',
+            desc: 'My comfort zone for backend work — lightweight and reliable.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/next-js.svg', name: 'Nextjs',
+            desc: 'My go-to frontend framework — fast, sleek, and intuitive to build with.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/javascript-1.svg', name: 'JavaScript',
+            desc: 'Started as a “let’s see what this does” — now can’t build without it.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/robot-framework.svg', name: 'Robot Framework',
+            desc: 'Learned at work — now my favorite way to automate the chaos.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/linux-tux.svg', name: 'Linux',
+            desc: 'Everyday environment — terminals, logs, and Debian are home now.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/docker-4.svg', name: 'Docker',
+            desc: 'Started at work, now essential for every personal project stack.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/proxmox.svg', name: 'Proxmox',
+            desc: 'Learned through managing lab servers — now my homelab playground.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/github-icon-1.svg', name: 'GitHub',
+            desc: 'Where all the code lives — issues, actions, and experiments alike.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/c-1.svg', name: 'C',
+            desc: 'Old-school fundamentals — data structures, pointers, and grit.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/java-14.svg', name: 'Java',
+            desc: 'Learned through coursework — solid OOP roots still in the toolkit.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/mysql-logo-pure.svg', name: 'SQL',
+            desc: 'Schemas, joins, and leaderboards — data made to tell stories.'
+        },
+        {
+            src: 'https://cdn.worldvectorlogo.com/logos/visual-studio-code-1.svg', name: 'VS Code',
+            desc: 'My daily workspace — extensions, themes, and organized chaos.'
+        },
+    ]
+
+
     const shuffledFacts = useMemo(() => {
         const arr = [...facts]
         for (let i = arr.length - 1; i > 0; i--) {
@@ -122,6 +231,46 @@ export default function Home() {
         setPageLoading(true)
         router.push(href)
     }
+
+    // Smooth open/close without unmounting immediately
+    const SkillInfoCard = ({ skill, onClosed }) => {
+        const [isClosing, setIsClosing] = useState(false)
+
+        const handleClose = () => {
+            setIsClosing(true)
+            // match CSS duration (180ms). After animation, unmount via parent.
+            setTimeout(() => onClosed(), 180)
+        }
+
+        if (!skill) return null
+
+        return (
+            <div
+                className={`glass absolute inset-x-0 top-0 max-w-[90%]
+                    rounded-xl p-3 !shadow-none w-full mx-auto !text-black
+                    ${isClosing ? 'animate-skill-out' : 'animate-skill-in'}`}
+            >
+                <div className="flex items-start justify-between gap-3">
+                    <div>
+                        <div className="font-semibold flex gap-3 items-center text-amber-950 text-2xl">
+                            <img src={skill.src} height={20} width={20} alt={skill.name} />
+                            {skill.name}
+                        </div>
+                        <p className="text-sm opacity-80">{skill.desc}</p>
+                    </div>
+                    <button
+                        type="button"
+                        className="shrink-0 rounded-md px-2 py-1 hover:bg-black/5"
+                        onClick={handleClose}
+                        aria-label="Close"
+                    >
+                        ✕
+                    </button>
+                </div>
+            </div>
+        )
+    }
+
 
     return (
         <main
@@ -205,7 +354,7 @@ export default function Home() {
                 }}
             >
                 <div className="
-    relative w-full h-screen mx-auto overflow-hidden  text-black
+    relative w-full h-screen mx-auto overflow-hidden text-black
     lg:w-[65rem] xl:w-full
     lg:max-w-6xl lg:mx-auto lg:grid lg:grid-cols-2 lg:items-center lg:gap-10
   ">
@@ -213,8 +362,7 @@ export default function Home() {
                     <div
                         className="
         absolute inset-x-0 top-0 h-[56vh] overflow-hidden
-        flex items-end justify-center
-        pb-2           
+        flex items-end justify-center pb-2
         lg:static lg:h-auto lg:pb-0 lg:order-2
       "
                     >
@@ -231,22 +379,24 @@ export default function Home() {
         absolute inset-x-0 bottom-0 z-10 px-4 pb-6 pt-8
         backdrop-blur-[2px]
         lg:static lg:px-0 lg:pt-0 lg:pb-0
-        lg:bg-none       /* remove gradient on desktop to kill the 'border' */
-        lg:backdrop-blur-0
+        lg:bg-none lg:backdrop-blur-0
         lg:order-1
       "
                     >
                         <h2 className="text-3xl lg:text-3xl leading-tight font-semibold text-white">
-                            Hi, nice to meet ya! <span className="animate-bounce absolute hidden ml-3 md:inline">👋</span> <br />
+                            Hi, nice to meet ya! <span className="animate-bounce absolute hidden ml-3 md:inline">👋</span><br />
                             <span className="opacity-80 text-2xl lg:text-3xl text-amber-950">
                                 Malaysian-born, <span className="text-red-700">Canadian-built.</span>
                             </span>
                         </h2>
 
-                        <p className="mt-3 font-montserrat lg:mt-4 text-base font-bold sm:font-normal lg:text-lg opacity-90 lg:opacity-100 lg:text-black">
-                            JR. Application Cybersecurity Specialist at Siemens. I design quiet UIs, create things that work,
-                            and tinker after hours because I actually enjoy it&nbsp;✨
-                        </p>
+                        {/* —— “Intro text” wrapper is relative so the box can be absolute below it —— */}
+                        <div className="relative">
+                            <p className="mt-3 font-montserrat lg:mt-4 text-base font-bold sm:font-normal lg:text-lg opacity-90 lg:opacity-100 lg:text-black">
+                                <span className="font-bold">{getJobDuration("2023-06-05")}</span> as a <span className="font-bold">JR. Application Cybersecurity Specialist</span> at Siemens. I design quiet UIs, create things that work,
+                                and tinker after hours because I actually enjoy it&nbsp;✨
+                            </p>
+                        </div>
 
                         {/* Marquee: mobile fades + desktop mask */}
                         <div className="
@@ -255,13 +405,8 @@ export default function Home() {
         md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
         md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
       ">
-                            {/* mobile-only side fades */}
-                            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:hidden
-          bg-gradient-to-r from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-                            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:hidden
-          bg-gradient-to-l from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-
-                            {/* moving track */}
+                            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:hidden bg-gradient-to-r from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
+                            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:hidden bg-gradient-to-l from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
                             <div className="flex min-w-max whitespace-nowrap gap-3 will-change-transform transform-gpu animate-slide-left">
                                 {[...items, ...items].map((t, i) => (
                                     <span
@@ -274,21 +419,57 @@ export default function Home() {
                             </div>
                         </div>
 
-                        {/* CTAs */}
-                        <div className="flex gap-5 mt-5 lg:mt-7 items-center">
-                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(eChin.linkedin)}>
-                                <LinkedIn htmlColor="dark:white" fontSize="large" />
-                            </Button>
-                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(githubLink)}>
-                                <GitHub htmlColor="dark:white" fontSize="large" />
-                            </Button>
-                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(emailLink)}>
-                                <Mail htmlColor="dark:white" fontSize="large" />
-                            </Button>
+
+
+                        {/* Skills marquee — clickable on md+ only */}
+                        <div className="
+        relative mt-4 lg:mt-6 w-full overflow-hidden p-0
+        [--fade:12%]
+        md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
+        md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
+      ">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:hidden bg-gradient-to-r from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
+                            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:hidden bg-gradient-to-l from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
+
+                            <div className="flex min-w-max whitespace-nowrap gap-3 will-change-transform transform-gpu animate-slide-left-skills">
+                                {[...skills, ...skills].map((t, i) => (
+                                    <button
+                                        type="button"
+                                        key={i}
+                                        onMouseEnter={() => setSelectedSkill(t)}
+                                        title={t.name}
+                                        className="
+                mx-0 gap-2 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full
+                backdrop-blur-md bg-white/20 flex items-center
+                text-sm lg:text-base
+                pointer-events-none md:pointer-events-auto
+                md:hover:bg-white/30 md:cursor-pointer
+                focus:outline-none
+              "
+                                        aria-label={`Show details for ${t.name}`}
+                                    >
+                                        <img src={t.src} height={20} width={20} alt={t.name} />
+                                        {t.name}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
+                        {/* Skill explanation area (md+). 
+    h-[96px] reserves space so nothing shifts. */}
+                        <div className="hidden md:block relative mt-3 h-[96px]">
+                            {selectedSkill && (
+                                <SkillInfoCard
+                                    skill={selectedSkill}
+                                    onClosed={() => setSelectedSkill(null)}
+                                />
+                            )}
+                        </div>
+
+
                     </div>
                 </div>
             </section>
+
 
 
             {/* SECTION 3 — ABOUT (Details) */}
@@ -307,7 +488,7 @@ export default function Home() {
                   h-screen lg:h-auto">
                     {/* Left: model (image/visual) */}
                     <div className="relative shrink-0 w-full max-w-[28rem] md:flex hidden justify-center overflow-visible">
-                    <div className="relative shrink-0 w-[30rem] h-[23rem] md:h-[35rem] lg:h-[40rem] lg:w-[22rem] xl:h-[56rem] xl:w-[35rem] lg:aspect-[4/5] lg:overflow-visible">
+                        <div className="relative shrink-0 w-[30rem] h-[23rem] md:h-[35rem] lg:h-[40rem] lg:w-[22rem] xl:h-[56rem] xl:w-[35rem] lg:aspect-[4/5] lg:overflow-visible">
                             <Model animate={false} />
                         </div>
                     </div>
@@ -343,6 +524,19 @@ export default function Home() {
                                 I’m always up for swapping ideas—whether it’s debugging a strange problem or
                                 planning the next trail. Feel free to say hi; I’m just a message away.
                             </p>
+                        </div>
+
+                        {/* CTAs */}
+                        <div className="flex gap-5 mt-5 lg:mt-7 items-center">
+                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(eChin.linkedin)}>
+                                <LinkedIn htmlColor="dark:white" fontSize="large" />
+                            </Button>
+                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(githubLink)}>
+                                <GitHub htmlColor="dark:white" fontSize="large" />
+                            </Button>
+                            <Button isIconOnly className="bg-transparent" onPress={() => handleClick(emailLink)}>
+                                <Mail htmlColor="dark:white" fontSize="large" />
+                            </Button>
                         </div>
                     </div>
 
