@@ -102,7 +102,7 @@ export function HeroSection({ setSelectedPage, setPageLoading, router, container
                                 className="text-amber-950 font-semibold px-6 py-2 bg-gradient-to-r from-amber-500 to-pink-400 shadow-md rounded-full
                                 focus:border-none outline-none
                                 text-sm w-40 sm:w-48
-                                hover:-translate-y-1.5 hover:from-pink-400 hover:to-amber-500
+                                hover:-translate-y-1 hover:from-pink-400 hover:to-amber-500
                                 transition-transform duration-100"
                                 // className="glass px-4 py-3 w-32 sm:w-40 justify-center rounded-xl flex items-center gap-2 transition transform hover:-translate-y-2 !focus:translate-y-0 active:translate-y-0"
                                 aria-label={label}
