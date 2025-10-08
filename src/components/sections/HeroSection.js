@@ -5,27 +5,27 @@ import { Model2 } from "@/components/avatar/Model_2"
 import { facts, navLinks } from "@/components/data/heroData"
 
 export function HeroSection({ setSelectedPage, setPageLoading, router, containerRef }) {
-  const shuffledFacts = useMemo(() => {
-    const arr = [...facts]
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      const t = arr[i]; arr[i] = arr[j]; arr[j] = t
-    }
-    return arr
-  }, [])
+    const shuffledFacts = useMemo(() => {
+        const arr = [...facts]
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+            const t = arr[i]; arr[i] = arr[j]; arr[j] = t
+        }
+        return arr
+    }, [])
 
-  const [showScrollHint, setShowScrollHint] = useState(true)
+    const [showScrollHint, setShowScrollHint] = useState(true)
 
-  const handleNavClick = (href, label) => {
-    if (label === "About Me" && containerRef.current) {
-      const secs = Array.from(containerRef.current.querySelectorAll("section[data-fade]"))
-      if (secs.length > 1) secs[1].scrollIntoView({ behavior: "smooth", block: "start" })
-      return
+    const handleNavClick = (href, label) => {
+        if (label === "About Me" && containerRef.current) {
+            const secs = Array.from(containerRef.current.querySelectorAll("section[data-fade]"))
+            if (secs.length > 1) secs[1].scrollIntoView({ behavior: "smooth", block: "start" })
+            return
+        }
+        setSelectedPage(label)
+        setPageLoading(true)
+        router.push(href)
     }
-    setSelectedPage(label)
-    setPageLoading(true)
-    router.push(href)
-  }
 
     // scroll hint hide on user interaction
     useEffect(() => {
@@ -54,16 +54,20 @@ export function HeroSection({ setSelectedPage, setPageLoading, router, container
     return (
         <section
             data-fade
-            className="relative min-h-screen snap-start overflow-hidden
-               transition-[opacity,transform] duration-200 ease-linear
-               will-change-[opacity,transform]"
+            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden
+             transition-[opacity,transform] duration-200 ease-linear
+             will-change-[opacity,transform]"
             style={{
                 opacity: "var(--vis, 0)",
                 transform: "translateY(calc((1 - var(--vis, 0)) * 8vh))",
             }}
         >
-            {/* Background model layer */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
+            <div
+                className="absolute inset-x-0 z-0 pointer-events-none
+             bottom-[max(0px,env(safe-area-inset-bottom))]
+             h-[55svh] sm:inset-0 sm:h-full
+             supports-[height:100dvh]:h-[55dvh]"
+            >
                 <Model2 modelScale={0.7} cameraZ={1.5} fov={38} dprMax={2} />
             </div>
 
@@ -95,11 +99,16 @@ export function HeroSection({ setSelectedPage, setPageLoading, router, container
                             <button
                                 key={href}
                                 onClick={() => handleNavClick(href, label)}
-                                className="glass px-4 py-3 w-32 sm:w-40 justify-center rounded-xl flex items-center gap-2 transition transform hover:-translate-y-2 !focus:translate-y-0 active:translate-y-0"
+                                className="text-amber-950 font-semibold px-6 py-2 bg-gradient-to-r from-amber-500 to-pink-400 shadow-md rounded-full
+                                focus:border-none outline-none
+                                text-sm w-40 sm:w-48
+                                hover:-translate-y-1.5 hover:from-pink-400 hover:to-amber-500
+                                transition-transform duration-100"
+                                // className="glass px-4 py-3 w-32 sm:w-40 justify-center rounded-xl flex items-center gap-2 transition transform hover:-translate-y-2 !focus:translate-y-0 active:translate-y-0"
                                 aria-label={label}
                             >
                                 <Icon fontSize="small" />
-                                <span className="text-sm sm:text-base font-medium">{label}</span>
+                                <span className="ml-2 text-sm sm:text-base font-medium">{label}</span>
                             </button>
                         ))}
                     </div>

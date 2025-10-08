@@ -4,35 +4,40 @@ import { items, skills } from "@/components/data/aboutIntroData"
 import { SkillInfoCard } from "@/components/cards/SkillInfoCard"
 
 export function AboutIntroSection({ getJobDuration }) {
-    
+
     const [selectedSkill, setSelectedSkill] = useState(null)
 
     return (
         <section
-            id="about"
             data-fade
-            className="min-h-screen snap-start transition-[opacity,transform] duration-200 ease-linear will-change-[opacity,transform]"
+            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden
+         transition-[opacity,transform] duration-200 ease-linear
+         will-change-[opacity,transform]"
             style={{
                 opacity: "var(--vis, 0)",
                 transform: "translateY(calc((1 - var(--vis, 0)) * 8vh))",
             }}
         >
-            <div
-                className="
-    relative w-full h-screen mx-auto overflow-hidden text-black
-    lg:w-[65rem] xl:w-full
-    lg:max-w-6xl lg:mx-auto lg:grid lg:grid-cols-2 lg:items-center lg:gap-10
-  "
-            >
+            <div className="
+  relative w-full min-h-[100svh] supports-[height:100dvh]:min-h-[100dvh] mx-auto overflow-hidden text-black
+  lg:w-[65rem] xl:w-full
+  lg:max-w-6xl lg:mx-auto lg:grid lg:grid-cols-2 lg:items-center lg:gap-10
+">
+
                 {/* MODEL BLOCK */}
                 <div
                     className="
-        absolute inset-x-0 top-0 h[56vh] h-[56vh] overflow-hidden
-        flex items-end justify-center pb-2
-        lg:static lg:h-auto lg:pb-0 lg:order-2
-      "
+    absolute inset-x-0 top-0 h-[56svh] supports-[height:100dvh]:h-[56dvh] overflow-hidden
+    flex items-end justify-center pb-2
+    lg:static lg:h-auto lg:pb-0 lg:order-2
+  "
                 >
-                    <div className="relative shrink-0 w-[30rem] h-[55vh] md:h-[50vh] lg:h-[80vh] lg:w-[22rem] xl:h-[100vh] xl:w-[35rem] lg:aspect-[4/5] lg:overflow-visible">
+                    <div className="relative shrink-0 w-[30rem]
+                h-[50svh] md:h-[50svh]
+                supports-[height:100dvh]:h-[50dvh]
+                lg:h-[80vh] lg:w-[22rem]
+                xl:h-[100vh] xl:w-[35rem]
+                lg:aspect-[4/5] lg:overflow-visible">
                         <div className="w-full h-full flex items-center justify-center">
                             <Model />
                         </div>
@@ -82,7 +87,8 @@ export function AboutIntroSection({ getJobDuration }) {
                             {[...items, ...items].map((t, i) => (
                                 <span
                                     key={i}
-                                    className="mx-0 px-3 lg:px-4 py-1.5 lg:py-2 font-monts rounded-full backdrop-blur-md bg-white/20 inline-block text-sm lg:text-base"
+                                    className="mx-0 px-3 lg:px-4 py-1.5 lg:py-2 font-monts rounded-full backdrop-blur-md bg-white/20 inline-block text-sm lg:text-base glass font-montserrat !text-amber-950
+                                    !shadow-none font-semibold"
                                 >
                                     {t}
                                 </span>
@@ -113,9 +119,12 @@ export function AboutIntroSection({ getJobDuration }) {
                 mx-0 gap-2 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full
                 backdrop-blur-md bg-white/20 flex items-center
                 text-sm lg:text-base
+                font-semibold
                 pointer-events-none md:pointer-events-auto
                 md:hover:bg-white/30 md:cursor-pointer
                 focus:outline-none
+                glass
+                !shadow-none font-montserrat !text-amber-950
               "
                                     aria-label={`Show details for ${t.name}`}
                                 >
