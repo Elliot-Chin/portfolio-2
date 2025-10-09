@@ -1,14 +1,17 @@
 // pages/experience.js
 import { useState, useMemo, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
+import { KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
+import { BackToTopButton } from "@/components/nav/BackTopTop"
+import NavBar from "@/components/nav/Navbar"
 
 const timeline = [
     // special born node
     {
         id: "born-1997",
         year: "1997",
-        title: "And I existed.",
-        desc: "A new process booted. No manual, no README, just vibes.",
+        title: "An Origin Story",
+        desc: "A new process booted, and I existed.",
         type: "born",
     },
     // lore
@@ -27,7 +30,11 @@ const timeline = [
             "Wrote scripts that refused to run only on Fridays (still investigating).",
             "Mastered the sacred dance: logs → bug → fix → celebratory snack."
         ],
-        tech: ["Python", "Flask", "Docker", "CI/CD"]
+        tech: [{ src: "", name: "Python" },
+        { src: "", name: "Flask" },
+        { src: "", name: "Docker" },
+        { src: "", name: "CI/CD" },
+        ]
     },
     {
         id: "2022-unb-its",
@@ -40,7 +47,10 @@ const timeline = [
             "Wrangled auth so students could forget fewer passwords.",
             "Spoke fluent ‘ticketese’ and wrote docs humans actually read."
         ],
-        tech: ["JavaScript", "React", "APIs", "SSO"]
+        tech: [{ src: "https://cdn.worldvectorlogo.com/logos/javascript-1.svg", name: "JavaScript" },
+        { src: "https://cdn.worldvectorlogo.com/logos/react-2.svg", name: "React" },
+        { src: "", name: "API" },
+        { src: "", name: "SSO" }]
     },
     {
         id: "2024-freelance",
@@ -53,7 +63,7 @@ const timeline = [
             "Score calculators for niche card games (zero rage-quits… mostly).",
             "UI that feels like a chill friend tapping the scoreboard for you."
         ],
-        tech: ["Next.js", "Flask-SocketIO", "Redis", "Docker"]
+        tech: [{ src: "", name: "NextJS" }, { src: "", name: "Flask" }]
     },
 
     // coda
@@ -69,6 +79,9 @@ export default function ExperiencePage() {
         () => timeline.map((t, i) => ({ ...t, side: i % 2 === 0 ? "left" : "right" })),
         []
     )
+
+    const { scrollYProgress } = useScroll({ container: containerRef })
+    const bgPos = useTransform(scrollYProgress, [0, 1], ["0% 0%", "0% 200%"])
 
     const lastId = items[items.length - 1].id
 
@@ -113,17 +126,33 @@ export default function ExperiencePage() {
             ref={containerRef}
             className="h-screen overflow-y-scroll scroll-smooth overscroll-contain text-amber-50"
         >
-            <h1 className="text-center text-4xl font-bold pt-16 pb-10 tracking-widest">
-                EXPERIENCE TIMELINE
+            <h1 className="relative text-center text-3xl md:text-5xl font-bold pt-16 pb-10 w-[70vw] md:w-[30vw] mx-auto">
+                {/* left gear */}
+                <span className="absolute animate-spin left-0 w-fit h-fit">
+                    ⚙️
+                </span>
+
+                BUILD LOG
+
+                {/* right gear */}
+                <span className="absolute animate-spin right-0">
+                    ⚙️
+                </span>
             </h1>
 
+            <NavBar />
+
+
+            <BackToTopButton targetRef={containerRef} />
+
             {/* Center spine */}
-            <div className="relative max-w-5xl mx-auto px-6 pb-24
-  before:content-[''] before:absolute before:top-0 before:bottom-0
-  before:left-5 before:w-[2px]
-  before:bg-gradient-to-b before:from-amber-400/70 before:to-pink-600/70 before:rounded-full
-  before:z-0                                 /* <-- add this */
-  md:before:left-1/2 md:before:w-[3px]"
+            <motion.div
+                style={{ backgroundPosition: bgPos }}
+                className="relative max-w-5xl mx-auto px-6 pb-24
+  before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-5 md:before:left-1/2
+  before:w-[2px] md:before:w-[3px] before:rounded-full
+  before:[background:linear-gradient(180deg,#fbbf24_0%,#ec4899_100%)]
+  before:[background-size:100%_200%] before:[background-position:0%_0%]"
             >
 
 
@@ -157,7 +186,7 @@ export default function ExperiencePage() {
                             </div>
 
                             {/* Card */}
-                            <div className={`relative md:w-[min(560px,calc(50%-2rem))] ml-5 ${isLeft ? "md:mr-auto md:ml-0 text-right" : "md:ml-auto text-left"}`}>
+                            <div className={` w-[90vw] relative md:w-[min(560px,calc(50%-2rem))] text-amber-950 ml-5 ${isLeft ? "md:mr-auto md:ml-0 text-right" : "md:ml-auto text-left"}`}>
                                 <motion.button
                                     type="button"
                                     onClick={() => isJob && toggle(item.id)}
@@ -165,33 +194,47 @@ export default function ExperiencePage() {
                                     aria-controls={isJob ? `${item.id}-panel` : undefined}
                                     whileHover={{ scale: isJob ? 1.01 : 1 }}
                                     whileTap={{ scale: isJob ? 0.995 : 1 }}
-                                    className={`w-full text-left group rounded-2xl border backdrop-blur-md transition-all
+                                    className={`w-full text-left group rounded-2xl border backdrop-blur-md transition-all ${isLeft && 'sm:pl-5'}
                     ${isBorn
                                             ? "border-pink-300/40 bg-pink-300/10 hover:border-pink-300/60 hover:shadow-[0_0_28px_rgba(255,170,220,0.35)]"
                                             : "border-white/10 bg-white/5 hover:border-amber-400/40 hover:shadow-[0_0_25px_rgba(255,180,80,0.25)]"}
                     ${isJob ? "cursor-pointer" : "cursor-default"}`}
                                 >
-                                    <div className={`p-5 ${isBorn ? "pt-6 pb-6" : ""}`}>
-                                        <div className={`flex items-baseline ${isLeft ? "justify-end" : "justify-start"} gap-3`}>
-                                            <h2 className={`text-2xl font-semibold ${isBorn ? "text-pink-300" : "text-amber-300"}`}>{item.year}</h2>
-                                            <h3 className={`text-xl font-bold ${isBorn ? "text-pink-100" : "text-rose-200"}`}>
-                                                {isBorn ? "🎉 Origin Story — " : ""}{item.title}
-                                            </h3>
+                                    <div className={`p-5 ${isBorn ? "pt-6 pb-6" : ""} ${isLeft && "sm:flex-row-reverse"} flex group items-start justify-between`}>
+                                        <div className="flex flex-col">
+                                            <div className={`flex items-baseline ${isLeft ? "justify-end" : "justify-start"} gap-3 sm:flex-row flex-col`}>
+                                                <h2 className={`text-2xl font-semibold ${isBorn ? "text-pink-600" : "text-amber-300"}`}>
+                                                    <span className={`mr-3 group-hover:animate-pulse`}>{item.type === "lore" ? "💡" : item.type === "born" ? "🐣" : "💼"}</span>
+                                                    {item.year}</h2>
+                                                <h3 className={`text-xl font-bold text-amber-950 font-montserrat`}>
+                                                    {item.title}
+                                                </h3>
+                                            </div>
+                                            <p className={`mt-2 opacity-90 text-sm leading-relaxed text-red-800 font-semibold ${isLeft && "sm:text-end"}`}>
+                                                {item.desc}
+                                            </p>
+
+                                            {item.tech?.length > 0 && (
+                                                <div className={`mt-3 flex flex-wrap gap-2 ${isLeft ? "sm:justify-end" : "justify-start"}`}>
+                                                    {item.tech.map((t) => (
+                                                        <span key={t.name} className="rounded-full !text-amber-950 font-semibold font-montserrat flex gap-2 glass px-3 py-1 text-xs sm:text-md opacity-90">
+                                                            <img src={t.src} height={10} width={10} />{t.name}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
-                                        <p className={`mt-2 opacity-90 text-sm leading-relaxed ${isBorn ? "text-pink-50/90" : ""} ${isLeft && "text-end"}`}>
-                                            {item.desc}
-                                        </p>
 
                                         {/* Accordion chevron (jobs only) */}
                                         {isJob && (
-                                            <div className={`mt-3 text-amber-300 flex ${isLeft ? "justify-end" : "justify-start"}`}>
+                                            <div className={`h-fit text-amber-300 flex ${isLeft ? "justify-end" : "justify-start"}`}>
                                                 <motion.span
                                                     animate={{ rotate: expanded ? 180 : 0 }}
                                                     transition={{ duration: 0.25 }}
                                                     className="inline-block select-none"
                                                     aria-hidden
                                                 >
-                                                    ▾
+                                                    <KeyboardDoubleArrowDownOutlined />
                                                 </motion.span>
                                             </div>
                                         )}
@@ -211,21 +254,13 @@ export default function ExperiencePage() {
                                             >
                                                 <div className="px-5 pb-5 pt-1">
                                                     {item.details?.length > 0 && (
-                                                        <ul className={`space-y-1 text-sm opacity-90 ${isLeft ? "list-disc" : "list-disc pl-5"}`}>
+                                                        <ul className={`space-y-1 text-sm md:text-md opacity-90 ${isLeft ? "list-disc" : "list-disc pl-5"}`}>
                                                             {item.details.map((d, i) => (
                                                                 <li key={i}>{d}</li>
                                                             ))}
                                                         </ul>
                                                     )}
-                                                    {item.tech?.length > 0 && (
-                                                        <div className={`mt-3 flex flex-wrap gap-2 ${isLeft ? "justify-end" : "justify-start"}`}>
-                                                            {item.tech.map((t) => (
-                                                                <span key={t} className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs opacity-90">
-                                                                    {t}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    )}
+
                                                 </div>
                                             </motion.div>
                                         )}
@@ -235,9 +270,9 @@ export default function ExperiencePage() {
                         </motion.section>
                     )
                 })}
-            </div>
+            </motion.div>
 
-            <footer className="pb-10 text-center opacity-60 text-sm">
+            <footer className="pb-10 text-center text-sm md:text-lg text-amber-950">
                 — still writing new commits to this timeline —
             </footer>
         </main>

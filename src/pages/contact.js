@@ -1,5 +1,4 @@
 import { ModelTextingAnimation } from "@/components/avatar/Model_TextingAnimation"
-import { Nav } from "@/components/nav/Navbar"
 import { Button, Input, Textarea } from "@nextui-org/react"
 import { useState } from "react"
 import { ReactTyped } from "react-typed"
@@ -59,7 +58,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
         <main className="min-h-screen h-fit dark:bg-slate-800 bg-slate-300 border border-transparent flex flex-col items-center relative
         lg:h-fit">
 
-            <Nav currentPage={'Contact'} />
+            {/* <Nav currentPage={'Contact'} /> */}
 
             <div className="w-11/12 mx-auto justify-around relative mb-5 lg:hidden
 							">

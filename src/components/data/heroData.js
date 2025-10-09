@@ -21,6 +21,5 @@ export const facts = [
 export const navLinks = [
     { label: "About Me", href: "/about", Icon: FaceRetouchingNaturalOutlined },
     { label: "Experiences", href: "/experiences", Icon: ApartmentOutlined },
-    { label: "Projects", href: "/projects", Icon: AssignmentOutlined },
     { label: "Contact", href: "/contact", Icon: ContactSupportOutlined },
 ]
