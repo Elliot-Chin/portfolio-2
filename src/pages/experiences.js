@@ -130,7 +130,7 @@ export default function ExperiencePage() {
     const goSubNext = () => setSubIdx((s) => clamp(s + 1, 0, Math.max(0, totalInYear - 1)))
 
     // fixed heights for the scrollable pane
-    const midHeightClass = totalInYear > 1 ? "h-[55vh]" : "h-[60vh]"
+    const midHeightClass = totalInYear > 1 ? "h-[60vh]" : "h-[67vh]"
 
     return (
         <>
@@ -197,8 +197,8 @@ export default function ExperiencePage() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ duration: 0.35 }}
                                                     className={`rounded-3xl border overflow-hidden backdrop-blur ${currentItem.type === "born"
-                                                            ? "border-pink-300/50 bg-pink-300/10"
-                                                            : "border-white/15 bg-white/5"
+                                                        ? "border-pink-300/50 bg-pink-300/10"
+                                                        : "border-white/15 bg-white/5"
                                                         }`}
                                                 >
                                                     <div className="p-6 md:p-10">
