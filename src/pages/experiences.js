@@ -1,27 +1,16 @@
 // pages/experience.js
-import { useState, useMemo, useRef, useEffect } from "react"
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
-import { KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
-import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { useMemo, useRef, useEffect, useState, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import NavBar from "@/components/nav/Navbar"
 
+// ----------------- DATA -----------------
 const timeline = [
-    // special born node
-    {
-        id: "born-1997",
-        year: "1997",
-        title: "An Origin Story",
-        desc: "A new process booted, and I existed.",
-        type: "born",
-    },
-    // lore
-    { id: "2006-ctrlz", year: "2006", title: "Discovered CTRL+Z", desc: "Unlocked god-mode for bad decisions. Peak achieved early.", type: "lore" },
-    { id: "2010-html", year: "2010", title: "First HTML", desc: "Built a site with <marquee> and thought it was art. It was.", type: "lore" },
-
-    // jobs (expandable)
+    { id: "born-1997", year: 1997, title: "An Origin Story", desc: "A new process booted, and I existed.", type: "born" },
+    { id: "2006-ctrlz", year: 2006, title: "Discovered CTRL+Z", desc: "Unlocked god-mode for bad decisions. Peak achieved early.", type: "lore" },
+    { id: "2010-html", year: 2010, title: "First HTML", desc: "Built a site with <marquee> and thought it was art. It was.", type: "lore" },
     {
         id: "2019-siemens",
-        year: "2019",
+        year: 2019,
         title: "Siemens — Software Intern",
         desc: "Taught machines to talk (politely).",
         type: "job",
@@ -30,15 +19,11 @@ const timeline = [
             "Wrote scripts that refused to run only on Fridays (still investigating).",
             "Mastered the sacred dance: logs → bug → fix → celebratory snack."
         ],
-        tech: [{ src: "", name: "Python" },
-        { src: "", name: "Flask" },
-        { src: "", name: "Docker" },
-        { src: "", name: "CI/CD" },
-        ]
+        tech: ["Python", "Flask", "Docker", "CI/CD"]
     },
     {
         id: "2022-unb-its",
-        year: "2022",
+        year: 2022,
         title: "UNB ITS — Co-op Dev",
         desc: "Campus apps, calm chaos.",
         type: "job",
@@ -47,14 +32,11 @@ const timeline = [
             "Wrangled auth so students could forget fewer passwords.",
             "Spoke fluent ‘ticketese’ and wrote docs humans actually read."
         ],
-        tech: [{ src: "https://cdn.worldvectorlogo.com/logos/javascript-1.svg", name: "JavaScript" },
-        { src: "https://cdn.worldvectorlogo.com/logos/react-2.svg", name: "React" },
-        { src: "", name: "API" },
-        { src: "", name: "SSO" }]
+        tech: ["JavaScript", "React", "API", "SSO"]
     },
     {
         id: "2024-freelance",
-        year: "2024",
+        year: 2024,
         title: "Freelance — Game-Scorer",
         desc: "Multiplayer chaos manager disguised as a score tracker.",
         type: "job",
@@ -63,218 +45,470 @@ const timeline = [
             "Score calculators for niche card games (zero rage-quits… mostly).",
             "UI that feels like a chill friend tapping the scoreboard for you."
         ],
-        tech: [{ src: "", name: "NextJS" }, { src: "", name: "Flask" }]
+        tech: ["Next.js", "Flask"]
     },
-
-    // coda
-    { id: "2025p", year: "2025+", title: "Still debugging life", desc: "No syntax errors so far. Only warnings.", type: "lore" },
+    { id: "2025p", year: 2025, title: "Still debugging life", desc: "No syntax errors so far. Only warnings.", type: "lore" }
 ]
 
-export default function ExperiencePage() {
-    const [openId, setOpenId] = useState(null)
-    const containerRef = useRef(null)
-    const sectionRefs = useRef({})
+// ----------------- HELPERS -----------------
+const uniqYearsAsc = (items) => Array.from(new Set(items.map(i => i.year))).sort((a, b) => a - b)
+const itemsByYear = (items) => items.reduce((acc, it) => ((acc[it.year] ||= []).push(it), acc), {})
 
-    const items = useMemo(
-        () => timeline.map((t, i) => ({ ...t, side: i % 2 === 0 ? "left" : "right" })),
-        []
-    )
-
-    const { scrollYProgress } = useScroll({ container: containerRef })
-    const bgPos = useTransform(scrollYProgress, [0, 1], ["0% 0%", "0% 200%"])
-
-    const lastId = items[items.length - 1].id
-
-    const toggle = (id) => setOpenId((cur) => (cur === id ? null : id))
-
-    // Smart-scroll when a job expands and is out of view
+// treat desktop as xl (≥1280px) + fine pointer (keeps iPad as mobile/tablet)
+function useDesktop() {
+    const [isDesktop, setDesktop] = useState(false)
     useEffect(() => {
-        if (!openId) return
-        const container = containerRef.current
-        const el = sectionRefs.current[openId]
-        if (!container || !el) return
-
-        const cTop = container.scrollTop
-        const cHeight = container.clientHeight
-        const elTop = el.offsetTop
-        const elBottom = elTop + el.offsetHeight
-        const inView = elTop >= cTop && elBottom <= cTop + cHeight
-
-        if (inView) return
-
-        // If it's the last item, scroll to the end
-        if (openId === lastId) {
-            const target = container.scrollHeight - cHeight
-            container.scrollTo({ top: target, behavior: "smooth" })
-            return
+        const mqXL = window.matchMedia("(min-width: 1280px)")
+        const mqFine = window.matchMedia("(pointer: fine)")
+        const update = () => setDesktop(mqXL.matches && mqFine.matches)
+        update()
+        mqXL.addEventListener?.("change", update)
+        mqFine.addEventListener?.("change", update)
+        return () => {
+            mqXL.removeEventListener?.("change", update)
+            mqFine.removeEventListener?.("change", update)
         }
+    }, [])
+    return isDesktop
+}
 
-        // Otherwise center the expanded section
-        const target = Math.max(
-            0,
-            Math.min(
-                elTop - (cHeight - el.offsetHeight) / 2,
-                container.scrollHeight - cHeight
-            )
-        )
-        container.scrollTo({ top: target, behavior: "smooth" })
-    }, [openId, lastId])
+// ----------------- DESKTOP LEFT RAIL -----------------
+function FishboneTimeline({ years, activeIndex, onJump }) {
+    const svgRef = useRef(null)
+    const pathRef = useRef(null)
+    const [pl, setPl] = useState(1)
+
+    useEffect(() => {
+        const measure = () => { if (pathRef.current) setPl(pathRef.current.getTotalLength() || 1) }
+        measure()
+        const ro = new ResizeObserver(measure)
+        if (svgRef.current) ro.observe(svgRef.current)
+        return () => ro.disconnect()
+    }, [])
+
+    const lastIdx = years.length - 1
+    const SLOTS = [0.22, 0.50, 0.78] // top / middle / bottom
+    const prevIdx = activeIndex - 1
+    const nextIdx = activeIndex + 1
+    const slotMap = [
+        ...(prevIdx >= 0 ? [{ year: years[prevIdx], t: SLOTS[0], index: prevIdx }] : []),
+        { year: years[activeIndex], t: SLOTS[1], index: activeIndex },
+        ...(nextIdx <= lastIdx ? [{ year: years[nextIdx], t: SLOTS[2], index: nextIdx }] : []),
+    ]
+
+    // your compressed vertical arc centered in the sidebar
+    const h = 500, yPad = 100, offset = 250
+    const curveD = `M 34 ${yPad + offset} A 220 ${h / 2.6} 0 0 1 34 ${h - yPad + offset}`
+
+    const pointAt = (t) => {
+        const d = t * (pl || 1)
+        if (pathRef.current && pl > 1) {
+            const pt = pathRef.current.getPointAtLength(d)
+            return { x: pt.x, y: pt.y }
+        }
+        return { x: 34, y: 10 + t * 980 }
+    }
 
     return (
-        // Keep background identical to index (transparent container; bg handled globally)
-        <main
-            ref={containerRef}
-            className="h-screen overflow-y-scroll scroll-smooth overscroll-contain text-amber-50"
-        >
-            <h1 className="relative text-center text-3xl md:text-5xl font-bold pt-16 pb-10 w-[70vw] md:w-[30vw] mx-auto">
-                {/* left gear */}
-                <span className="absolute animate-spin left-0 w-fit h-fit">
-                    ⚙️
-                </span>
+        <aside className="fixed left-0 top-0 h-screen w-[280px] z-20">
+            <div
+                className="relative h-full w-full pointer-events-none select-none"
+                style={{
+                    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+                    maskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+                }}
+            >
+                <svg ref={svgRef} className="h-full w-full overflow-visible" viewBox="0 0 280 1000" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+                        <linearGradient id="spineLight" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#fb7185" /><stop offset="100%" stopColor="#f43f5e" />
+                        </linearGradient>
+                    </defs>
 
-                BUILD LOG
+                    {/* light base */}
+                    <path ref={pathRef} d={curveD} stroke="url(#spineLight)" strokeWidth="6" fill="none" filter="url(#glow)" strokeLinecap="round" opacity="0.85" />
 
-                {/* right gear */}
-                <span className="absolute animate-spin right-0">
-                    ⚙️
-                </span>
-            </h1>
+                    {/* dark overlay grows from TOP as you move DOWN the list */}
+                    <motion.path
+                        d={curveD}
+                        stroke="#7f1d1d"
+                        strokeWidth="6"
+                        fill="none"
+                        strokeLinecap="round"
+                        initial={false}
+                        animate={{ strokeDasharray: `${(activeIndex / Math.max(1, lastIdx)) * (pl || 1)} ${pl || 1}` }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        opacity="0.55"
+                    />
+
+                    {/* prev / current / next only (active in middle) */}
+                    {slotMap.map(({ year, t, index }) => {
+                        const { x, y } = pointAt(t)
+                        const active = index === activeIndex
+                        const dotR = active ? 7.5 : 5
+                        const dotFill = active ? "#fbbf24" : "#ef4444"
+                        const barLen = 50
+                        return (
+                            <motion.g key={year} animate={{ x, y, opacity: 1 }} initial={{ x, y, opacity: 0.9 }} transition={{ type: "spring", stiffness: 320, damping: 28 }}>
+                                <circle r={dotR} fill={dotFill} stroke="#7f1d1d" strokeWidth="2" />
+                                <line x1="7" y1="0" x2={barLen} y2="0" stroke={active ? "#fbbf24" : "#ef4444"} strokeWidth={2.2} strokeLinecap="round" />
+                                <text x={barLen + 10} y={2} fill={active ? "#fde68a" : "#fecacaCC"} fontSize="12" textAnchor="start" alignmentBaseline="middle" style={{ letterSpacing: 2, fontWeight: 700 }}>
+                                    {year}
+                                </text>
+                                <g onClick={() => onJump?.(index)} className="cursor-pointer" transform="translate(0,-14)" style={{ pointerEvents: "auto" }}>
+                                    <rect width={barLen + 60} height="28" fill="transparent" />
+                                </g>
+                            </motion.g>
+                        )
+                    })}
+                </svg>
+            </div>
+        </aside>
+    )
+}
+
+// ----------------- MOBILE/TABLET BOTTOM RAIL — years inside dome (center active) -----------------
+function MobileFishboneTimeline({ years, activeIndex, onJump }) {
+    const lastIdx = years.length - 1
+
+    // ensure always three slots: prev, current, next
+    const slots = [
+        activeIndex - 1 >= 0 ? activeIndex - 1 : null,
+        activeIndex,
+        activeIndex + 1 <= lastIdx ? activeIndex + 1 : null,
+    ]
+
+    // arc geometry
+    const viewW = 1000
+    const R = 500
+    const baseY = 710
+    const curveD = `M 0 ${baseY} A ${R} ${R} 0 0 1 ${viewW} ${baseY}`
+    const SLOTS = [0.2, 0.5, 0.8]
+    const xAt = (t) => 10 + t * (990 - 10)
+    const yInside = 168 // text inside dome (arc at y=200)
+
+    return (
+        <aside className="fixed left-0 bottom-0 w-full h-[140px] z-20 pointer-events-none">
+            <div
+                className="relative w-full h-full"
+                style={{
+                    WebkitMaskImage:
+                        "linear-gradient(to top, transparent 0%, #000 18%, #000 100%)",
+                    maskImage:
+                        "linear-gradient(to top, transparent 0%, #000 18%, #000 100%)",
+                }}
+            >
+                <svg
+                    className="w-full h-full overflow-visible"
+                    viewBox="0 0 1000 280"
+                    preserveAspectRatio="xMidYMid meet"
+                >
+                    <defs>
+                        <filter id="mobGlow">
+                            <feGaussianBlur stdDeviation="3" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                        <linearGradient id="mobLight" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0%" stopColor="#fb7185" />
+                            <stop offset="100%" stopColor="#f43f5e" />
+                        </linearGradient>
+                    </defs>
+
+                    {/* Dome arc */}
+                    <path
+                        d={curveD}
+                        stroke="url(#mobLight)"
+                        strokeWidth="6"
+                        fill="none"
+                        filter="url(#mobGlow)"
+                        strokeLinecap="round"
+                        opacity="0.85"
+                    />
+
+                    {/* Progress gradient */}
+                    <motion.path
+                        d={curveD}
+                        stroke="#7f1d1d"
+                        strokeWidth="6"
+                        fill="none"
+                        strokeLinecap="round"
+                        initial={false}
+                        animate={{ pathLength: activeIndex / Math.max(1, lastIdx) }}
+                        style={{
+                            pathLength: 1,
+                            strokeDasharray: "1 1",
+                            strokeDashoffset: 0,
+                        }}
+                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        opacity="0.35"
+                    />
+
+                    {/* Year labels always centered */}
+                    {slots.map((i, k) => {
+                        const x = xAt(SLOTS[k])
+                        const active = i === activeIndex
+                        const year = i != null ? years[i] : ""
+                        const size = active ? 120 : 50
+                        const fill = active ? "#fde68a" : "#fecacaCC"
+                        const weight = active ? 800 : 700
+                        const opacity = i == null ? 0 : active ? 1 : 0.75
+                        const pointer = i == null ? "none" : "auto"
+
+                        return (
+                            <motion.g
+                                key={k}
+                                initial={{ opacity }}
+                                animate={{ opacity }}
+                                transition={{ duration: 0.25 }}
+                                className="pointer-events-auto cursor-pointer"
+                                style={{ pointerEvents: pointer }}
+                                onClick={() => i != null && onJump?.(i)}
+                            >
+                                <text
+                                    x={x}
+                                    y={yInside}
+                                    fill={fill}
+                                    fontSize={size}
+                                    fontWeight={weight}
+                                    textAnchor="middle"
+                                    alignmentBaseline="middle"
+                                    style={{
+                                        letterSpacing: active ? 2 : 1.5,
+                                        transition: "all 0.2s ease",
+                                    }}
+                                >
+                                    {year}
+                                </text>
+                            </motion.g>
+                        )
+                    })}
+                </svg>
+            </div>
+        </aside>
+    )
+}
+
+
+// ----------------- PAGE -----------------
+export default function ExperiencePage() {
+    const containerRef = useRef(null)         // full-page interaction surface
+    const scrollAreaRef = useRef(null)        // ONLY the title+bullets scroll
+    const isDesktop = useDesktop()
+
+    const years = useMemo(() => uniqYearsAsc(timeline), [])
+    const groups = useMemo(() => itemsByYear(timeline), [])
+    const lastIdx = years.length - 1
+
+    const [idx, setIdx] = useState(0)
+    const [dir, setDir] = useState(0)
+    const [lock, setLock] = useState(false)
+
+    const goTo = useCallback((next) => {
+        if (lock) return
+        const clamped = Math.max(0, Math.min(lastIdx, next))
+        if (clamped === idx) return
+        setDir(clamped > idx ? 1 : -1)
+        setLock(true); setIdx(clamped)
+        setTimeout(() => setLock(false), 420)
+    }, [idx, lastIdx, lock])
+
+    const goNext = useCallback(() => goTo(idx + 1), [goTo, idx])
+    const goPrev = useCallback(() => goTo(idx - 1), [goTo, idx])
+
+    // wheel on desktop: only intercept when the middle scroll area cannot scroll further
+    useEffect(() => {
+        if (!isDesktop) return
+        const root = containerRef.current
+        if (!root) return
+
+        const canScrollMid = (deltaY) => {
+            const sc = scrollAreaRef.current
+            if (!sc) return false
+            const atTop = sc.scrollTop <= 0
+            const atBottom = sc.scrollTop + sc.clientHeight >= sc.scrollHeight - 1
+            if (deltaY > 0) return !atBottom
+            if (deltaY < 0) return !atTop
+            return false
+        }
+
+        const onWheel = (e) => {
+            if (canScrollMid(e.deltaY)) return // let the inner area scroll
+            e.preventDefault()
+            if (Math.abs(e.deltaY) < 8) return
+            e.deltaY > 0 ? goNext() : goPrev()
+        }
+
+        root.addEventListener("wheel", onWheel, { passive: false })
+        return () => root.removeEventListener("wheel", onWheel)
+    }, [isDesktop, goNext, goPrev])
+
+    // keys (both layouts)
+    useEffect(() => {
+        const onKey = (e) => {
+            if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); goNext() }
+            if (["ArrowUp", "PageUp"].includes(e.key)) { e.preventDefault(); goPrev() }
+            if (e.key === "Home") { e.preventDefault(); goTo(0) }
+            if (e.key === "End") { e.preventDefault(); goTo(lastIdx) }
+            if (!isDesktop) {
+                if (e.key === "ArrowRight") { e.preventDefault(); goNext() }
+                if (e.key === "ArrowLeft") { e.preventDefault(); goPrev() }
+            }
+        }
+        window.addEventListener("keydown", onKey)
+        return () => window.removeEventListener("keydown", onKey)
+    }, [isDesktop, goNext, goPrev, goTo, lastIdx])
+
+    // touch: horizontal on mobile/tablet; vertical on desktop if touch present
+    useEffect(() => {
+        const el = containerRef.current
+        if (!el) return
+        let startX = 0, startY = 0
+
+        const onStart = (e) => { startX = e.touches[0].clientX; startY = e.touches[0].clientY }
+        const onMove = () => { /* allow native scroll inside scrollAreaRef if needed */ }
+        const onEnd = (e) => {
+            const endX = (e.changedTouches?.[0]?.clientX) ?? startX
+            const endY = (e.changedTouches?.[0]?.clientY) ?? startY
+            const dx = endX - startX
+            const dy = endY - startY
+
+            if (!isDesktop) {
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? goNext() : goPrev() }
+            } else {
+                if (Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) { dy > 0 ? goNext() : goPrev() }
+            }
+        }
+
+        el.addEventListener("touchstart", onStart, { passive: true })
+        el.addEventListener("touchmove", onMove, { passive: true })
+        el.addEventListener("touchend", onEnd, { passive: true })
+        return () => {
+            el.removeEventListener("touchstart", onStart)
+            el.removeEventListener("touchmove", onMove)
+            el.removeEventListener("touchend", onEnd)
+        }
+    }, [isDesktop, goNext, goPrev])
+
+    const activeYear = years[idx]
+    const activeItems = groups[activeYear] || []
+
+    return (
+        <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-10">
 
             <NavBar />
 
+            {/* Rails */}
+            {isDesktop ? (
+                <FishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
+            ) : (
+                <MobileFishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
+            )}
 
-            <BackToTopButton targetRef={containerRef} />
+            {/* Content */}
+            <section className={(isDesktop ? "pl-[280px]" : "pl-0") + " h-full"}>
+                <div className="relative h-full">
+                    {/* Instruction chip */}
+                    <div className="absolute right-4 top-4 z-10">
+                        <div className="rounded-full bg-white/10 backdrop-blur px-3 py-1 text-xs text-white/80">
+                            {isDesktop ? "Scroll / ↑↓ / Swipe to navigate" : "Swipe ← / →"}
+                        </div>
+                    </div>
 
-            {/* Center spine */}
-            <motion.div
-                style={{ backgroundPosition: bgPos }}
-                className="relative max-w-5xl mx-auto px-6 pb-24
-  before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-5 md:before:left-1/2
-  before:w-[2px] md:before:w-[3px] before:rounded-full
-  before:[background:linear-gradient(180deg,#fbbf24_0%,#ec4899_100%)]
-  before:[background-size:100%_200%] before:[background-position:0%_0%]"
-            >
-
-
-                {items.map((item) => {
-                    const isLeft = item.side === "left"
-                    const isJob = item.type === "job"
-                    const isBorn = item.type === "born"
-                    const expanded = openId === item.id
-
-                    return (
-                        <motion.section
-                            key={item.id}
-                            ref={(node) => { if (node) sectionRefs.current[item.id] = node }}
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-10% 0px -10% 0px" }}
-                            transition={{ duration: 0.5 }}
-                            className={`relative mb-16 flex items-start
-  justify-start                                      /* mobile: single column */
-  ${isLeft ? "md:justify-end" : "md:justify-start"}` /* desktop: alternate */
-                            }
+                    <AnimatePresence initial={false} custom={dir} mode="popLayout">
+                        <motion.div
+                            key={activeYear}
+                            custom={dir}
+                            initial={{ opacity: 0, x: dir >= 0 ? 60 : -60, scale: 0.98 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: dir >= 0 ? -60 : 60, scale: 0.98 }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="absolute inset-0 flex flex-col"
                         >
-                            {/* Node (dot) */}
-                            <div className="absolute top-3 left-5 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 z-10">
-                                {isBorn && (
-                                    <span className="absolute inset-0 -translate-x-1/2 left-1/2 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-pink-400/20" />
-                                )}
-                                <div className={`relative w-5 h-5 rounded-full border-[3px] -translate-x-[calc(50%+13px)] md:translate-x-0 shadow-[0_0_22px_rgba(255,200,100,0.6)]
-                                    ${isBorn ? "bg-pink-300 border-pink-600" : "bg-amber-400 border-rose-900"}`}
-                                />
+                            {/* Year chip (fixed top) */}
+                            <div className={"pt-4 " + (isDesktop ? "px-6" : "px-4")}>
+                                <div className="inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur px-5 py-2">
+                                    <span className="text-sm tracking-widest opacity-90">YEAR</span>
+                                    <span className="text-2xl font-bold text-red-300">{activeYear}</span>
+                                </div>
                             </div>
 
-                            {/* Card */}
-                            <div className={` w-[90vw] relative md:w-[min(560px,calc(50%-2rem))] text-amber-950 ml-5 ${isLeft ? "md:mr-auto md:ml-0 text-right" : "md:ml-auto text-left"}`}>
-                                <motion.button
-                                    type="button"
-                                    onClick={() => isJob && toggle(item.id)}
-                                    aria-expanded={isJob ? expanded : undefined}
-                                    aria-controls={isJob ? `${item.id}-panel` : undefined}
-                                    whileHover={{ scale: isJob ? 1.01 : 1 }}
-                                    whileTap={{ scale: isJob ? 0.995 : 1 }}
-                                    className={`w-full text-left group rounded-2xl border backdrop-blur-md transition-all ${isLeft && 'sm:pl-5'}
-                    ${isBorn
-                                            ? "border-pink-300/40 bg-pink-300/10 hover:border-pink-300/60 hover:shadow-[0_0_28px_rgba(255,170,220,0.35)]"
-                                            : "border-white/10 bg-white/5 hover:border-amber-400/40 hover:shadow-[0_0_25px_rgba(255,180,80,0.25)]"}
-                    ${isJob ? "cursor-pointer" : "cursor-default"}`}
-                                >
-                                    <div className={`p-5 ${isBorn ? "pt-6 pb-6" : ""} ${isLeft && "sm:flex-row-reverse"} flex group items-start justify-between`}>
-                                        <div className="flex flex-col">
-                                            <div className={`flex items-baseline ${isLeft ? "justify-end" : "justify-start"} gap-3 sm:flex-row flex-col`}>
-                                                <h2 className={`text-2xl font-semibold ${isBorn ? "text-pink-600" : "text-amber-300"}`}>
-                                                    <span className={`mr-3 group-hover:animate-pulse`}>{item.type === "lore" ? "💡" : item.type === "born" ? "🐣" : "💼"}</span>
-                                                    {item.year}</h2>
-                                                <h3 className={`text-xl font-bold text-amber-950 font-montserrat`}>
-                                                    {item.title}
-                                                </h3>
-                                            </div>
-                                            <p className={`mt-2 opacity-90 text-sm leading-relaxed text-red-800 font-semibold ${isLeft && "sm:text-end"}`}>
-                                                {item.desc}
-                                            </p>
-
-                                            {item.tech?.length > 0 && (
-                                                <div className={`mt-3 flex flex-wrap gap-2 ${isLeft ? "sm:justify-end" : "justify-start"}`}>
-                                                    {item.tech.map((t) => (
-                                                        <span key={t.name} className="rounded-full !text-amber-950 font-semibold font-montserrat flex gap-2 glass px-3 py-1 text-xs sm:text-md opacity-90">
-                                                            <img src={t.src} height={10} width={10} />{t.name}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {/* Accordion chevron (jobs only) */}
-                                        {isJob && (
-                                            <div className={`h-fit text-amber-300 flex ${isLeft ? "justify-end" : "justify-start"}`}>
-                                                <motion.span
-                                                    animate={{ rotate: expanded ? 180 : 0 }}
-                                                    transition={{ duration: 0.25 }}
-                                                    className="inline-block select-none"
-                                                    aria-hidden
-                                                >
-                                                    <KeyboardDoubleArrowDownOutlined />
-                                                </motion.span>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Expandable content — only for jobs */}
-                                    <AnimatePresence initial={false}>
-                                        {isJob && expanded && (
-                                            <motion.div
-                                                id={`${item.id}-panel`}
-                                                key="details"
-                                                initial={{ height: 0, opacity: 0 }}
-                                                animate={{ height: "auto", opacity: 1 }}
-                                                exit={{ height: 0, opacity: 0 }}
-                                                transition={{ duration: 0.3 }}
-                                                className="overflow-hidden"
+                            {/* Scrollable middle section */}
+                            <div
+                                ref={scrollAreaRef}
+                                className={
+                                    "flex-1 overflow-y-auto px-4 md:px-6 mt-4 pb-6" +
+                                    (isDesktop ? "" : " overscroll-contain")
+                                }
+                            >
+                                <div className="w-full max-w-5xl mx-auto space-y-6 overflow-auto h-[60vh]">
+                                    {activeItems.map((item) => {
+                                        const isBorn = item.type === "born"
+                                        const isJob = item.type === "job"
+                                        return (
+                                            <motion.article
+                                                key={item.id}
+                                                initial={{ opacity: 0, y: 16 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ duration: 0.35 }}
+                                                className={`rounded-3xl border overflow-hidden backdrop-blur ${isBorn
+                                                    ? "border-pink-300/50 bg-pink-300/10"
+                                                    : "border-white/15 bg-white/5"
+                                                    }`}
                                             >
-                                                <div className="px-5 pb-5 pt-1">
-                                                    {item.details?.length > 0 && (
-                                                        <ul className={`space-y-1 text-sm md:text-md opacity-90 ${isLeft ? "list-disc" : "list-disc pl-5"}`}>
+                                                <div className="p-6 md:p-10">
+                                                    <header className="flex items-start justify-between gap-4">
+                                                        <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
+                                                            {item.title}
+                                                        </h2>
+                                                        <div className="text-4xl md:text-5xl">
+                                                            {isBorn ? "🐣" : isJob ? "💼" : "💡"}
+                                                        </div>
+                                                    </header>
+
+                                                    <p
+                                                        className="mt-4 text-amber-50/90 text-lg leading-relaxed"
+                                                        dangerouslySetInnerHTML={{ __html: item.desc }}
+                                                    />
+
+                                                    {isJob && item.details?.length > 0 && (
+                                                        <ul className="mt-6 grid gap-2 text-amber-50/85 text-base md:text-lg list-disc pl-6">
                                                             {item.details.map((d, i) => (
                                                                 <li key={i}>{d}</li>
                                                             ))}
                                                         </ul>
                                                     )}
 
+                                                    {item.tech?.length > 0 && (
+                                                        <div className="mt-6 flex flex-wrap gap-2">
+                                                            {item.tech.map((t) => (
+                                                                <span
+                                                                    key={t}
+                                                                    className={`text-amber-950 font-semibold bg-amber-200/90 rounded-full px-3 py-1 text-sm ${isDesktop && 'glass'}`}
+                                                                >
+                                                                    {t}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                 </div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </motion.button>
+                                            </motion.article>
+                                        )
+                                    })}
+                                </div>
                             </div>
-                        </motion.section>
-                    )
-                })}
-            </motion.div>
+                        </motion.div>
+                    </AnimatePresence>
 
-            <footer className="pb-10 text-center text-sm md:text-lg text-amber-950">
-                — still writing new commits to this timeline —
-            </footer>
+                </div>
+            </section>
+
+            <style jsx global>{`
+        html, body { overflow: hidden; }
+      `}</style>
         </main>
     )
 }
