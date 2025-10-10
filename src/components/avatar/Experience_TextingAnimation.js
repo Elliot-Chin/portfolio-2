@@ -1,20 +1,12 @@
-import { OrbitControls } from "@react-three/drei";
-import { AvatarTextingAnimation } from "./Avatar_TextingAnimation";
-
+import { AvatarTextingAnimation } from "./Avatar_TextingAnimation"
 
 export const ExperienceTextingAnimation = () => {
-    return (
-        <>
-            <OrbitControls
-                screenSpacePanning={false}
-                enableZoom={false}
-                enablePan={false}
-                maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2}
-            />
-            <group position-y={-1}>
-                <AvatarTextingAnimation />
-            </group>
-            <ambientLight intensity={2} />
-        </>
-    )
+  return (
+    <>
+      <group position-y={-1.05} scale={1.0}>
+        <AvatarTextingAnimation />
+      </group>
+      <ambientLight intensity={2} />
+    </>
+  )
 }
