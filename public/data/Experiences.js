@@ -5,9 +5,9 @@ export const experiences = {
             imgSrc: "/experience_logos/Siemens_Logo.png",
             smWidth: 200,
             lgWidth: 120,
-            title: "Jr. Software Developer",
+            title: "Jr. Application Cybersecurity Specialist",
             duration: "June, 2023 - Present",
-            summary: "As a Jr. software developer at Siemens, I am actively engaged in various projects. My roles range from testing software for the Sinec Security Monitor (SSM), a network security monitoring tool, to serving as a full stack developer, enhancing and maintaining a dashboard used by our clients. \
+            summary: "As a Jr. Application Cybersecurity Specialist at Siemens, I am actively engaged in various projects. My roles range from testing software for the Sinec Security Monitor (SSM), a network security monitoring tool, to serving as a full stack developer, enhancing and maintaining a dashboard used by our clients. \
                         <br><br> \
                         In addition to my usual responsibilities, Siemens strongly encourages continuous learning to stay up to date with current trends and technologies. They provide a dedicated platform where all employees can access learning materials that are not only related to our current roles but also covering a variety of other topics that captures our interest.",
             skills: [

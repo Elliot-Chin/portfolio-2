@@ -1,10 +1,10 @@
 import { AccountTreeOutlined, ApiOutlined, CodeOutlined, ConstructionOutlined, SettingsOutlined, SpeakerNotesOutlined, } from "@mui/icons-material"
 
 export const jobs = [{
-    title: 'Jr. Software Developer',
+    title: 'Application Cybersecurity Specialist',
     duration: '2023, June - Present',
     location: 'Siemens Canada - NB, Canada',
-    description: "As a Jr. software developer at Siemens, I am actively engaged in various projects. My roles range from testing software for the Sinec Security Monitor (SSM), a network security monitoring tool, to serving as a full stack developer, enhancing and maintaining a dashboard used by our clients. \
+    description: "As a Jr. Application Cybersecurity Specialist at Siemens, I am actively engaged in various projects. My roles range from testing software for the Sinec Security Monitor (SSM), a network security monitoring tool, to serving as a full stack developer, enhancing and maintaining a dashboard used by our clients. \
     <br><br> \
     In addition to my usual responsibilities, Siemens strongly encourages continuous learning to stay up to date with current trends and technologies. They provide a dedicated platform where all employees can access learning materials that are not only related to our current roles but also covering a variety of other topics that captures our interest.",
 }]
@@ -37,7 +37,7 @@ export const skills = [
     },
     {
         icon: <SpeakerNotesOutlined className="text-2xl dark:text-white" />,
-        category: 'Tools',
+        category: 'Languages',
         skills: ['English', 'Mandarin', 'Cantonese', 'Malay'],
     },
 ]
