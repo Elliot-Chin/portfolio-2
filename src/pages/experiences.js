@@ -1,325 +1,56 @@
-// pages/experience.js
+// pages/experiences.js
 import { useMemo, useRef, useEffect, useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import Head from "next/head"
 import NavBar from "@/components/nav/Navbar"
 
-// ----------------- DATA -----------------
-const timeline = [
-    { id: "born-1997", year: 1997, title: "An Origin Story", desc: "A new process booted, and I existed.", type: "born" },
-    { id: "2006-ctrlz", year: 2006, title: "Discovered CTRL+Z", desc: "Unlocked god-mode for bad decisions. Peak achieved early.", type: "lore" },
-    { id: "2010-html", year: 2010, title: "First HTML", desc: "Built a site with <marquee> and thought it was art. It was.", type: "lore" },
-    {
-        id: "2019-siemens",
-        year: 2019,
-        title: "Siemens — Software Intern",
-        desc: "Taught machines to talk (politely).",
-        type: "job",
-        details: [
-            "Built internal tools that spared humans from spreadsheet purgatory.",
-            "Wrote scripts that refused to run only on Fridays (still investigating).",
-            "Mastered the sacred dance: logs → bug → fix → celebratory snack."
-        ],
-        tech: ["Python", "Flask", "Docker", "CI/CD"]
-    },
-    {
-        id: "2022-unb-its",
-        year: 2022,
-        title: "UNB ITS — Co-op Dev",
-        desc: "Campus apps, calm chaos.",
-        type: "job",
-        details: [
-            "Shipped small features with outsized vibes.",
-            "Wrangled auth so students could forget fewer passwords.",
-            "Spoke fluent ‘ticketese’ and wrote docs humans actually read."
-        ],
-        tech: ["JavaScript", "React", "API", "SSO"]
-    },
-    {
-        id: "2024-freelance",
-        year: 2024,
-        title: "Freelance — Game-Scorer",
-        desc: "Multiplayer chaos manager disguised as a score tracker.",
-        type: "job",
-        details: [
-            "Real-time rooms with sockets, edge cases, and polite disconnects.",
-            "Score calculators for niche card games (zero rage-quits… mostly).",
-            "UI that feels like a chill friend tapping the scoreboard for you."
-        ],
-        tech: ["Next.js", "Flask"]
-    },
-    { id: "2025p", year: 2025, title: "Still debugging life", desc: "No syntax errors so far. Only warnings.", type: "lore" }
-]
+import { timeline } from "@/components/data/timelineData"
+import { useDesktop } from "@/components/hooks/useDesktop"
+import { FishboneTimeline } from "@/components/experiences/FishboneTimeline"
+import { MobileFishboneTimeline } from "@/components/experiences/MobileFishboneTimeline"
+import {
+    KeyboardDoubleArrowLeftOutlined,
+    KeyboardDoubleArrowRightOutlined,
+} from "@mui/icons-material"
 
-// ----------------- HELPERS -----------------
-const uniqYearsAsc = (items) => Array.from(new Set(items.map(i => i.year))).sort((a, b) => a - b)
-const itemsByYear = (items) => items.reduce((acc, it) => ((acc[it.year] ||= []).push(it), acc), {})
+// helpers
+const uniqYearsAsc = (items) =>
+    Array.from(new Set(items.map((i) => i.year))).sort((a, b) => a - b)
+const itemsByYear = (items) =>
+    items.reduce((acc, it) => ((acc[it.year] ||= []).push(it), acc), {})
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
 
-// treat desktop as xl (≥1280px) + fine pointer (keeps iPad as mobile/tablet)
-function useDesktop() {
-    const [isDesktop, setDesktop] = useState(false)
-    useEffect(() => {
-        const mqXL = window.matchMedia("(min-width: 1280px)")
-        const mqFine = window.matchMedia("(pointer: fine)")
-        const update = () => setDesktop(mqXL.matches && mqFine.matches)
-        update()
-        mqXL.addEventListener?.("change", update)
-        mqFine.addEventListener?.("change", update)
-        return () => {
-            mqXL.removeEventListener?.("change", update)
-            mqFine.removeEventListener?.("change", update)
-        }
-    }, [])
-    return isDesktop
-}
-
-// ----------------- DESKTOP LEFT RAIL -----------------
-function FishboneTimeline({ years, activeIndex, onJump }) {
-    const svgRef = useRef(null)
-    const pathRef = useRef(null)
-    const [pl, setPl] = useState(1)
-
-    useEffect(() => {
-        const measure = () => { if (pathRef.current) setPl(pathRef.current.getTotalLength() || 1) }
-        measure()
-        const ro = new ResizeObserver(measure)
-        if (svgRef.current) ro.observe(svgRef.current)
-        return () => ro.disconnect()
-    }, [])
-
-    const lastIdx = years.length - 1
-    const SLOTS = [0.22, 0.50, 0.78] // top / middle / bottom
-    const prevIdx = activeIndex - 1
-    const nextIdx = activeIndex + 1
-    const slotMap = [
-        ...(prevIdx >= 0 ? [{ year: years[prevIdx], t: SLOTS[0], index: prevIdx }] : []),
-        { year: years[activeIndex], t: SLOTS[1], index: activeIndex },
-        ...(nextIdx <= lastIdx ? [{ year: years[nextIdx], t: SLOTS[2], index: nextIdx }] : []),
-    ]
-
-    // your compressed vertical arc centered in the sidebar
-    const h = 500, yPad = 100, offset = 250
-    const curveD = `M 34 ${yPad + offset} A 220 ${h / 2.6} 0 0 1 34 ${h - yPad + offset}`
-
-    const pointAt = (t) => {
-        const d = t * (pl || 1)
-        if (pathRef.current && pl > 1) {
-            const pt = pathRef.current.getPointAtLength(d)
-            return { x: pt.x, y: pt.y }
-        }
-        return { x: 34, y: 10 + t * 980 }
-    }
-
-    return (
-        <aside className="fixed left-0 top-0 h-screen w-[280px] z-20">
-            <div
-                className="relative h-full w-full pointer-events-none select-none"
-                style={{
-                    WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
-                    maskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
-                }}
-            >
-                <svg ref={svgRef} className="h-full w-full overflow-visible" viewBox="0 0 280 1000" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur" /><feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-                        <linearGradient id="spineLight" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#fb7185" /><stop offset="100%" stopColor="#f43f5e" />
-                        </linearGradient>
-                    </defs>
-
-                    {/* light base */}
-                    <path ref={pathRef} d={curveD} stroke="url(#spineLight)" strokeWidth="6" fill="none" filter="url(#glow)" strokeLinecap="round" opacity="0.85" />
-
-                    {/* dark overlay grows from TOP as you move DOWN the list */}
-                    <motion.path
-                        d={curveD}
-                        stroke="#7f1d1d"
-                        strokeWidth="6"
-                        fill="none"
-                        strokeLinecap="round"
-                        initial={false}
-                        animate={{ strokeDasharray: `${(activeIndex / Math.max(1, lastIdx)) * (pl || 1)} ${pl || 1}` }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                        opacity="0.55"
-                    />
-
-                    {/* prev / current / next only (active in middle) */}
-                    {slotMap.map(({ year, t, index }) => {
-                        const { x, y } = pointAt(t)
-                        const active = index === activeIndex
-                        const dotR = active ? 7.5 : 5
-                        const dotFill = active ? "#fbbf24" : "#ef4444"
-                        const barLen = 50
-                        return (
-                            <motion.g key={year} animate={{ x, y, opacity: 1 }} initial={{ x, y, opacity: 0.9 }} transition={{ type: "spring", stiffness: 320, damping: 28 }}>
-                                <circle r={dotR} fill={dotFill} stroke="#7f1d1d" strokeWidth="2" />
-                                <line x1="7" y1="0" x2={barLen} y2="0" stroke={active ? "#fbbf24" : "#ef4444"} strokeWidth={2.2} strokeLinecap="round" />
-                                <text x={barLen + 10} y={2} fill={active ? "#fde68a" : "#fecacaCC"} fontSize="12" textAnchor="start" alignmentBaseline="middle" style={{ letterSpacing: 2, fontWeight: 700 }}>
-                                    {year}
-                                </text>
-                                <g onClick={() => onJump?.(index)} className="cursor-pointer" transform="translate(0,-14)" style={{ pointerEvents: "auto" }}>
-                                    <rect width={barLen + 60} height="28" fill="transparent" />
-                                </g>
-                            </motion.g>
-                        )
-                    })}
-                </svg>
-            </div>
-        </aside>
-    )
-}
-
-// ----------------- MOBILE/TABLET BOTTOM RAIL — years inside dome (center active) -----------------
-function MobileFishboneTimeline({ years, activeIndex, onJump }) {
-    const lastIdx = years.length - 1
-
-    // ensure always three slots: prev, current, next
-    const slots = [
-        activeIndex - 1 >= 0 ? activeIndex - 1 : null,
-        activeIndex,
-        activeIndex + 1 <= lastIdx ? activeIndex + 1 : null,
-    ]
-
-    // arc geometry
-    const viewW = 1000
-    const R = 500
-    const baseY = 710
-    const curveD = `M 0 ${baseY} A ${R} ${R} 0 0 1 ${viewW} ${baseY}`
-    const SLOTS = [0.2, 0.5, 0.8]
-    const xAt = (t) => 10 + t * (990 - 10)
-    const yInside = 168 // text inside dome (arc at y=200)
-
-    return (
-        <aside className="fixed left-0 bottom-0 w-full h-[140px] z-20 pointer-events-none">
-            <div
-                className="relative w-full h-full"
-                style={{
-                    WebkitMaskImage:
-                        "linear-gradient(to top, transparent 0%, #000 18%, #000 100%)",
-                    maskImage:
-                        "linear-gradient(to top, transparent 0%, #000 18%, #000 100%)",
-                }}
-            >
-                <svg
-                    className="w-full h-full overflow-visible"
-                    viewBox="0 0 1000 280"
-                    preserveAspectRatio="xMidYMid meet"
-                >
-                    <defs>
-                        <filter id="mobGlow">
-                            <feGaussianBlur stdDeviation="3" result="blur" />
-                            <feMerge>
-                                <feMergeNode in="blur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                        <linearGradient id="mobLight" x1="0" y1="0" x2="1" y2="0">
-                            <stop offset="0%" stopColor="#fb7185" />
-                            <stop offset="100%" stopColor="#f43f5e" />
-                        </linearGradient>
-                    </defs>
-
-                    {/* Dome arc */}
-                    <path
-                        d={curveD}
-                        stroke="url(#mobLight)"
-                        strokeWidth="6"
-                        fill="none"
-                        filter="url(#mobGlow)"
-                        strokeLinecap="round"
-                        opacity="0.85"
-                    />
-
-                    {/* Progress gradient */}
-                    <motion.path
-                        d={curveD}
-                        stroke="#7f1d1d"
-                        strokeWidth="6"
-                        fill="none"
-                        strokeLinecap="round"
-                        initial={false}
-                        animate={{ pathLength: activeIndex / Math.max(1, lastIdx) }}
-                        style={{
-                            pathLength: 1,
-                            strokeDasharray: "1 1",
-                            strokeDashoffset: 0,
-                        }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                        opacity="0.35"
-                    />
-
-                    {/* Year labels always centered */}
-                    {slots.map((i, k) => {
-                        const x = xAt(SLOTS[k])
-                        const active = i === activeIndex
-                        const year = i != null ? years[i] : ""
-                        const size = active ? 120 : 50
-                        const fill = active ? "#fde68a" : "#fecacaCC"
-                        const weight = active ? 800 : 700
-                        const opacity = i == null ? 0 : active ? 1 : 0.75
-                        const pointer = i == null ? "none" : "auto"
-
-                        return (
-                            <motion.g
-                                key={k}
-                                initial={{ opacity }}
-                                animate={{ opacity }}
-                                transition={{ duration: 0.25 }}
-                                className="pointer-events-auto cursor-pointer"
-                                style={{ pointerEvents: pointer }}
-                                onClick={() => i != null && onJump?.(i)}
-                            >
-                                <text
-                                    x={x}
-                                    y={yInside}
-                                    fill={fill}
-                                    fontSize={size}
-                                    fontWeight={weight}
-                                    textAnchor="middle"
-                                    alignmentBaseline="middle"
-                                    style={{
-                                        letterSpacing: active ? 2 : 1.5,
-                                        transition: "all 0.2s ease",
-                                    }}
-                                >
-                                    {year}
-                                </text>
-                            </motion.g>
-                        )
-                    })}
-                </svg>
-            </div>
-        </aside>
-    )
-}
-
-
-// ----------------- PAGE -----------------
 export default function ExperiencePage() {
-    const containerRef = useRef(null)         // full-page interaction surface
-    const scrollAreaRef = useRef(null)        // ONLY the title+bullets scroll
+    const containerRef = useRef(null)
+    const scrollAreaRef = useRef(null)
     const isDesktop = useDesktop()
 
     const years = useMemo(() => uniqYearsAsc(timeline), [])
     const groups = useMemo(() => itemsByYear(timeline), [])
     const lastIdx = years.length - 1
 
-    const [idx, setIdx] = useState(0)
-    const [dir, setDir] = useState(0)
+    const [idx, setIdx] = useState(0)   // active year index
+    const [dir, setDir] = useState(0)   // slide direction
     const [lock, setLock] = useState(false)
+    const [subIdx, setSubIdx] = useState(0) // index within year
 
     const goTo = useCallback((next) => {
         if (lock) return
         const clamped = Math.max(0, Math.min(lastIdx, next))
         if (clamped === idx) return
         setDir(clamped > idx ? 1 : -1)
-        setLock(true); setIdx(clamped)
+        setLock(true)
+        setIdx(clamped)
         setTimeout(() => setLock(false), 420)
     }, [idx, lastIdx, lock])
 
     const goNext = useCallback(() => goTo(idx + 1), [goTo, idx])
     const goPrev = useCallback(() => goTo(idx - 1), [goTo, idx])
 
-    // wheel on desktop: only intercept when the middle scroll area cannot scroll further
+    // reset within-year pager when year changes
+    useEffect(() => { setSubIdx(0) }, [idx])
+
+    // desktop wheel: only trigger year nav if the middle pane can't scroll further
     useEffect(() => {
         if (!isDesktop) return
         const root = containerRef.current
@@ -336,7 +67,7 @@ export default function ExperiencePage() {
         }
 
         const onWheel = (e) => {
-            if (canScrollMid(e.deltaY)) return // let the inner area scroll
+            if (canScrollMid(e.deltaY)) return
             e.preventDefault()
             if (Math.abs(e.deltaY) < 8) return
             e.deltaY > 0 ? goNext() : goPrev()
@@ -346,7 +77,7 @@ export default function ExperiencePage() {
         return () => root.removeEventListener("wheel", onWheel)
     }, [isDesktop, goNext, goPrev])
 
-    // keys (both layouts)
+    // keyboard nav
     useEffect(() => {
         const onKey = (e) => {
             if (["ArrowDown", "PageDown", " "].includes(e.key)) { e.preventDefault(); goNext() }
@@ -362,20 +93,18 @@ export default function ExperiencePage() {
         return () => window.removeEventListener("keydown", onKey)
     }, [isDesktop, goNext, goPrev, goTo, lastIdx])
 
-    // touch: horizontal on mobile/tablet; vertical on desktop if touch present
+    // touch (swipe)
     useEffect(() => {
         const el = containerRef.current
         if (!el) return
         let startX = 0, startY = 0
 
         const onStart = (e) => { startX = e.touches[0].clientX; startY = e.touches[0].clientY }
-        const onMove = () => { /* allow native scroll inside scrollAreaRef if needed */ }
         const onEnd = (e) => {
             const endX = (e.changedTouches?.[0]?.clientX) ?? startX
             const endY = (e.changedTouches?.[0]?.clientY) ?? startY
             const dx = endX - startX
             const dy = endY - startY
-
             if (!isDesktop) {
                 if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? goNext() : goPrev() }
             } else {
@@ -384,131 +113,172 @@ export default function ExperiencePage() {
         }
 
         el.addEventListener("touchstart", onStart, { passive: true })
-        el.addEventListener("touchmove", onMove, { passive: true })
         el.addEventListener("touchend", onEnd, { passive: true })
         return () => {
             el.removeEventListener("touchstart", onStart)
-            el.removeEventListener("touchmove", onMove)
             el.removeEventListener("touchend", onEnd)
         }
     }, [isDesktop, goNext, goPrev])
 
+    // active data
     const activeYear = years[idx]
     const activeItems = groups[activeYear] || []
+    const totalInYear = activeItems.length
+    const currentItem = totalInYear ? activeItems[clamp(subIdx, 0, totalInYear - 1)] : null
+
+    const goSubPrev = () => setSubIdx((s) => clamp(s - 1, 0, Math.max(0, totalInYear - 1)))
+    const goSubNext = () => setSubIdx((s) => clamp(s + 1, 0, Math.max(0, totalInYear - 1)))
+
+    // fixed heights for the scrollable pane
+    const midHeightClass = totalInYear > 1 ? "h-[55vh]" : "h-[60vh]"
 
     return (
-        <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-10">
+        <>
+            <Head><title>Elliot Chin | Experiences</title></Head>
 
-            <NavBar />
+            <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-10">
+                <NavBar />
 
-            {/* Rails */}
-            {isDesktop ? (
-                <FishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
-            ) : (
-                <MobileFishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
-            )}
+                {/* Rails */}
+                {isDesktop ? (
+                    <FishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
+                ) : (
+                    <MobileFishboneTimeline years={years} activeIndex={idx} onJump={goTo} />
+                )}
 
-            {/* Content */}
-            <section className={(isDesktop ? "pl-[280px]" : "pl-0") + " h-full"}>
-                <div className="relative h-full">
-                    {/* Instruction chip */}
-                    <div className="absolute right-4 top-4 z-10">
-                        <div className="rounded-full bg-white/10 backdrop-blur px-3 py-1 text-xs text-white/80">
-                            {isDesktop ? "Scroll / ↑↓ / Swipe to navigate" : "Swipe ← / →"}
+                {/* Content column */}
+                <section className={(isDesktop ? "pl-[280px]" : "pl-0") + " h-full"}>
+                    <div className="relative h-full">
+                        {/* Hint chip */}
+                        <div className="absolute right-4 top-4 z-10">
+                            <div className="rounded-full bg-white/10 backdrop-blur px-3 py-1 text-xs text-white/80">
+                                {isDesktop ? "Scroll / ↑↓ / Swipe to navigate" : "Swipe ← / →"}
+                            </div>
                         </div>
-                    </div>
 
-                    <AnimatePresence initial={false} custom={dir} mode="popLayout">
-                        <motion.div
-                            key={activeYear}
-                            custom={dir}
-                            initial={{ opacity: 0, x: dir >= 0 ? 60 : -60, scale: 0.98 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            exit={{ opacity: 0, x: dir >= 0 ? -60 : 60, scale: 0.98 }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="absolute inset-0 flex flex-col"
-                        >
-                            {/* Year chip (fixed top) */}
-                            <div className={"pt-4 " + (isDesktop ? "px-6" : "px-4")}>
-                                <div className="inline-flex items-center gap-3 rounded-full bg-white/10 backdrop-blur px-5 py-2">
-                                    <span className="text-sm tracking-widest opacity-90">YEAR</span>
-                                    <span className="text-2xl font-bold text-red-300">{activeYear}</span>
-                                </div>
-                            </div>
-
-                            {/* Scrollable middle section */}
-                            <div
-                                ref={scrollAreaRef}
-                                className={
-                                    "flex-1 overflow-y-auto px-4 md:px-6 mt-4 pb-6" +
-                                    (isDesktop ? "" : " overscroll-contain")
-                                }
+                        <AnimatePresence initial={false} custom={dir} mode="popLayout">
+                            <motion.div
+                                key={activeYear}
+                                custom={dir}
+                                initial={{ opacity: 0, x: dir >= 0 ? 60 : -60, scale: 0.98 }}
+                                animate={{ opacity: 1, x: 0, scale: 1 }}
+                                exit={{ opacity: 0, x: dir >= 0 ? -60 : 60, scale: 0.98 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="absolute inset-0 flex flex-col"
                             >
-                                <div className="w-full max-w-5xl mx-auto space-y-6 overflow-auto h-[60vh]">
-                                    {activeItems.map((item) => {
-                                        const isBorn = item.type === "born"
-                                        const isJob = item.type === "job"
-                                        return (
-                                            <motion.article
-                                                key={item.id}
-                                                initial={{ opacity: 0, y: 16 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ duration: 0.35 }}
-                                                className={`rounded-3xl border overflow-hidden backdrop-blur ${isBorn
-                                                    ? "border-pink-300/50 bg-pink-300/10"
-                                                    : "border-white/15 bg-white/5"
-                                                    }`}
-                                            >
-                                                <div className="p-6 md:p-10">
-                                                    <header className="flex items-start justify-between gap-4">
-                                                        <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
-                                                            {item.title}
-                                                        </h2>
-                                                        <div className="text-4xl md:text-5xl">
-                                                            {isBorn ? "🐣" : isJob ? "💼" : "💡"}
-                                                        </div>
-                                                    </header>
-
-                                                    <p
-                                                        className="mt-4 text-amber-50/90 text-lg leading-relaxed"
-                                                        dangerouslySetInnerHTML={{ __html: item.desc }}
-                                                    />
-
-                                                    {isJob && item.details?.length > 0 && (
-                                                        <ul className="mt-6 grid gap-2 text-amber-50/85 text-base md:text-lg list-disc pl-6">
-                                                            {item.details.map((d, i) => (
-                                                                <li key={i}>{d}</li>
-                                                            ))}
-                                                        </ul>
-                                                    )}
-
-                                                    {item.tech?.length > 0 && (
-                                                        <div className="mt-6 flex flex-wrap gap-2">
-                                                            {item.tech.map((t) => (
-                                                                <span
-                                                                    key={t}
-                                                                    className={`text-amber-950 font-semibold bg-amber-200/90 rounded-full px-3 py-1 text-sm ${isDesktop && 'glass'}`}
-                                                                >
-                                                                    {t}
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </motion.article>
-                                        )
-                                    })}
+                                {/* YEAR chip */}
+                                <div className={"pt-4 " + (isDesktop ? "px-6" : "px-4")}>
+                                    <div className="flex items-center gap-3 rounded-full bg-white/10 backdrop-blur px-5 py-2 w-fit">
+                                        <span className="text-sm tracking-widest opacity-90">YEAR</span>
+                                        <span className="text-2xl font-bold text-red-300">
+                                            {(() => {
+                                                const sample = (groups[activeYear] || [])[0]
+                                                if (!sample) return activeYear
+                                                const start = sample.start ?? sample.year
+                                                const end = sample.current ? "PRESENT" : (sample.end ?? sample.year)
+                                                return start === end ? `${start}` : `${start} - ${end}`
+                                            })()}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
 
-                </div>
-            </section>
+                                {/* Middle region */}
+                                <div className={"px-4 md:px-6 mt-4 pb-2" + (isDesktop ? "" : " overscroll-contain")}>
+                                    <div className="w-full max-w-5xl mx-auto">
+                                        {/* SCROLLABLE PANE (fixed height) */}
+                                        <div
+                                            ref={scrollAreaRef}
+                                            className={`overflow-y-auto ${midHeightClass}`}
+                                        >
+                                            {currentItem && (
+                                                <motion.article
+                                                    key={currentItem.id}
+                                                    initial={{ opacity: 0, y: 16 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ duration: 0.35 }}
+                                                    className={`rounded-3xl border overflow-hidden backdrop-blur ${currentItem.type === "born"
+                                                            ? "border-pink-300/50 bg-pink-300/10"
+                                                            : "border-white/15 bg-white/5"
+                                                        }`}
+                                                >
+                                                    <div className="p-6 md:p-10">
+                                                        <header className="flex items-start justify-between gap-4">
+                                                            <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
+                                                                {currentItem.title}
+                                                            </h2>
+                                                            <div className="text-4xl md:text-5xl">
+                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ? "💼" : "💡"}
+                                                            </div>
+                                                        </header>
 
-            <style jsx global>{`
-        html, body { overflow: hidden; }
-      `}</style>
-        </main>
+                                                        <p
+                                                            className={`mt-4 text-xl font-semibold leading-relaxed ${currentItem.details?.length > 0 ? "text-blue-900 italic" : "text-amber-950"
+                                                                }`}
+                                                            dangerouslySetInnerHTML={{ __html: currentItem.desc }}
+                                                        />
+
+                                                        {currentItem.type === "job" && currentItem.details?.length > 0 && (
+                                                            <ul className="mt-6 grid gap-2 text-amber-950 text-base md:text-lg list-disc pl-6">
+                                                                {currentItem.details.map((d, i) => <li key={i}>{d}</li>)}
+                                                            </ul>
+                                                        )}
+
+                                                        {currentItem.tech?.length > 0 && (
+                                                            <div className="mt-6 flex flex-wrap gap-2">
+                                                                {currentItem.tech.map((t) => (
+                                                                    <span
+                                                                        key={t}
+                                                                        className="text-amber-950 font-semibold bg-amber-200/90 rounded-full px-3 py-1 text-sm"
+                                                                    >
+                                                                        {t}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </motion.article>
+                                            )}
+                                            {/* give a little breathing room at the bottom of the scroller */}
+                                            <div className="h-2" />
+                                        </div>
+
+                                        {/* PAGER OUTSIDE the scroller, directly under the card */}
+                                        {totalInYear > 1 && (
+                                            <div className="mt-3 md:mt-4 flex items-center justify-center gap-4">
+                                                <button
+                                                    onClick={goSubPrev}
+                                                    disabled={subIdx <= 0}
+                                                    className="rounded-full bg-white/15 px-5 py-2 text-sm text-white/80 hover:bg-white/25 transition disabled:opacity-40"
+                                                >
+                                                    <KeyboardDoubleArrowLeftOutlined fontSize="small" />
+                                                    <span className="ml-1">Prev</span>
+                                                </button>
+
+                                                <span className="text-sm text-white/70 tabular-nums">
+                                                    {subIdx + 1} / {totalInYear}
+                                                </span>
+
+                                                <button
+                                                    onClick={goSubNext}
+                                                    disabled={subIdx >= totalInYear - 1}
+                                                    className="rounded-full bg-white/15 px-5 py-2 text-sm text-white/80 hover:bg-white/25 transition disabled:opacity-40"
+                                                >
+                                                    <span className="mr-1">Next</span>
+                                                    <KeyboardDoubleArrowRightOutlined fontSize="small" />
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
+                </section>
+
+                <style jsx global>{`
+          html, body { overflow: hidden; }
+        `}</style>
+            </main>
+        </>
     )
 }

@@ -1,0 +1,155 @@
+// ----------------- DATA -----------------
+export const timeline = [
+    {
+        id: "born-1997",
+        year: 1997, title: "An Origin Story",
+        desc: "A new process booted, and I existed.",
+        type: "born",
+        tech: ["Human OS", "Existance 101"]
+    },
+    {
+        id: "2006-ctrlz",
+        year: 2004, title: "Discovered CTRL+Z",
+        desc: "Unlocked god-mode for bad decisions. Peak achieved early.",
+        type: "lore",
+        tech: ["Keyboard", "CTRL + *"]
+    },
+    {
+        id: "2010-highschool",
+        year: 2010,
+        title: "Started High School",
+        desc: "New uniform, new friends, and my first real deadlines. Learned to juggle classes, clubs, and canteen curry puffs.",
+        type: "lore",
+        tech: ["MS PowerPoint", "Procrastination", "Group Projects"],
+    },
+    {
+        id: "2016-html",
+        year: 2016,
+        title: "First HTML",
+        desc: "Built a site with HTML and CSS <marquee> and thought it was art. It was.",
+        type: "lore",
+        tech: ["HTML", "CSS"]
+    },
+    {
+        id: "2017-UNB",
+        year: 2017,
+        title: "Next Steps - University",
+        desc: "Upgraded from High School Edition to University Pro.<br>Installed caffeine dependency, discovered version control (for both code and sleep).",
+        type: "lore",
+        tech: ["Java", "Stack Overflow", "Late Nights", "Group Projects"]
+    },
+    {
+        id: "2019-unb-ra",
+        year: 2019,
+        start: 2019,
+        end: 2020,
+        title: "UNB Residence — Residence Assistant",
+        desc: "Part mentor, part firefighter, part event planner — full-time chaos coordinator.",
+        type: "job",
+        details: [
+            "Supported and guided resident students to create a safe, inclusive, and welcoming community.",
+            "Enforced university policies, mediated conflicts, and responded to emergencies calmly and effectively.",
+            "Planned and executed social and educational programs that built community and encouraged personal growth.",
+            "Collaborated with residence staff and university personnel to maintain smooth operations and positive living experiences.",
+            "Practiced empathy, leadership, and quick problem-solving in every late-night knock on the door.",
+        ],
+        tech: ["Leadership", "Conflict Resolution", "Event Planning", "Crisis Management", "Community Building"],
+    },
+    {
+        id: "2020-unb-its",
+        year: 2020,
+        start: 2020,
+        end: 2020,
+        title: "UNB ITS — Student Consultant",
+        desc: "Keeping campus tech alive and printers from spontaneous rebellion.",
+        type: "job",
+        details: [
+            "Maintained and troubleshooted lab printers to keep them operational 24/7.",
+            "Performed system diagnostics, repairs, and flush-and-fill operations on campus machines.",
+            "Configured new faculty and staff systems, ensuring software and settings were user-ready.",
+            "Applied technical proficiency and problem-solving skills to support a large academic environment.",
+        ],
+        tech: ["System Configuration", "Diagnostics", "Tech Support", "Problem Solving"],
+    },
+    {
+        id: "2021-unb-research",
+        year: 2021,
+        start: 2021,
+        end: 2022,
+        title: "Side Quest — UNB Research Assistant",
+        desc: "Ran physics simulations so graduate students could make prettier graphs (and science).",
+        type: "job",
+        details: [
+            "Learned and operated COMSOL Multiphysics to run simulations supporting graduate research projects.",
+            "Collaborated closely with Dr. Ignaszak’s research group to generate high-quality visual data for publication.",
+            "Taught lab members how to use COMSOL effectively, ensuring knowledge transfer and self-sufficiency.",
+            "Troubleshot and resolved computer and software issues within the lab environment.",
+            "Reported progress during weekly meetings and continuously improved technical and analytical skills.",
+        ],
+        tech: ["COMSOL", "Continuous Learning", "Collaboration", "Problem Solving", "Communication"],
+    },
+    {
+        id: "2022-unb-ta",
+        year: 2022,
+        start: 2022,
+        end: 2022,
+        title: "UNB — Co-Op Teaching Assistant",
+        desc: "Debugged code and confusion in equal measure.",
+        type: "job",
+        details: [
+            "Assisted students during lab sessions by answering questions and guiding them through programming assignments.",
+            "Held additional office hours to support students needing extra time or clarification outside of lab hours.",
+            "Reinforced understanding of Python concepts while helping others learn — teaching by debugging.",
+            "Developed strong interpersonal communication and problem-solving skills in a fast-paced academic environment.",
+            "Contributed to a supportive and engaging learning experience for undergraduate students.",
+        ],
+        tech: ["Python", "Interpersonal Communication", "Problem Solving", "Mentorship", "Education Support"],
+    },
+    {
+        id: "2022-unb-ecesd",
+        year: 2022,
+        start: 2022,
+        end: 2022,
+        title: "UNB ENGG — Software Developer",
+        desc: "Built tools so useful the department forgot life before them.",
+        type: "job",
+        details: [
+            "Served as the sole full-stack developer for the Department of Electrical and Computer Engineering.",
+            "Developed two department-wide automated tools for academic advising and CEAB accreditation purposes.",
+            "Built both tools using Java Swing and Python, ensuring flexible and maintainable architectures.",
+            "Met regularly with faculty stakeholders to gather feedback, present progress, and align on evolving requirements.",
+            "Delivered reliable, scalable solutions that streamlined departmental workflows and reduced manual work.",
+        ],
+        tech: ["Python", "Java Swing", "Automation", "Full-Stack Development", "Communication"],
+    },
+
+    {
+        id: "2023-siemens",
+        year: 2023,
+        start: 2023,
+        current: true,
+        title: "SIEMENS — Software Intern",
+        desc: "Taught machines to talk (politely).",
+        type: "job",
+        details: [
+            "Built internal tools that spared humans from spreadsheet purgatory.",
+            "Wrote scripts that refused to run only on Fridays (still investigating).",
+            "Mastered the sacred dance: logs → bug → fix → celebratory snack."
+        ],
+        tech: ["Python", "Flask", "Docker", "CI/CD"]
+    },
+    {
+        id: "2024-freelance",
+        year: 2024,
+        title: "Freelance — Game-Scorer",
+        desc: "Multiplayer chaos manager disguised as a score tracker.",
+        type: "job",
+        details: [
+            "Real-time rooms with sockets, edge cases, and polite disconnects.",
+            "Score calculators for niche card games (zero rage-quits… mostly).",
+            "UI that feels like a chill friend tapping the scoreboard for you."
+        ],
+        tech: ["Next.js", "Flask"]
+    },
+    { id: "2025p", year: 2025, title: "Still debugging life", desc: "No syntax errors so far. Only warnings.", type: "lore" }
+]
