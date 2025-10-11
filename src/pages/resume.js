@@ -10,7 +10,7 @@ import {
     GpsFixed,
 } from "@mui/icons-material"
 import { useState } from "react"
-import { Button, Navbar } from "@nextui-org/react"
+import { Button } from "@nextui-org/react"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { Loader } from "@/components/nav/Loader"
 import {
@@ -31,12 +31,16 @@ import {
 } from "../../public/data/Etc"
 import { jobs, projects, skills } from "../../public/data/Resume"
 import { eChin } from "../../public/data/People"
+import Navbar from "@/components/nav/Navbar"
+import { ReactTyped } from "react-typed"
+import Head from "next/head"
 
 export default function Resume() {
     const [showExperience, setShowExperience] = useState(true)
     const [showSkills, setShowSkills] = useState(true)
     const [showProjects, setShowProjects] = useState(true)
     const [loading, setLoading] = useState({ state: false, name: "" })
+    const [downloadHover, setDownloadHover] = useState(false)
 
     const handleDownload = () => {
         const link = document.createElement("a")
@@ -62,27 +66,30 @@ export default function Resume() {
         flex flex-col items-center pb-24
       "
         >
+            {loading.state && <Loader pageName={loading.name} />}
+
             <Navbar />
 
-            {loading.state && <Loader pageName={loading.name} />}
+            <Head>
+            <title>Elliot Chin — Resume</title>
+                <meta name="description" content="Hey — I’m Elliot. This is my resume." />
+            </Head>
 
             {/* Top header */}
             <div
                 className="
-          w-full px-3 mt-8 lg:w-1/2 float-up
+          w-full px-3 mt-16 lg:w-1/2 float-up 
         "
             >
                 <div className="
-            rounded-2xl p-4 lg:p-6
-            bg-white/40 backdrop-blur-md shadow-xl ring-1 ring-white/40
-            dark:bg-slate-800/50 dark:ring-slate-700/60
+            rounded-2xl p-4 lg:p-6 glass 
           ">
-                    <span className="block font-montserrat text-5xl lg:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    <span className="block font-montserrat text-5xl lg:text-7xl font-extrabold tracking-tight text-amber-950">
                         {name}
                     </span>
 
                     {/* contact row */}
-                    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-slate-900 dark:text-slate-200">
+                    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-red-900 font-semibold">
                         <div
                             className="flex gap-2 items-center px-1 hover:opacity-90 hover:translate-x-[1px] transition-transform duration-200 cursor-pointer"
                             onClick={() => handleClick(emailLink)}
@@ -120,26 +127,23 @@ export default function Resume() {
 
             {/* Education */}
             <div className="w-full px-3 mt-6 lg:w-1/2 float-up">
-                <div className="
-            rounded-2xl p-4 lg:p-6
-            bg-white/40 backdrop-blur-md shadow-xl ring-1 ring-white/40
-            dark:bg-slate-800/50 dark:ring-slate-700/60
+                <div className=" rounded-2xl p-4 lg:p-6
           ">
                     <div className="flex items-center gap-3">
-                        <span className="font-montserrat text-2xl lg:text-4xl text-slate-900 dark:text-white">
+                        <span className="font-montserrat text-2xl lg:text-4xl text-amber-950">
                             EDUCATION
                         </span>
                         <div className="h-[2px] flex-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 dark:from-amber-400 dark:via-amber-300 dark:to-yellow-300 rounded-full" />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 text-amber-950">
                         <div className="flex gap-2 items-center">
-                            <GpsFixed className="text-2xl text-slate-900 dark:text-white" />
-                            <span className="font-raleway text-xl lg:text-2xl text-slate-900 dark:text-white">
+                            <GpsFixed className="text-2xl font-semibold" />
+                            <span className="font-raleway text-xl lg:text-2xl  font-semibold">
                                 {university}
                             </span>
                         </div>
-                        <span className="block font-montserrat mt-2 text-sm lg:text-base text-slate-800 dark:text-slate-200">
+                        <span className="block font-montserrat mt-2 text-red-950">
                             {degree}
                         </span>
                     </div>
@@ -150,8 +154,6 @@ export default function Resume() {
             <div className="w-full px-3 mt-6 lg:w-1/2 float-up">
                 <div className="
             rounded-2xl p-4 lg:p-6
-            bg-white/40 backdrop-blur-md shadow-xl ring-1 ring-white/40
-            dark:bg-slate-800/50 dark:ring-slate-700/60
           ">
                     <ResumeJobEntry
                         setLoading={setLoading}
@@ -165,10 +167,8 @@ export default function Resume() {
 
             {/* Skills */}
             <div className="w-full px-3 mt-6 lg:w-1/2 float-up">
-                <div className="
+                <div className=" 
             rounded-2xl p-4 lg:p-6
-            bg-white/40 backdrop-blur-md shadow-xl ring-1 ring-white/40
-            dark:bg-slate-800/50 dark:ring-slate-700/60
           ">
                     <ResumeSkillEntry
                         title={"SKILLS"}
@@ -183,8 +183,6 @@ export default function Resume() {
             <div className="w-full px-3 mt-6 lg:w-1/2 float-up">
                 <div className="
             rounded-2xl p-4 lg:p-6
-            bg-white/40 backdrop-blur-md shadow-xl ring-1 ring-white/40
-            dark:bg-slate-800/50 dark:ring-slate-700/60
           ">
                     <ResumeProjectEntry
                         setLoading={setLoading}
@@ -208,10 +206,21 @@ export default function Resume() {
             bg-gradient-to-br from-amber-500 to-yellow-400
             text-white shadow-lg hover:opacity-95 active:scale-[0.98]
             transition
+            group
+            hover:w-fit
           "
-                    onClick={handleDownload}
+                    onPress={handleDownload}
+                    onMouseEnter={() => setDownloadHover(true)}
+                    onMouseLeave={() => setDownloadHover(false)}
                 >
-                    <DownloadOutlined className="text-3xl lg:text-5xl" />
+                    <DownloadOutlined className="text-3xl lg:text-5xl group-hover:ml-3" />
+                    {downloadHover && <ReactTyped
+                        startWhenVisible
+                        strings={["Downlaod Resume"]}
+                        typeSpeed={40}
+                        className="text-[#1F1F1F] bg-transparent font-bold capitalize font-montserrat pl-2 pr-5"
+                        showCursor={false}
+                    />}
                 </Button>
             </div>
         </main>

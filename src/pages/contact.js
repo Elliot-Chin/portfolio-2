@@ -567,8 +567,8 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     return (
         <>
             <Head>
-                <title>Contact | Elliot</title>
-                <meta name="description" content="Get in touch with Elliot." />
+                <title>Elliot Chin — Contact</title>
+                <meta name="description" content="Hey — I’m Elliot. Get in touch with me!." />
             </Head>
 
             <NavBar />

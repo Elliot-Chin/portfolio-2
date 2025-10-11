@@ -91,7 +91,7 @@ export const BackToTopButton = ({ targetRef }) => {
                 variant="solid"
                 color="primary"
                 className="dark:bg-blue-600 bg-slate-700 text-white lg:w-16 lg:h-16"
-                onClick={scrollToTop}
+                onPress={scrollToTop}
             >
                 <ArrowUpwardOutlined className="lg:text-5xl" />
             </Button>

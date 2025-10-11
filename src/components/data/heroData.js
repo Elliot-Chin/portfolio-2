@@ -3,6 +3,7 @@ import {
     ApartmentOutlined,
     AssignmentOutlined,
     ContactSupportOutlined,
+    ArticleOutlined,
 } from "@mui/icons-material"
 
 export const facts = [
@@ -21,5 +22,6 @@ export const facts = [
 export const navLinks = [
     { label: "About Me", href: "/about", Icon: FaceRetouchingNaturalOutlined },
     { label: "Experiences", href: "/experiences", Icon: ApartmentOutlined },
+    { label: "Resume", href: "/resume", Icon: ArticleOutlined },
     { label: "Contact", href: "/contact", Icon: ContactSupportOutlined },
 ]

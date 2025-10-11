@@ -1,12 +1,12 @@
 import { BackToTopButton } from "@/components/nav/BackTopTop";
-import { Nav } from "@/components/nav/Navbar";
+import Navbar from "@/components/nav/Navbar";
 import { ProjectImage } from "@/components/projects/ProjectImage";
 import { AvatarGroup, Divider, Avatar, Progress } from "@nextui-org/react";
 import Image from "next/image";
 import { useState } from "react";
-import { ECAvatarLink, exp } from "../../public/data/Projects";
-import { linkedInLink } from "../../public/data/Links";
-import { eChin } from "../../public/data/People";
+import { ECAvatarLink, exp } from "../../../public/data/Projects";
+import { linkedInLink } from "../../../public/data/Links";
+import { eChin } from "../../../public/data/People";
 
 
 
@@ -18,7 +18,7 @@ export default function ExpensesRecorder() {
         <main className="min-h-screen h-fit dark:bg-slate-800 bg-slate-300 border border-transparent flex flex-col items-center pb-10
         lg:h-fit">
 
-            <Nav />
+            <Navbar />
 
             <BackToTopButton />
 
@@ -121,101 +121,101 @@ export default function ExpensesRecorder() {
                     </span>
                     <p dangerouslySetInnerHTML={{ __html: exp.currentVersion }} className="font-raleway dark:text-slate-300 text-slate-900" />
 
-                        <span className="dark:text-white text-amber-700 text-3xl font-bold font-rubikmono mt-5">
-                            NEW COMPONENTS
+                    <span className="dark:text-white text-amber-700 text-3xl font-bold font-rubikmono mt-5">
+                        NEW COMPONENTS
+                    </span>
+
+                    <div className="w-full flex flex-col gap-2">
+                        <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
+                            Dashboard
                         </span>
+                        <p className="font-raleway dark:text-slate-300 text-slate-900">
+                            {exp.dashboardDesc}
+                        </p>
 
-                        <div className="w-full flex flex-col gap-2">
-                            <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
-                                Dashboard
-                            </span>
-                            <p className="font-raleway dark:text-slate-300 text-slate-900">
-                                {exp.dashboardDesc}
-                            </p>
-
-                            <div className="flex flex-col gap-2
+                        <div className="flex flex-col gap-2
                                     lg:flex-row">
-                                <ProjectImage
-                                    alt={exp.CMSChartImg.alt}
-                                    src={exp.CMSChartImg.src}
-                                    description={exp.CMSChartImg.desc}
-                                    size={'w-3/4'}
-                                    lg_size={'w-1/3'}
-                                />
-                                <ProjectImage
-                                    alt={exp.PMSChartImg.alt}
-                                    src={exp.PMSChartImg.src}
-                                    description={exp.PMSChartImg.desc}
-                                    size={'w-3/4'}
-                                    lg_size={'w-1/3'}
-                                />
-                            </div>
+                            <ProjectImage
+                                alt={exp.CMSChartImg.alt}
+                                src={exp.CMSChartImg.src}
+                                description={exp.CMSChartImg.desc}
+                                size={'w-3/4'}
+                                lg_size={'w-1/3'}
+                            />
+                            <ProjectImage
+                                alt={exp.PMSChartImg.alt}
+                                src={exp.PMSChartImg.src}
+                                description={exp.PMSChartImg.desc}
+                                size={'w-3/4'}
+                                lg_size={'w-1/3'}
+                            />
+                        </div>
 
-                            <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
-                                Expenses View
-                            </span>
-                            <p className="font-raleway dark:text-slate-300 text-slate-900">
-                                {exp.expViewDesc}
-                            </p>
+                        <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
+                            Expenses View
+                        </span>
+                        <p className="font-raleway dark:text-slate-300 text-slate-900">
+                            {exp.expViewDesc}
+                        </p>
 
-                            <div className="flex flex-col gap-2">
-                                <ProjectImage
-                                    alt={exp.ExpViewImg.alt}
-                                    src={exp.ExpViewImg.src}
-                                    description={exp.ExpViewImg.desc}
-                                    size={'w-3/4'}
-                                    lg_size={'w-1/2'}
-                                />
-                                <ProjectImage
-                                    alt={'Expenses Recorder - Past Month Spending Chart Example'}
-                                    src={'/projects/exprec/exprec_expview_details.png'}
-                                    description={'A snippet of an example list of expenses for the selected month.'}
-                                    size={'w-3/4'}
-                                    lg_size={'w-1/2'}
-                                />
-                            </div>
+                        <div className="flex flex-col gap-2">
+                            <ProjectImage
+                                alt={exp.ExpViewImg.alt}
+                                src={exp.ExpViewImg.src}
+                                description={exp.ExpViewImg.desc}
+                                size={'w-3/4'}
+                                lg_size={'w-1/2'}
+                            />
+                            <ProjectImage
+                                alt={'Expenses Recorder - Past Month Spending Chart Example'}
+                                src={'/projects/exprec/exprec_expview_details.png'}
+                                description={'A snippet of an example list of expenses for the selected month.'}
+                                size={'w-3/4'}
+                                lg_size={'w-1/2'}
+                            />
+                        </div>
 
-                            <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
-                                Budgets Page
-                            </span>
-                            <p className="font-raleway dark:text-slate-300 text-slate-900">
-                                {exp.budgetPageDesc}
-                            </p>
+                        <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
+                            Budgets Page
+                        </span>
+                        <p className="font-raleway dark:text-slate-300 text-slate-900">
+                            {exp.budgetPageDesc}
+                        </p>
 
-                            <div className="flex flex-col gap-2
+                        <div className="flex flex-col gap-2
                                     lg:flex-row">
-                                <ProjectImage
-                                    alt={'Expenses Recorder - Expenses Month Summary Example'}
-                                    src={'/projects/exprec/exprec_budget.png'}
-                                    description={'A snippet of the budget page, where I am able to modify the amounts to fit my financial needs.'}
-                                    size={'w-3/4'}
-                                    lg_size={'w-1/2'}
-                                />
-                            </div>
-
-                            <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
-                                Trip Expenditures
-                            </span>
-                            <p className="font-raleway dark:text-slate-300 text-slate-900">
-                                {exp.tripExpenditureDesc}
-                            </p>
+                            <ProjectImage
+                                alt={'Expenses Recorder - Expenses Month Summary Example'}
+                                src={'/projects/exprec/exprec_budget.png'}
+                                description={'A snippet of the budget page, where I am able to modify the amounts to fit my financial needs.'}
+                                size={'w-3/4'}
+                                lg_size={'w-1/2'}
+                            />
                         </div>
 
+                        <span className="dark:text-white text-slate-950 text-xl font-bold font-spacemono">
+                            Trip Expenditures
+                        </span>
+                        <p className="font-raleway dark:text-slate-300 text-slate-900">
+                            {exp.tripExpenditureDesc}
+                        </p>
+                    </div>
 
-                        <div className="w-full flex flex-col gap-2 mt-5">
-                            <span className="dark:text-white text-amber-700 text-3xl font-bold font-rubikmono ">
-                                FINAL THOUGHTS
-                            </span>
-                            <p className="font-raleway dark:text-slate-300 text-slate-900">
-                                {exp.finalThoughts}
-                            </p>
-                        </div>
 
-                        <div className="flex justify-center items-center gap-5 px-2 mt-5">
-                            <Divider className="bg-amber-600 w-1/3 h-1" />
-                            <span className="dark:text-white text-slate-950 text-xl font-rubikmono w-1/4 text-center">END</span>
-                            <Divider className="bg-amber-600 w-1/3 h-1" />
-                        </div>
+                    <div className="w-full flex flex-col gap-2 mt-5">
+                        <span className="dark:text-white text-amber-700 text-3xl font-bold font-rubikmono ">
+                            FINAL THOUGHTS
+                        </span>
+                        <p className="font-raleway dark:text-slate-300 text-slate-900">
+                            {exp.finalThoughts}
+                        </p>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-5 px-2 mt-5">
+                        <Divider className="bg-amber-600 w-1/3 h-1" />
+                        <span className="dark:text-white text-slate-950 text-xl font-rubikmono w-1/4 text-center">END</span>
+                        <Divider className="bg-amber-600 w-1/3 h-1" />
+                    </div>
                 </div>
             </div>
         </main>

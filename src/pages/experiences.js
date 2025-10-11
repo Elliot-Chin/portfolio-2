@@ -12,6 +12,7 @@ import {
     KeyboardDoubleArrowLeftOutlined,
     KeyboardDoubleArrowRightOutlined,
 } from "@mui/icons-material"
+import { ReactTyped } from "react-typed"
 
 // helpers
 const uniqYearsAsc = (items) =>
@@ -134,9 +135,12 @@ export default function ExperiencePage() {
 
     return (
         <>
-            <Head><title>Elliot Chin | Experiences</title></Head>
+            <Head>
+                <title>Elliot Chin — Experiences</title>
+                <meta name="description" content="Hey — I’m Elliot. These are my experiences." />
+            </Head>
 
-            <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-10">
+            <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-16">
                 <NavBar />
 
                 {/* Rails */}
@@ -203,11 +207,19 @@ export default function ExperiencePage() {
                                                 >
                                                     <div className="p-6 md:p-10">
                                                         <header className="flex items-start justify-between gap-4">
-                                                            <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
+                                                            {/* <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
                                                                 {currentItem.title}
-                                                            </h2>
+                                                            </h2> */}
+                                                            <ReactTyped
+                                                                startWhenVisible
+                                                                strings={[currentItem.title]}
+                                                                typeSpeed={40}
+                                                                className="text-2xl md:text-4xl lg:5xl font-extrabold text-amber-50 tracking-tight"
+                                                                showCursor={false}
+                                                                contentType="html"
+                                                            />
                                                             <div className="text-4xl md:text-5xl">
-                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ? "💼" : "💡"}
+                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ? "💼" : currentItem.type === "lore" ? "🎭" : "💡"}
                                                             </div>
                                                         </header>
 
@@ -217,7 +229,7 @@ export default function ExperiencePage() {
                                                             dangerouslySetInnerHTML={{ __html: currentItem.desc }}
                                                         />
 
-                                                        {currentItem.type === "job" && currentItem.details?.length > 0 && (
+                                                        {currentItem.details?.length > 0 && (
                                                             <ul className="mt-6 grid gap-2 text-amber-950 text-base md:text-lg list-disc pl-6">
                                                                 {currentItem.details.map((d, i) => <li key={i}>{d}</li>)}
                                                             </ul>

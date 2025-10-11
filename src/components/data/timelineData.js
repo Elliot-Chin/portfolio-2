@@ -1,15 +1,22 @@
 // ----------------- DATA -----------------
+
+const titles = [
+    `<span class="!text-green-800">Still Debugging Life</span>`,
+    `<span class="!text-green-800">Currently in Maintenance Mode</span>`,
+    `<span class="!text-green-800">Still writing commits to Timeline</span>`
+];
+
 export const timeline = [
     {
         id: "born-1997",
-        year: 1997, title: "An Origin Story",
+        year: 1997, title: '<span class="!text-amber-950">An</span> <span class="!text-red-800">Origin Story</span>',
         desc: "A new process booted, and I existed.",
         type: "born",
         tech: ["Human OS", "Existance 101"]
     },
     {
         id: "2006-ctrlz",
-        year: 2004, title: "Discovered CTRL+Z",
+        year: 2004, title: '<span class="!text-amber-950">Discovered</span> <span class="!text-red-800">CTRL+Z</span>',
         desc: "Unlocked god-mode for bad decisions. Peak achieved early.",
         type: "lore",
         tech: ["Keyboard", "CTRL + *"]
@@ -17,7 +24,7 @@ export const timeline = [
     {
         id: "2010-highschool",
         year: 2010,
-        title: "Started High School",
+        title: '<span class="!text-amber-950">Started</span> <span class="!text-red-800">High School',
         desc: "New uniform, new friends, and my first real deadlines. Learned to juggle classes, clubs, and canteen curry puffs.",
         type: "lore",
         tech: ["MS PowerPoint", "Procrastination", "Group Projects"],
@@ -25,7 +32,7 @@ export const timeline = [
     {
         id: "2016-html",
         year: 2016,
-        title: "First HTML",
+        title: '<span class="!text-amber-950">Discovery Phase</span> — <span class="!text-red-800">First HTML',
         desc: "Built a site with HTML and CSS <marquee> and thought it was art. It was.",
         type: "lore",
         tech: ["HTML", "CSS"]
@@ -33,7 +40,7 @@ export const timeline = [
     {
         id: "2017-UNB",
         year: 2017,
-        title: "Next Steps - University",
+        title: '<span class="!text-amber-950">Next Steps</span> — <span class="!text-red-800">University</span>',
         desc: "Upgraded from High School Edition to University Pro.<br>Installed caffeine dependency, discovered version control (for both code and sleep).",
         type: "lore",
         tech: ["Java", "Stack Overflow", "Late Nights", "Group Projects"]
@@ -43,7 +50,7 @@ export const timeline = [
         year: 2019,
         start: 2019,
         end: 2020,
-        title: "UNB Residence — Residence Assistant",
+        title: `<span class="!text-amber-950">UNB Residence</span> — <span class="!text-red-800">Residence Assistant</span>`,
         desc: "Part mentor, part firefighter, part event planner — full-time chaos coordinator.",
         type: "job",
         details: [
@@ -60,7 +67,7 @@ export const timeline = [
         year: 2020,
         start: 2020,
         end: 2020,
-        title: "UNB ITS — Student Consultant",
+        title: '<span class="!text-amber-950">UNB ITS</span> — <span class="!text-red-800">Student Consultant</span>',
         desc: "Keeping campus tech alive and printers from spontaneous rebellion.",
         type: "job",
         details: [
@@ -76,7 +83,7 @@ export const timeline = [
         year: 2021,
         start: 2021,
         end: 2022,
-        title: "Side Quest — UNB Research Assistant",
+        title: '<span class="!text-amber-950">Side Quest</span> — <span class="!text-red-800">UNB Research Assistant',
         desc: "Ran physics simulations so graduate students could make prettier graphs (and science).",
         type: "job",
         details: [
@@ -93,7 +100,7 @@ export const timeline = [
         year: 2022,
         start: 2022,
         end: 2022,
-        title: "UNB — Co-Op Teaching Assistant",
+        title: '<span class="!text-amber-950">UNB</span> — <span class="!text-red-800">Teaching Assistant',
         desc: "Debugged code and confusion in equal measure.",
         type: "job",
         details: [
@@ -128,7 +135,7 @@ export const timeline = [
         year: 2023,
         start: 2023,
         current: true,
-        title: "SIEMENS — Software Intern",
+        title: '<span class="!text-amber-950">SIEMENS</span> — <br><span class="!text-red-800">Junior Application Cybersecurity Specialist',
         desc: "Taught machines to talk (politely).",
         type: "job",
         details: [
@@ -139,9 +146,9 @@ export const timeline = [
         tech: ["Python", "Flask", "Docker", "CI/CD"]
     },
     {
-        id: "2024-freelance",
-        year: 2024,
-        title: "Freelance — Game-Scorer",
+        id: "2025-freelance",
+        year: 2025,
+        title: '<span class="!text-amber-950">Project<span> — <span class="!text-red-800">ScoreHub',
         desc: "Multiplayer chaos manager disguised as a score tracker.",
         type: "job",
         details: [
@@ -151,5 +158,13 @@ export const timeline = [
         ],
         tech: ["Next.js", "Flask"]
     },
-    { id: "2025p", year: 2025, title: "Still debugging life", desc: "No syntax errors so far. Only warnings.", type: "lore" }
+
+
+    {
+        id: new Date().getFullYear().toString(),
+        year: new Date().getFullYear(),
+        title: titles[Math.floor(Math.random() * titles.length)],
+        desc: "No syntax errors so far. Only warnings.",
+        type: "lore",
+    }
 ]

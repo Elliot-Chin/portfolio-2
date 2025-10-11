@@ -5,12 +5,14 @@ Command: npx gltfjsx@6.2.18 .\public\models\avatar.glb
 
 import React, { useEffect, useRef } from 'react'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
+import { useRouter } from 'next/router'
 
 export function Avatar(props) {
     const group = useRef()
-    const { nodes, materials } = useGLTF('models/avatar_2.glb')
+    const { basePath } = useRouter()
+    const { nodes, materials } = useGLTF(basePath + '/models/avatar_2.glb')
 
-    const { animations: wavingAnimation } = useFBX("animations/Waving.fbx")
+    const { animations: wavingAnimation } = useFBX(basePath + "/animations/Waving.fbx")
 
     wavingAnimation[0].name = 'Waving'
 

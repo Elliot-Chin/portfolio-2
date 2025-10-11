@@ -6,8 +6,8 @@ import { GitHub, YouTube } from "@mui/icons-material";
 import { AvatarGroup, Divider, Avatar, Progress, Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useState } from "react";
-import { am } from "../../public/data/Projects";
-import { eChin, edChang, edChange, olee, oleeAvatarLink, oleeLinkedInLink, tcamp } from "../../public/data/People";
+import { am } from "../../../public/data/Projects";
+import { eChin, edChang, edChange, olee, oleeAvatarLink, oleeLinkedInLink, tcamp } from "../../../public/data/People";
 
 
 

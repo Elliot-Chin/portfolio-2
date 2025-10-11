@@ -5,13 +5,15 @@ Command: npx gltfjsx@6.2.18 avatar_2.glb
 
 import React, { useEffect, useRef } from 'react'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
+import { useRouter } from 'next/router'
 
 export function Avatar2(props) {
-  const { nodes, materials } = useGLTF('models/avatar.glb')
+    const { basePath } = useRouter()
+  const { nodes, materials } = useGLTF(basePath + '/models/avatar.glb')
 
   const group = useRef()
 
-  const { animations: typingAnimation } = useFBX("animations/Typing.fbx")
+  const { animations: typingAnimation } = useFBX(basePath + "/animations/Typing.fbx")
 
   typingAnimation[0].name = 'Typing'
 

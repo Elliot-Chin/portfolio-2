@@ -4,20 +4,8 @@ import { GitHub } from "@mui/icons-material";
 import { AvatarGroup, Divider, Avatar, Progress, Button } from "@nextui-org/react";
 import Image from "next/image";
 import { useState } from "react";
-import { sts } from "../../public/data/Projects";
-import { carterMl, eChin, jdr, olee } from "../../public/data/People";
-
-
-
-
-
-
-
-
-
-
-
-
+import { sts } from "../../../public/data/Projects";
+import { carterMl, eChin, jdr, olee } from "../../../public/data/People";
 
 export default function Student_Tracking_System() {
 
