@@ -11,7 +11,7 @@ import {
     HomeOutlined,
 } from "@mui/icons-material"
 
-export default function Navbar() {
+export default function Navbar({pageName = ''}) {
     const router = useRouter()
     const [selectedName, setSelectedName] = useState("")
     const [isLoading, setLoading] = useState(false)
@@ -83,7 +83,7 @@ export default function Navbar() {
                     {/* MOBILE: current page title (left) */}
                     <div className="sm:hidden flex items-center gap-2 text-amber-200 font-raleway font-semibold tracking-wide">
                         {currentPage?.icon}
-                        {currentPage?.label}
+                        {currentPage?.label || pageName}
                     </div>
 
                     {/* Desktop links (center) — unchanged from your original desktop layout */}

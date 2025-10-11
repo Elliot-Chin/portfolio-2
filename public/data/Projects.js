@@ -54,24 +54,6 @@ export const exp = {
     },
     duration: '2021, September - Present',
     TLDR: "The Expense Tracker is a tool I developed for managing and recording my daily expenses efficiently. It allows me to log and categorize my expenditures, add monthly budgets to monitor my spending, and instantly see if I've overspent or have extra savings for any given month. With customizable categories, detailed reports, and visualizations, I gain valuable insights into my spending habits, helping me identify areas for potential savings. The user-friendly interface makes managing my finances intuitive and straightforward, making the Expense Tracker my personal financial assistant for achieving my savings goals with ease.",
-    languages: [
-        {
-            label: "JavaScript [76.1%]",
-            value: 76.1,
-        },
-        {
-            label: "Python [18.6%]",
-            value: 18.6,
-        },
-        {
-            label: "HTML [4.7%]",
-            value: 4.7,
-        },
-        {
-            label: "CSS [0.6%]",
-            value: 0.6,
-        }
-    ],
     legacyVersion: "The idea for my Expense Tracker started in 2021 when I wanted to know my spendings. The first prototype was built in Java using Java's Swing UI library, with all information stored in files. Over time, I created additional prototypes, all utilizing Java's Swing UI library.<br /><br /> \
                     \
                     It had multiple panels, and each panel served a different purpose. The \"\"Entry Label panel\"\" was responsible for adding new expenses entries. The \"\"<span className=\"italic\">Stats Panel</span>\"\" displayed a summary of my spendings for the given month. I also have donut graphs that would visualize the amount spent for each category, and calculators to distribute expenses amoung me and my roommates at that time. The \"\"<span className=\"italic\">Report Gen. Panel</span>\"\" allowed me to generate monthly reports in the form of CSV files.",
