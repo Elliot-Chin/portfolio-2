@@ -145,7 +145,7 @@ function Toast({ kind = "success", text = "", onClose }) {
 function QuickAction({ title, subtitle, icon, onPress, href, asEmail }) {
     const content = (
         <Card
-            isPressable
+            isPressable={!href} // only pressable if no link
             onPress={onPress}
             className="w-full h-full bg-transparent border border-amber-500/10 hover:border-amber-500/25 transition-colors"
         >
@@ -158,20 +158,24 @@ function QuickAction({ title, subtitle, icon, onPress, href, asEmail }) {
             </CardBody>
         </Card>
     )
+
+    // ✅ use native <a> for touch reliability
     if (href) {
         return (
-            <HLink
+            <a
                 href={href}
                 target={asEmail ? "_self" : "_blank"}
                 rel="noopener noreferrer"
                 className="block"
+                style={{ WebkitTapHighlightColor: "transparent" }} // prevent iOS gray flash
             >
                 {content}
-            </HLink>
+            </a>
         )
     }
     return content
 }
+
 
 function ContactHeaderDesktop() {
     return (
