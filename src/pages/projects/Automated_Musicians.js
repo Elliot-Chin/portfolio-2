@@ -11,16 +11,6 @@ import { eChin, edChang, edChange, olee, oleeAvatarLink, oleeLinkedInLink, tcamp
 
 
 
-
-
-
-
-
-
-
-
-
-
 export default function AutomatedMusicians() {
 
     const placeholder = 'Contributors'
@@ -60,7 +50,7 @@ export default function AutomatedMusicians() {
                             onMouseEnter={() => setName(olee.name)}
                             onMouseLeave={() => setName(placeholder)}
                             onClick={() => window.open(olee.linkedin, '_blank')}
-                            src={olee.avatarLink}/>
+                            src={olee.avatarLink} />
                         <Avatar name={tcamp.name}
                             onMouseEnter={() => setName(tcamp.name)}
                             onMouseLeave={() => setName(placeholder)}
