@@ -81,7 +81,7 @@ export const timeline = [
     {
         id: "2021-unb-research",
         year: 2021,
-        start: 202,
+        start: 2021,
         end: 2022,
         title: '<span class="!text-amber-950">Side Quest</span> — <span class="!text-red-800">UNB Research Assistant',
         desc: "Ran physics simulations so graduate students could make prettier graphs (and science).",
@@ -162,6 +162,23 @@ export const timeline = [
             "UI focuses on clarity: every cent, every category, zero clutter."
         ],
         tech: ["Next.js", "Flask", "PostgreSQL", "Tailwind"]
+    },
+
+    {
+        id: "2022-automated-musicians",
+        year: 2022,
+        title: '<span class="!text-amber-950">UNB</span> — <span class="!text-red-800">Automated Musicians</span>',
+        desc: "Where music meets algorithms — a creative blend of theory, pattern recognition, and composition automation.",
+        type: "project",
+        link: "/projects/Automated_Musicians",
+        details: [
+            "Analyzes sheet music patterns and converts them into structured ABC notation.",
+            "Implements algorithmic composition — generating new melodies based on learned musical structures.",
+            "Built modularly: data extraction, pattern recognition, and generation pipelines are all isolated for testing.",
+            "Presented at UNB as a capstone project, later featured on CBC Radio for its innovation in AI-driven music.",
+            "Team project built with collaboration across data analysis, algorithm design, and full-stack development."
+        ],
+        tech: ["Python", "NumPy", "Pandas, Full-Stack Development"]
     },
 
     {

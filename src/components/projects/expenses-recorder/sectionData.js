@@ -38,8 +38,8 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
                             </motion.div>
                         </AvatarGroup>
                         <div className="flex flex-col">
-                            <span className="font-montserrat dark:text-white text-slate-950 text-xl lg:text-2xl">{name}</span>
-                            <span className="font-oswald dark:text-white text-slate-950 text-sm opacity-80">{exp.duration}</span>
+                            <span className="font-montserrat text-white text-xl lg:text-2xl">{name}</span>
+                            <span className="font-oswald text-white text-sm opacity-80">{exp.duration}</span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
             desc: (
                 <p
                     dangerouslySetInnerHTML={{ __html: exp.legacyVersion }}
-                    className="font-raleway dark:text-slate-100/90 text-slate-900 text-left"
+                    className="font-raleway text-slate-100/90 text-left"
                 />
             ),
             media: (
@@ -74,7 +74,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
             desc: (
                 <p
                     dangerouslySetInnerHTML={{ __html: exp.currentVersion }}
-                    className="font-raleway dark:text-slate-100/90 text-slate-900 text-left"
+                    className="font-raleway text-slate-100/90  text-left"
                 />
             ),
             media: null,
@@ -83,7 +83,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
         {
             key: "new-components",
             title: "New Components",
-            desc: <p className="font-raleway dark:text-slate-100/90 text-slate-900 text-left">{exp.dashboardDesc}</p>,
+            desc: <p className="font-raleway text-slate-100/90 text-left">{exp.dashboardDesc}</p>,
             media: (
                 <div className="flex flex-col gap-5 lg:flex-row">
                     <div className="w-full lg:w-[100%] flex flex-col items-center gap-5">
@@ -114,7 +114,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
         {
             key: "expenses-view",
             title: "Expenses View",
-            desc: <p className="font-raleway dark:text-slate-100/90 text-slate-900 text-left">{exp.expViewDesc}</p>,
+            desc: <p className="font-raleway text-slate-100/90text-left">{exp.expViewDesc}</p>,
             media: (
                 <div className="flex flex-col gap-4 items-center justify-center">
                     <motion.div {...subtleHover} className="w-full">
@@ -142,7 +142,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
         {
             key: "budgets",
             title: "Budgets Page",
-            desc: <p className="font-raleway dark:text-slate-100/90 text-slate-900 text-left">{exp.budgetPageDesc}</p>,
+            desc: <p className="font-ralewaytext-slate-100/90 text-left">{exp.budgetPageDesc}</p>,
             media: (
                 <motion.div {...subtleHover} className="w-full">
                     <ProjectImage
@@ -160,16 +160,16 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
             key: "trip-final",
             title: "Final Thoughts",
             desc: (
-                <div className="space-y-4 font-raleway dark:text-slate-100/90 text-slate-900 text-left">
+                <div className="space-y-4 font-raleway text-slate-100/90  text-left">
                     <p>{exp.finalThoughts}</p>
                 </div>
             ),
             media: (
                 <div className="w-full max-w-2xl">
-                    <h2 className="text-center lg:text-left text-3xl md:text-4xl lg:text-5xl font-extrabold text-amber-700 dark:text-amber-400 font-rubikmono mb-4">
+                    <h2 className="text-center lg:text-left text-3xl md:text-4xl lg:text-5xl font-extrabold text-amber-400 font-rubikmono mb-4">
                         Trip Expenditures
                     </h2>
-                    <div className="space-y-4 font-raleway dark:text-slate-100/90 text-slate-900 text-left">
+                    <div className="space-y-4 font-raleway text-slate-100/90  text-left">
                         <p>{exp.tripExpenditureDesc}</p>
                     </div>
                 </div>

@@ -27,7 +27,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, bg, maxH }) => {
                 </ModalContent>
             </Modal>
 
-            <div className={`rounded-md flex flex-col gap-2 mx-auto mt-5 w-full ${lg_size ? `lg:${lg_size}` : "lg:w-1/3"}`}>
+            <div className={`rounded-md flex flex-col gap-2 mx-auto mt-5 w-full ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
                 <div className={`w-full rounded-md flex items-center justify-center`}>
                     <img
                         alt={alt}
