@@ -3,7 +3,7 @@
 const titles = [
     `<span class="!text-green-800">Still Debugging Life</span>`,
     `<span class="!text-green-800">Currently in Maintenance Mode</span>`,
-    `<span class="!text-green-800">Still writing commits to Timeline</span>`
+    `<span class="!text-green-800">Still writing commits to this Timeline</span>`
 ];
 
 export const timeline = [
@@ -81,7 +81,7 @@ export const timeline = [
     {
         id: "2021-unb-research",
         year: 2021,
-        start: 2021,
+        start: 202,
         end: 2022,
         title: '<span class="!text-amber-950">Side Quest</span> — <span class="!text-red-800">UNB Research Assistant',
         desc: "Ran physics simulations so graduate students could make prettier graphs (and science).",
@@ -117,7 +117,7 @@ export const timeline = [
         year: 2022,
         start: 2022,
         end: 2022,
-        title: "UNB ENGG — Software Developer",
+        title: '<span class="!text-amber-950">UNB ENGG</span> — <span class="!text-red-800">Software Developer',
         desc: "Built tools so useful the department forgot life before them.",
         type: "job",
         details: [
@@ -145,8 +145,27 @@ export const timeline = [
         ],
         tech: ["Python", "Flask", "Docker", "CI/CD"]
     },
+
+    /* ---------------- Projects ---------------- */
+
     {
-        id: "2025-freelance",
+        id: "2024-expenses-recorder",
+        year: 2024,
+        title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Expenses Recorder</span>',
+        desc: "Where budgets meet common sense — simple, predictable, and actually nice to use.",
+        type: "project",
+        link: "/projects/Expenses_Recorder",
+        details: [
+            "Tracks budgets and sub-budgets that roll over month to month.",
+            "Auto-populates new month budgets with your last setup — no manual rebuilds.",
+            "Flask serving clean JSON straight to the Next.js dashboard.",
+            "UI focuses on clarity: every cent, every category, zero clutter."
+        ],
+        tech: ["Next.js", "Flask", "PostgreSQL", "Tailwind"]
+    },
+
+    {
+        id: "2025-scorehub",
         year: 2025,
         title: '<span class="!text-amber-950">Project<span> — <span class="!text-red-800">ScoreHub',
         desc: "Multiplayer chaos manager disguised as a score tracker.",
@@ -158,7 +177,6 @@ export const timeline = [
         ],
         tech: ["Next.js", "Flask"]
     },
-
 
     {
         id: new Date().getFullYear().toString(),

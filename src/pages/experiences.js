@@ -2,6 +2,7 @@
 import { useMemo, useRef, useEffect, useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Head from "next/head"
+import Link from "next/link"
 import NavBar from "@/components/nav/Navbar"
 
 import { timeline } from "@/components/data/timelineData"
@@ -131,7 +132,7 @@ export default function ExperiencePage() {
     const goSubNext = () => setSubIdx((s) => clamp(s + 1, 0, Math.max(0, totalInYear - 1)))
 
     // fixed heights for the scrollable pane
-    const midHeightClass = totalInYear > 1 ? "h-[60vh]" : "h-[67vh]"
+    const midHeightClass = totalInYear > 1 ? "h-[55vh]" : "h-[63vh]"
 
     return (
         <>
@@ -207,9 +208,6 @@ export default function ExperiencePage() {
                                                 >
                                                     <div className="p-6 md:p-10">
                                                         <header className="flex items-start justify-between gap-4">
-                                                            {/* <h2 className="text-3xl md:text-5xl font-extrabold text-amber-50 tracking-tight">
-                                                                {currentItem.title}
-                                                            </h2> */}
                                                             <ReactTyped
                                                                 startWhenVisible
                                                                 strings={[currentItem.title]}
@@ -245,6 +243,17 @@ export default function ExperiencePage() {
                                                                         {t}
                                                                     </span>
                                                                 ))}
+                                                            </div>
+                                                        )}
+
+                                                        {currentItem.type === "project" && currentItem.link && (
+                                                            <div className="mt-8 flex justify-end">
+                                                                <Link
+                                                                    href={currentItem.link}
+                                                                    className="inline-flex items-center gap-2 rounded-full glass px-5 py-2 transition"
+                                                                >
+                                                                    See More
+                                                                </Link>
                                                             </div>
                                                         )}
                                                     </div>
