@@ -1,6 +1,4 @@
 import { AccountTreeOutlined, ApiOutlined, CodeOutlined, ConstructionOutlined, SettingsOutlined, SpeakerNotesOutlined, } from "@mui/icons-material"
-import { duration } from "@mui/material"
-import { animate } from "framer-motion"
 
 export const jobs = [{
     title: 'Application Cybersecurity Specialist',

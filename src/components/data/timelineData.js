@@ -207,6 +207,7 @@ export const timeline = [
         year: `${new Date().getFullYear()}+`,
         title: titles[Math.floor(Math.random() * titles.length)],
         desc: "No syntax errors so far. Only warnings.",
+        logo: "/projects/icons/cs.png",
         type: "lore",
     },
 ]

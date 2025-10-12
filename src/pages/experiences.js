@@ -227,11 +227,11 @@ export default function ExperiencePage() {
                                                                 contentType="html"
                                                             />
                                                             <div className="text-4xl md:text-5xl">
-                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ?
-                                                                    currentItem.logo ?
-                                                                        <img src={currentItem.logo} height={64} width={64} className="rounded-lg" /> : "💼"
-                                                                    : currentItem.type === "lore" ?
-                                                                    "🎭" : "💡"}
+                                                                {currentItem.type === "born" ? "🐣" : currentItem.logo ?
+                                                                    <img src={currentItem.logo} height={64} width={64} className="rounded-lg" /> :
+                                                                    currentItem.type === "job" ? "💼"
+                                                                        : currentItem.type === "lore" ?
+                                                                            "🎭" : "💡"}
                                                             </div>
                                                         </header>
 
