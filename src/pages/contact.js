@@ -11,7 +11,6 @@ import {
     CardBody,
     CardHeader,
     Tooltip,
-    Link as HLink,
     Spinner,
 } from "@nextui-org/react"
 import emailjs from "@emailjs/browser"
@@ -25,11 +24,11 @@ import { fetchEnvVars } from "@/utils/ServerFetchFunction"
 import * as Links from "../../public/data/Links"
 import { KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
 import { ModelTextingAnimation } from "@/components/avatar/Model_TextingAnimation"
-const linkedinUrl = Links.linkedin || Links.linkedinLink || Links.eChin?.linkedin || "#"
-const githubUrl = Links.github || Links.githubLink || "#"
+const linkedinUrl = Links.linkedInLink 
+const githubUrl = Links.githubLink
 const emailDisplay = "ychin@unb.ca"
-const emailHref = Links.email || Links.emailLink || `mailto:${emailDisplay}`
-const resumeUrl = Links.resume || Links.resumeLink || "#"
+const emailHref = `mailto:${emailDisplay}`
+const resumeUrl = Links.resumeLink 
 
 // ---------- Constants ----------
 const MAX_MESSAGE = 1200
