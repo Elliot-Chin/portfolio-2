@@ -135,16 +135,18 @@ export const timeline = [
         year: 2023,
         start: 2023,
         current: true,
-        title: '<span class="!text-amber-950">SIEMENS</span> — <br><span class="!text-red-800">Junior Application Cybersecurity Specialist',
-        desc: "Taught machines to talk (politely).",
+        title: '<span class="!text-amber-950">SIEMENS</span> — <br><span class="!text-red-800">Junior Application Cybersecurity Specialist</span>',
+        desc: "Bridging cybersecurity and automation — keeping the machines honest 🔒⚙️",
         type: "job",
         details: [
-            "Built internal tools that spared humans from spreadsheet purgatory.",
-            "Wrote scripts that refused to run only on Fridays (still investigating).",
-            "Mastered the sacred dance: logs → bug → fix → celebratory snack."
+            "Developed internal tooling that automated security compliance and vulnerability reporting.",
+            "Built scripts and dashboards that monitor app health, patch status, and access control integrity.",
+            "Collaborated across teams to secure apps and CI/CD workflows.",
+            "Tuned network policies and app configs for secure deployments across complex environments."
         ],
-        tech: ["Python", "Flask", "Docker", "CI/CD"]
+        tech: ["Python", "Flask", "Docker", "CI/CD", "Ansible", "Linux", "Networking"]
     },
+
 
     /* ---------------- Projects ---------------- */
 
