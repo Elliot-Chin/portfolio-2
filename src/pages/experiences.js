@@ -27,7 +27,14 @@ export default function ExperiencePage() {
     const scrollAreaRef = useRef(null)
     const isDesktop = useDesktop()
 
-    const years = useMemo(() => uniqYearsAsc(timeline), [])
+    const years = useMemo(() => {
+        const base = uniqYearsAsc(timeline)
+        const CURR = new Date().getFullYear()
+        // remove any existing current-year+ entry to avoid duplicates
+        const filtered = base.filter(y => y !== `${CURR}+`)
+        // ensure the final one is always <current-year>+
+        return [...filtered, `${CURR}+`]
+    }, [])
     const groups = useMemo(() => itemsByYear(timeline), [])
     const lastIdx = years.length - 1
 
@@ -123,8 +130,11 @@ export default function ExperiencePage() {
     }, [isDesktop, goNext, goPrev])
 
     // active data
+    const CURR = new Date().getFullYear()
     const activeYear = years[idx]
-    const activeItems = groups[activeYear] || []
+    const rawYear = years[idx]
+    const dataYear = (typeof rawYear === "string" && rawYear.endsWith("+")) ? CURR + "+" : rawYear
+    const activeItems = groups[dataYear] || []
     const totalInYear = activeItems.length
     const currentItem = totalInYear ? activeItems[clamp(subIdx, 0, totalInYear - 1)] : null
 
@@ -212,12 +222,16 @@ export default function ExperiencePage() {
                                                                 startWhenVisible
                                                                 strings={[currentItem.title]}
                                                                 typeSpeed={40}
-                                                                className="text-2xl md:text-4xl lg:5xl font-extrabold text-amber-50 tracking-tight"
+                                                                className="text-2xl md:text-4xl lg:5xl font-extrabold text-amber-50 w-[55vw] tracking-tight"
                                                                 showCursor={false}
                                                                 contentType="html"
                                                             />
                                                             <div className="text-4xl md:text-5xl">
-                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ? "💼" : currentItem.type === "lore" ? "🎭" : "💡"}
+                                                                {currentItem.type === "born" ? "🐣" : currentItem.type === "job" ?
+                                                                    currentItem.logo ?
+                                                                        <img src={currentItem.logo} height={64} width={64} className="rounded-lg" /> : "💼"
+                                                                    : currentItem.type === "lore" ?
+                                                                    "🎭" : "💡"}
                                                             </div>
                                                         </header>
 

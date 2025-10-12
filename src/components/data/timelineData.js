@@ -1,9 +1,9 @@
 // ----------------- DATA -----------------
 
 const titles = [
-    `<span class="!text-green-800">Still Debugging Life</span>`,
-    `<span class="!text-green-800">Currently in Maintenance Mode</span>`,
-    `<span class="!text-green-800">Still writing commits to this Timeline</span>`
+    `<span class="!text-green-800">Still Debugging Life.</span>`,
+    `<span class="!text-green-800">Currently in Maintenance Mode.</span>`,
+    `<span class="!text-green-800">Still writing commits to this Timeline.</span>`
 ];
 
 export const timeline = [
@@ -53,6 +53,7 @@ export const timeline = [
         title: `<span class="!text-amber-950">UNB Residence</span> — <span class="!text-red-800">Residence Assistant</span>`,
         desc: "Part mentor, part firefighter, part event planner — full-time chaos coordinator.",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/unb-1.svg",
         details: [
             "Supported and guided resident students to create a safe, inclusive, and welcoming community.",
             "Enforced university policies, mediated conflicts, and responded to emergencies calmly and effectively.",
@@ -70,6 +71,7 @@ export const timeline = [
         title: '<span class="!text-amber-950">UNB ITS</span> — <span class="!text-red-800">Student Consultant</span>',
         desc: "Keeping campus tech alive and printers from spontaneous rebellion.",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/unb-1.svg",
         details: [
             "Maintained and troubleshooted lab printers to keep them operational 24/7.",
             "Performed system diagnostics, repairs, and flush-and-fill operations on campus machines.",
@@ -86,6 +88,7 @@ export const timeline = [
         title: '<span class="!text-amber-950">Side Quest</span> — <span class="!text-red-800">UNB Research Assistant',
         desc: "Ran physics simulations so graduate students could make prettier graphs (and science).",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/unb-1.svg",
         details: [
             "Learned and operated COMSOL Multiphysics to run simulations supporting graduate research projects.",
             "Collaborated closely with Dr. Ignaszak’s research group to generate high-quality visual data for publication.",
@@ -103,6 +106,7 @@ export const timeline = [
         title: '<span class="!text-amber-950">UNB</span> — <span class="!text-red-800">Teaching Assistant',
         desc: "Debugged code and confusion in equal measure.",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/unb-1.svg",
         details: [
             "Assisted students during lab sessions by answering questions and guiding them through programming assignments.",
             "Held additional office hours to support students needing extra time or clarification outside of lab hours.",
@@ -120,6 +124,7 @@ export const timeline = [
         title: '<span class="!text-amber-950">UNB ENGG</span> — <span class="!text-red-800">Software Developer',
         desc: "Built tools so useful the department forgot life before them.",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/unb-1.svg",
         details: [
             "Served as the sole full-stack developer for the Department of Electrical and Computer Engineering.",
             "Developed two department-wide automated tools for academic advising and CEAB accreditation purposes.",
@@ -138,6 +143,7 @@ export const timeline = [
         title: '<span class="!text-amber-950">SIEMENS</span> — <br><span class="!text-red-800">Junior Application Cybersecurity Specialist</span>',
         desc: "Bridging cybersecurity and automation — keeping the machines honest 🔒⚙️",
         type: "job",
+        logo: "https://cdn.worldvectorlogo.com/logos/siemens.svg",
         details: [
             "Developed internal tooling that automated security compliance and vulnerability reporting.",
             "Built scripts and dashboards that monitor app health, patch status, and access control integrity.",
@@ -169,7 +175,7 @@ export const timeline = [
     {
         id: "2022-automated-musicians",
         year: 2022,
-        title: '<span class="!text-amber-950">UNB</span> — <span class="!text-red-800">Automated Musicians</span>',
+        title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Automated Musicians</span>',
         desc: "Where music meets algorithms — a creative blend of theory, pattern recognition, and composition automation.",
         type: "project",
         link: "/projects/Automated_Musicians",
@@ -182,13 +188,13 @@ export const timeline = [
         ],
         tech: ["Python", "NumPy", "Pandas, Full-Stack Development"]
     },
-
     {
         id: "2025-scorehub",
         year: 2025,
         title: '<span class="!text-amber-950">Project<span> — <span class="!text-red-800">ScoreHub',
         desc: "Multiplayer chaos manager disguised as a score tracker.",
-        type: "job",
+        type: "project",
+        link: "/projects/Score_Hub",
         details: [
             "Real-time rooms with sockets, edge cases, and polite disconnects.",
             "Score calculators for niche card games (zero rage-quits… mostly).",
@@ -196,12 +202,11 @@ export const timeline = [
         ],
         tech: ["Next.js", "Flask"]
     },
-
     {
-        id: new Date().getFullYear().toString(),
-        year: new Date().getFullYear(),
+        id: 'future plans',
+        year: `${new Date().getFullYear()}+`,
         title: titles[Math.floor(Math.random() * titles.length)],
         desc: "No syntax errors so far. Only warnings.",
         type: "lore",
-    }
+    },
 ]
