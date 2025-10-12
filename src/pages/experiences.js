@@ -222,7 +222,7 @@ export default function ExperiencePage() {
                                                                 startWhenVisible
                                                                 strings={[currentItem.title]}
                                                                 typeSpeed={40}
-                                                                className="text-2xl md:text-4xl lg:5xl font-extrabold text-amber-50 w-[55vw] tracking-tight"
+                                                                className="text-xl md:text-4xl lg:5xl font-extrabold text-amber-50 w-[55vw] tracking-tight"
                                                                 showCursor={false}
                                                                 contentType="html"
                                                             />

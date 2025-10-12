@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { Loader } from "./Loader"
-import { Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material"
+import { Menu as MenuIcon, Close as CloseIcon, AccountTreeOutlined } from "@mui/icons-material"
 import {
     ApartmentOutlined,
     ArticleOutlined,
@@ -11,7 +11,7 @@ import {
     HomeOutlined,
 } from "@mui/icons-material"
 
-export default function Navbar({pageName = ''}) {
+export default function Navbar({ pageName = '' }) {
     const router = useRouter()
     const [selectedName, setSelectedName] = useState("")
     const [isLoading, setLoading] = useState(false)
@@ -20,6 +20,7 @@ export default function Navbar({pageName = ''}) {
     const links = [
         { href: "/", label: "Home", icon: <HomeOutlined fontSize="small" /> },
         { href: "/experiences", label: "Experiences", icon: <ApartmentOutlined fontSize="small" /> },
+        { href: "/projects", label: "Projects", icon: <AccountTreeOutlined fontSize="small" /> },
         { href: "/resume", label: "Resume", icon: <ArticleOutlined fontSize="small" /> },
         { href: "/contact", label: "Contact", icon: <ContactSupportOutlined fontSize="small" /> },
     ]
@@ -98,8 +99,8 @@ export default function Navbar({pageName = ''}) {
                                         aria-disabled={active ? "true" : undefined}
                                         onClick={(e) => navOrNoop(href, label, e)}
                                         className={`flex items-center gap-2 transition-colors ${active
-                                                ? "text-amber-400 pointer-events-none cursor-default"
-                                                : "hover:text-amber-400"
+                                            ? "text-amber-400 pointer-events-none cursor-default"
+                                            : "hover:text-amber-400"
                                             }`}
                                     >
                                         {icon}

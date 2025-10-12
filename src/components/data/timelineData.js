@@ -186,7 +186,7 @@ export const timeline = [
             "Presented at UNB as a capstone project, later featured on CBC Radio for its innovation in AI-driven music.",
             "Team project built with collaboration across data analysis, algorithm design, and full-stack development."
         ],
-        tech: ["Python", "NumPy", "Pandas, Full-Stack Development"]
+        tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"]
     },
     {
         id: "2025-scorehub",
@@ -200,7 +200,7 @@ export const timeline = [
             "Score calculators for niche card games (zero rage-quits… mostly).",
             "UI that feels like a chill friend tapping the scoreboard for you."
         ],
-        tech: ["Next.js", "Flask"]
+        tech: ["Next.js", "Flask", "Full-Stack Development", "Web App"]
     },
     {
         id: 'future plans',
