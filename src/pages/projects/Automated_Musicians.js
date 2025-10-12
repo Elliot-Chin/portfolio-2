@@ -16,13 +16,7 @@ import { am } from "../../../public/data/Projects"
 import { eChin, edChang, olee, tcamp } from "../../../public/data/People"
 import Head from "next/head"
 
-// subtle slide animation for desktop rail
-const DURATION_MS = 600
-const slideUp = {
-    hidden: { opacity: 0, y: 64, scale: 0.98 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, y: -32, scale: 0.995, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
-}
+import { DURATION_MS, backBtnFade, slideUp, subtleHover } from "@/components/projects/expenses-recorder/animations"
 
 function useSections(contribName, setContribName) {
     const placeholder = "Contributors"
@@ -180,10 +174,16 @@ function useSections(contribName, setContribName) {
                 desc: <p className="font-raleway text-slate-300">{am.musicAlgorithmsDesc}</p>,
                 media: (
                     <div className="flex flex-col gap-3">
-                        <ProjectImage {...am.hStepImg} lg_size="!w-[1vh]" />
+                        <motion.div {...subtleHover} className="w-full">
+                            <ProjectImage {...am.hStepImg} lg_size="!w-[1vh]" />
+                        </motion.div>
                         <div className="flex gap-3">
-                            <ProjectImage {...am.iScaleImg} lg_size="w-1/2" />
-                            <ProjectImage {...am.aScaleImg} lg_size="w-1/2" />
+                            <motion.div {...subtleHover} className="w-full">
+                                <ProjectImage {...am.iScaleImg} lg_size="w-1/2" />
+                            </motion.div>
+                            <motion.div {...subtleHover} className="w-full">
+                                <ProjectImage {...am.aScaleImg} lg_size="w-1/2" />
+                            </motion.div>
                         </div>
                     </div>
                 ),
@@ -196,8 +196,12 @@ function useSections(contribName, setContribName) {
                 desc: <p className="font-raleway text-slate-300">{am.patternExtractionDesc}</p>,
                 media: (
                     <div className="flex flex-col gap-3 flex-wrap lg:flex-row">
-                        <ProjectImage {...am.sheetMusicImg} lg_size="w-2/3" />
-                        <ProjectImage {...am.abcFormatImg} lg_size="w-2/3" />
+                        <motion.div {...subtleHover} className="w-full">
+                            <ProjectImage {...am.sheetMusicImg} lg_size="w-2/3" />
+                        </motion.div>
+                        <motion.div {...subtleHover} className="w-full">
+                            <ProjectImage {...am.abcFormatImg} lg_size="w-2/3" />
+                        </motion.div>
                     </div>
                 ),
                 images: true,
@@ -209,7 +213,9 @@ function useSections(contribName, setContribName) {
                 desc: <p className="font-raleway text-slate-100/90">{am.compositionGenDesc}</p>,
                 media: (
                     <div className="flex flex-col gap-3 lg:flex-row">
-                        <ProjectImage {...am.pseudocodeImg} lg_size="w-2/3" />
+                        <motion.div {...subtleHover} className="w-full">
+                            <ProjectImage {...am.pseudocodeImg} lg_size="w-2/3" />
+                        </motion.div>
                     </div>
                 ),
                 images: true,
@@ -448,6 +454,32 @@ export default function AutomatedMusicians() {
                     isSwitching={isSwitching}
                     setIsSwitching={setIsSwitching}
                 />
+            )}
+
+            {active === sections.length - 1 && (
+                <motion.button
+                    variants={backBtnFade}
+                    initial="hidden"
+                    animate="show"
+                    type="button"
+                    aria-label="Back to start"
+                    onClick={() => {
+                        if (isSwitching || active === 0) return
+                        setIsSwitching(true)
+                        setScrolledOnce(true)
+                        setActive(0)
+                        setProgress(0)
+                        setTimeout(() => setIsSwitching(false), DURATION_MS)
+                    }}
+                    className="flex items-center gap-2 absolute bottom-6 right-6 z-30 rounded-full px-4 py-2
+                     bg-amber-600 text-white shadow hover:bg-amber-700 active:scale-[0.98] mr-[20vw]"
+                >
+                    <span className="text-sm font-semibold">Back to Start</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M19 12H5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M12 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </motion.button>
             )}
 
             {/* END marker for mobile */}

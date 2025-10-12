@@ -33,7 +33,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, bg, maxH }) => {
                         alt={alt}
                         src={src}
                         onClick={() => modalHandler.onOpen()}
-                        className={`w-full h-auto object-contain bg-transparent hover:cursor-pointer ${maxHClasses}`}
+                        className={`w-full h-auto object-contain bg-transparent hover:cursor-zoom-in ${maxHClasses}`}
                     />
                 </div>
                 <span className="font-montserrat text-sm dark:text-white text-slate-950 text-center w-full italic">

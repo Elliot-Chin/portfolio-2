@@ -6,7 +6,6 @@ export default function DesktopLayout({
     sections,
     active,
     setActive,
-    progress,
     setProgress,
     scrolledOnce,
     setScrolledOnce,
