@@ -310,9 +310,6 @@ export default function ExperiencePage() {
                     </div>
                 </section>
 
-                <style jsx global>{`
-          html, body { overflow: hidden; }
-        `}</style>
             </main>
         </>
     )

@@ -71,7 +71,7 @@ export default function Resume() {
             <Navbar />
 
             <Head>
-            <title>Elliot Chin — Resume</title>
+                <title>Elliot Chin — Resume</title>
                 <meta name="description" content="Hey — I’m Elliot. This is my resume." />
             </Head>
 
