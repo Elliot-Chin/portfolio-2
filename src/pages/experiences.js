@@ -236,13 +236,13 @@ export default function ExperiencePage() {
                                                         </header>
 
                                                         <p
-                                                            className={`mt-4 text-xl font-semibold leading-relaxed ${currentItem.details?.length > 0 ? "text-blue-900 italic" : "text-amber-950"
+                                                            className={`mt-4 text-xl font-semibold leading-relaxed ${currentItem.details?.length > 0 ? "text-blue-900 italic" : "text-white"
                                                                 }`}
                                                             dangerouslySetInnerHTML={{ __html: currentItem.desc }}
                                                         />
 
                                                         {currentItem.details?.length > 0 && (
-                                                            <ul className="mt-6 grid gap-2 text-amber-950 text-base md:text-lg list-disc pl-6">
+                                                            <ul className="mt-6 grid gap-2 text-white text-base md:text-lg list-disc pl-6">
                                                                 {currentItem.details.map((d, i) => <li key={i}>{d}</li>)}
                                                             </ul>
                                                         )}

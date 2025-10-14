@@ -8,11 +8,11 @@ export default function ResumeSkillEntry({ toggle, bool, title, skills }) {
         className="w-full mt-1 flex items-center select-none cursor-pointer"
         onClick={() => toggle((p) => !p)}
       >
-        <span className="font-montserrat text-2xl lg:text-4xl text-amber-950">
+        <span className="font-bold text-2xl lg:text-4xl text-white">
           {title || "<TITLE>"}
         </span>
-        <div className="mx-3 h-[2px] flex-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 dark:from-amber-400 dark:via-amber-300 dark:to-yellow-300 rounded-full" />
-        <div className="text-amber-950">
+        <div className="mx-3 h-[2px] flex-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 rounded-full" />
+        <div className="text-white">
           {bool ? (
             <RemoveOutlined className="text-red-500 transition-transform duration-200" />
           ) : (
@@ -28,11 +28,11 @@ export default function ResumeSkillEntry({ toggle, bool, title, skills }) {
               <div className="w-full gap-y-2">
                 <div className="flex gap-2 items-center">
                   {/* keep passed icon (styled by caller) */}
-                  <span className={`inline-flex items-center !text-amber-950 font-semibold absolute animate-${skill.animate}
+                  <span className={`inline-flex items-center !text-white font-semibold
                   [animation-duration:${skill.duration || 4}s]`}>
                     {skill.icon}
                   </span>
-                  <span className="font-raleway text-xl lg:text-3xl !text-amber-950 font-semibold ml-10">
+                  <span className="font-raleway text-xl lg:text-3xl !text-white font-semibold">
                     {skill.category}
                   </span>
                 </div>
@@ -43,7 +43,7 @@ export default function ResumeSkillEntry({ toggle, bool, title, skills }) {
                       key={i}
                       variant="flat"
                       color="warning"
-                      className="font-montserrat lg:text-base shadow-sm !text-red-950"
+                      className="font-montserrat lg:text-base shadow-sm !text-slate-100/90"
                     >
                       {s}
                     </Chip>

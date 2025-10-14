@@ -40,7 +40,7 @@ export function AboutDetailsSection() {
                         A little more <span className="text-red-700">About Me</span>
                     </h3>
 
-                    <div className="overflow-y-auto md:max-h-none md:overflow-visible md:pt-0 font-montserrat text-black font-bold sm:font-normal">
+                    <div className="overflow-y-auto md:max-h-none md:overflow-visible md:pt-0 font-montserrat text-white font-bold sm:font-normal">
                         <p className="mt-3 text-base md:text-lg opacity-85 ">
                             I grew up in Malaysia and moved to Canada to study, eventually graduating in Software Engineering from
                             UNB. These days I’m a developer / engineer at Siemens, and outside of work you’ll usually find me

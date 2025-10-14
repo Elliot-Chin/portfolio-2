@@ -65,7 +65,7 @@ export function AboutIntroSection({ getJobDuration }) {
 
                     {/* —— “Intro text” wrapper is relative so the box can be absolute below it —— */}
                     <div className="relative">
-                        <p className="mt-3 font-montserrat lg:mt-4 text-base font-bold sm:font-normal lg:text-lg opacity-90 lg:opacity-100 lg:text-black">
+                        <p className="mt-3 font-montserrat lg:mt-4 font-bold sm:font-normal lg:text-lg opacity-90 lg:opacity-100 text-white">
                             <span className="font-bold">{getJobDuration("2023-06-05")}</span> as a{" "}
                             <span className="font-bold">JR. Application Cybersecurity Specialist</span> at Siemens. I design quiet UIs,
                             create things that work, and tinker after hours because I actually enjoy it&nbsp;✨

@@ -17,7 +17,7 @@ export default function ResumeJobEntry({ toggle, bool, title, jobs, setLoading }
                 className="w-full mt-1 flex items-center select-none cursor-pointer"
                 onClick={() => toggle((p) => !p)}
             >
-                <span className="font-montserrat text-2xl lg:text-4xl text-amber-950
+                <span className="font-bold text-2xl lg:text-4xl text-white
           ">
                     {title || "<TITLE>"}
                 </span>
@@ -36,32 +36,32 @@ export default function ResumeJobEntry({ toggle, bool, title, jobs, setLoading }
                     {jobs?.map((job, index) => (
                         <div key={index}>
                             <div className="w-full gap-y-2">
-                                <div className="flex gap-2 items-center text-amber-950 font-semibold">
+                                <div className="flex gap-2 items-center text-white font-semibold">
                                     <PersonOutline className="text-2xl 
                     " />
-                                    <span className="font-raleway lg:text-2xl text-amber-950 font-semibold ">
+                                    <span className="font-raleway lg:text-2xl text-white font-semibold ">
                                         {job.title}
                                     </span>
                                 </div>
 
-                                <div className="flex gap-2 items-center mt-1 text-amber-950 font-semibold">
+                                <div className="flex gap-2 items-center mt-1 text-slate-100/80 font-semibold">
                                     <CalendarMonth className="text-2xl 
                     " />
-                                    <span className="font-raleway lg:text-xl text-amber-950 font-semibold ">
+                                    <span className="font-raleway lg:text-xl text-slate-310/780 font-semibold ">
                                         {job.duration}
                                     </span>
                                 </div>
 
-                                <div className="flex gap-2 items-center mt-1 text-amber-950 font-semibold">
+                                <div className="flex gap-2 items-center mt-1 text-slate-100/80 font-semibold">
                                     <GpsFixed className="text-2xl 
                     " />
-                                    <span className="font-raleway lg:text-xl text-amber-950 font-semibold ">
+                                    <span className="font-raleway lg:text-xl text-slate-100/80 font-semibold ">
                                         {job.location}
                                     </span>
                                 </div>
 
                                 <p
-                                    className="font-montserrat mt-3 leading-relaxed text-amber-950 "
+                                    className="font-montserrat mt-3 leading-relaxed text-white "
                                     dangerouslySetInnerHTML={{ __html: job.description }}
                                 />
                             </div>

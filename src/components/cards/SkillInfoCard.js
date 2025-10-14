@@ -14,7 +14,7 @@ export function SkillInfoCard({ skill, onClosed }) {
         >
             <div className="flex items-start justify-between gap-3">
                 <div>
-                    <div className="font-semibold flex gap-3 items-center text-amber-950 text-2xl">
+                    <div className="font-semibold flex gap-3 items-center text-white text-2xl">
                         <img src={skill.src} height={20} width={20} alt={skill.name} />
                         {skill.name}
                     </div>

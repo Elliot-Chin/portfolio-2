@@ -84,12 +84,12 @@ export default function Resume() {
                 <div className="
             rounded-2xl p-4 lg:p-6 glass 
           ">
-                    <span className="block font-montserrat text-5xl lg:text-7xl font-extrabold tracking-tight text-amber-950">
+                    <span className="block text-5xl lg:text-7xl font-extrabold tracking-tight text-white">
                         {name}
                     </span>
 
                     {/* contact row */}
-                    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-red-900 font-semibold">
+                    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-6 text-white font-semibold">
                         <div
                             className="flex gap-2 items-center px-1 hover:opacity-90 hover:translate-x-[1px] transition-transform duration-200 cursor-pointer"
                             onClick={() => handleClick(emailLink)}
@@ -130,20 +130,20 @@ export default function Resume() {
                 <div className=" rounded-2xl p-4 lg:p-6
           ">
                     <div className="flex items-center gap-3">
-                        <span className="font-montserrat text-2xl lg:text-4xl text-amber-950">
+                        <span className="font-bold text-2xl lg:text-4xl text-white">
                             EDUCATION
                         </span>
                         <div className="h-[2px] flex-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-300 dark:from-amber-400 dark:via-amber-300 dark:to-yellow-300 rounded-full" />
                     </div>
 
-                    <div className="mt-4 text-amber-950">
+                    <div className="mt-4 text-slate-100/90">
                         <div className="flex gap-2 items-center">
                             <GpsFixed className="text-2xl font-semibold" />
-                            <span className="font-raleway text-xl lg:text-2xl  font-semibold">
+                            <span className="font-raleway text-xl lg:text-2xl font-semibold">
                                 {university}
                             </span>
                         </div>
-                        <span className="block font-montserrat mt-2 text-red-950">
+                        <span className="block font-montserrat mt-2 text-white">
                             {degree}
                         </span>
                     </div>

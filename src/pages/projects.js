@@ -168,7 +168,7 @@ export default function ProjectsPage() {
 
                                                     {/* TL;DR */}
                                                     <p
-                                                        className="mt-4 text-xl font-semibold leading-relaxed text-amber-950"
+                                                        className="mt-4 text-xl font-semibold leading-relaxed text-white"
                                                         dangerouslySetInnerHTML={{ __html: active.desc }}
                                                     />
 

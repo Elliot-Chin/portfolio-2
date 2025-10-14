@@ -20,7 +20,7 @@ export default function Custom404() {
             </Head>
 
             {/* Use 100svh to match the *visible* viewport on mobile (no rubber-band scroll) */}
-            <div className="relative grid grid-rows-[auto,auto,auto] items-center justify-items-center h-[100svh] overflow-hidden text-center text-amber-950 dark:text-amber-100
+            <div className="relative grid grid-rows-[auto,auto,auto] items-center justify-items-center h-[100svh] overflow-hidden text-center text-white
         bg-gradient-to-br from-amber-100 via-orange-200 to-pink-200 dark:from-slate-900 dark:via-amber-900 dark:to-rose-900
         px-4"> {/* small side padding to prevent squeeze */}
 
