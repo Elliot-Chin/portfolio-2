@@ -10,7 +10,7 @@ import { ProjectImage } from "@/components/projects/ProjectImage"
 import YouTubePlayer from "@/components/projects/YoutubePlayer"
 
 import { GitHub, YouTube } from "@mui/icons-material"
-import { AvatarGroup, Divider, Avatar, Progress, Button } from "@nextui-org/react"
+import { AvatarGroup, Divider, Avatar, Button } from "@nextui-org/react"
 
 import { am } from "../../../public/data/Projects"
 import { eChin, edChang, olee, tcamp } from "../../../public/data/People"
@@ -419,7 +419,7 @@ export default function AutomatedMusicians() {
 
     return (
         <main className="fixed inset-0 bg-gradient-to-b from-[#6b3200] via-[#502300] to-black">
-            <Navbar />
+            <Navbar pageName="Automated Musicians"/>
             <BackToTopButton />
 
             <Head>

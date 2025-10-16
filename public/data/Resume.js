@@ -54,7 +54,7 @@ export const projects = [
     {
         title: 'ScoreHub',
         duration: 'September 2025 - Present',
-        summary: 'Game-Scorer is a real-time multiplayer web application designed to make tracking scores in card and party games effortless. It replaces messy paper score sheets with an interactive, synchronized scoreboard that updates live across all players’ devices, letting everyone stay focused on the game instead of the math.<br /><br /> Built with Flask - SocketIO, Redis, and Next.js, it features smooth real- time syncing, reconnect logic, and a clean interface optimized for both desktop and mobile.Game - Scorer blends utility with polish — fast, intuitive, and made for the chaotic fun of game nights.',
+        summary: 'ScoreHub is a real-time multiplayer web application designed to make tracking scores in card and party games effortless. It replaces messy paper score sheets with an interactive, synchronized scoreboard that updates live across all players’ devices, letting everyone stay focused on the game instead of the math.<br /><br /> Built with Flask - SocketIO, Redis, and Next.js, it features smooth real- time syncing, reconnect logic, and a clean interface optimized for both desktop and mobile. ScoreHub blends utility with polish — fast, intuitive, and made for the chaotic fun of game nights.',
 link: '/projects/score_hub',
     }
 ]
