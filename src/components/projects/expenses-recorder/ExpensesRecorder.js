@@ -37,17 +37,17 @@ export default function ExpensesRecorder() {
 
     return (
         <main
-            className="fixed inset-0 bg-gradient-to-b from-amber-50 via-amber-100 to-amber-200
-            dark:from-amber-900/70 dark:via-amber-950/80 dark:to-black"
+            className="fixed inset-0 bg-gradient-to-b
+            from-amber-900/70 via-amber-950/80 to-black"
         >
             <Navbar pageName="Project - Expenses Recorder" />
 
             {/* Desktop progress bar */}
             {isDesktop && (
                 <div className="fixed top-[56px] left-0 right-0 h-[3px] z-40">
-                    <div className="w-[90vw] h-[3px] bg-transparent/20 dark:bg-white/10 backdrop-blur-sm" />
+                    <div className="w-[90vw] h-[3px] bg-white/10 backdrop-blur-sm" />
                     <motion.div
-                        className="absolute top-0 left-0 h-[3px] bg-amber-600 dark:bg-amber-400"
+                        className="absolute top-0 left-0 h-[3px] bg-amber-400"
                         style={{ width: `${Math.round(progress * 100)}%` }}
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}

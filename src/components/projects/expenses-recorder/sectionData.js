@@ -93,7 +93,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
                                 src={exp.CMSChartImg.src}
                                 description={exp.CMSChartImg.desc}
                                 lg_size="w-full"
-                                maxH="max-h-[34vh] md:max-h-[36vh] lg:max-h-[36vh]"
+                                maxH="max-h-[34vh] md:max-h-[36vh] lg:max-h-[30vh]"
                             />
                         </motion.div>
 
@@ -103,7 +103,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
                                 src={exp.PMSChartImg.src}
                                 description={exp.PMSChartImg.desc}
                                 lg_size="w-full"
-                                maxH="max-h-[34vh] md:max-h-[36vh] lg:max-h-[36vh]"
+                                maxH="max-h-[34vh] md:max-h-[36vh] lg:max-h-[30vh]"
                             />
                         </motion.div>
                     </div>
@@ -123,7 +123,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
                             src={exp.ExpViewImg.src}
                             description={exp.ExpViewImg.desc}
                             lg_size="w-full"
-                            maxH="max-h-[100vh] lg:max-h-[35vh]"
+                            maxH="max-h-[100vh] lg:max-h-[30vh]"
                         />
                     </motion.div>
                     <motion.div {...subtleHover} className="w-full">
@@ -132,7 +132,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
                             src="/projects/exprec/exprec_expview_details.png"
                             description="A snippet of an example list of expenses for the selected month."
                             lg_size="w-full"
-                            maxH="max-h-[100vh] lg:max-h-[35vh]"
+                            maxH="max-h-[100vh] lg:max-h-[30vh]"
                         />
                     </motion.div>
                 </div>
@@ -160,7 +160,7 @@ export function buildSections({ name, setName, exp, ECAvatarLink, linkedInLink, 
             key: "trip-final",
             title: "Final Thoughts",
             desc: (
-                <div className="space-y-4 font-raleway text-slate-100/90  text-left">
+                <div className="space-y-4 font-raleway text-slate-100/90 text-left">
                     <p>{exp.finalThoughts}</p>
                 </div>
             ),

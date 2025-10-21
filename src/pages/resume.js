@@ -150,9 +150,9 @@ export default function Resume() {
 
                             {/* UPDATED stats row */}
                             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-                                <Stat label="Years Work Experience" value={stats.yearsExpDisplay} />
-                                <Stat label="Favourite Languages" value="JS · Python" />
-                                <Stat label="Core Stack" value="Next.js · Flask" />
+                                <Stat label="Years Work Experience" value={stats.yearsExpDisplay} size="3rem" />
+                                <Stat label="Favourite Languages" value="JS · Python" size='1.7rem' />
+                                <Stat label="Core Stack" value="Next.js · Flask" size='1.5rem' />
                             </div>
 
                         </div>
@@ -267,7 +267,7 @@ export default function Resume() {
                     <div className="absolute left-[10px] top-0 h-full w-[2px] bg-gradient-to-b from-amber-400/70 via-amber-300/40 to-transparent" />
                     <div className="ml-8 relative rounded-xl border border-amber-100/20 p-4 shadow-sm hover:shadow-md transition">
                         <div className="flex items-center gap-2 text-white text-2xl font-semibold">
-                            <SchoolOutlined fontSize="large"/> {university}
+                            <SchoolOutlined fontSize="large" /> {university}
                         </div>
                         <p className="mt-2 text-white">{degree}</p>
                     </div>
@@ -323,11 +323,16 @@ function Tag({ icon, text }) {
     )
 }
 
-function Stat({ label, value }) {
+function Stat({ label, value, size }) {
     return (
         <div className="rounded-xl border border-amber-100 flex flex-col justify-between bg-white/80 p-3">
-            <div className="text-amber-900 md:text-2xl font-extrabold">{value}</div>
+            <div
+                className="text-amber-900 font-extrabold md:text-2xl"
+                style={size ? { fontSize: size } : {}}
+            >
+                {value}
+            </div>
             <div className="text-xs text-amber-800/80">{label}</div>
         </div>
-    )
+    );
 }
