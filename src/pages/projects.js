@@ -11,6 +11,7 @@ import { ReactTyped } from "react-typed"
 // SOURCE OF TRUTH: filter your existing timelineData for type === "project"
 // If you prefer, replace this with an import from your data module.
 import { timeline } from "@/components/data/timelineData"
+import { Loader } from "@/components/nav/Loader"
 
 const projectsFromTimeline = (timeline ?? []).filter((t) => t.type === "project")
 
@@ -28,6 +29,8 @@ export default function ProjectsPage() {
     const [idx, setIdx] = useState(0)
     const [dir, setDir] = useState(0)
     const [lock, setLock] = useState(false)
+
+    const [loading, setLoading] = useState({ state: false, name: "" })
 
     const goTo = useCallback((next) => {
         if (lock) return
@@ -103,6 +106,8 @@ export default function ProjectsPage() {
                 <title>Elliot Chin — Projects</title>
                 <meta name="description" content="Selected projects by Elliot Chin." />
             </Head>
+
+            {loading.state && <Loader pageName={loading.name} />}
 
             <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-16">
                 <NavBar />
@@ -184,7 +189,11 @@ export default function ProjectsPage() {
 
                                                     {active.link && (
                                                         <div className="mt-8 flex justify-end">
-                                                            <Link href={active.link} className="inline-flex items-center gap-2 rounded-full glass px-5 py-2 transition">
+                                                            <Link href={active.link}
+                                                                onClick={() => {
+                                                                    setLoading({ state: true, name: active.title.split("—")[1].replace(/<[^>]*>/g, "") })
+                                                                }}
+                                                                className="inline-flex items-center gap-2 rounded-full glass px-5 py-2 transition">
                                                                 See More
                                                             </Link>
                                                         </div>

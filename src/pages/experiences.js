@@ -14,6 +14,7 @@ import {
     KeyboardDoubleArrowRightOutlined,
 } from "@mui/icons-material"
 import { ReactTyped } from "react-typed"
+import { Loader } from "@/components/nav/Loader"
 
 // helpers
 const uniqYearsAsc = (items) =>
@@ -42,6 +43,11 @@ export default function ExperiencePage() {
     const [dir, setDir] = useState(0)   // slide direction
     const [lock, setLock] = useState(false)
     const [subIdx, setSubIdx] = useState(0) // index within year
+
+    const [loading, setLoading] = useState({
+        loading: false,
+        title: "",
+    })
 
     const goTo = useCallback((next) => {
         if (lock) return
@@ -150,6 +156,8 @@ export default function ExperiencePage() {
                 <title>Elliot Chin — Experiences</title>
                 <meta name="description" content="Hey — I’m Elliot. These are my experiences." />
             </Head>
+
+            {loading.loading && <Loader pageName={loading.title} />}
 
             <main ref={containerRef} className="relative h-screen w-screen overflow-hidden bg-transparent text-amber-50 pt-16">
                 <NavBar />
@@ -265,6 +273,7 @@ export default function ExperiencePage() {
                                                                 <Link
                                                                     href={currentItem.link}
                                                                     className="inline-flex items-center gap-2 rounded-full glass px-5 py-2 transition"
+                                                                    onClick={() => {setLoading({loading: true, title: currentItem.title.split("—")[1].replace(/<[^>]*>/g, "")})}}
                                                                 >
                                                                     See More
                                                                 </Link>

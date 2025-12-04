@@ -52,9 +52,15 @@ export const projects = [
         link: '/projects/Expenses_Recorder',
     },
     {
-        title: 'ScoreHub',
-        duration: 'September 2025 - Present',
-        summary: 'ScoreHub is a real-time multiplayer web application designed to make tracking scores in card and party games effortless. It replaces messy paper score sheets with an interactive, synchronized scoreboard that updates live across all players’ devices, letting everyone stay focused on the game instead of the math.<br /><br /> Built with Flask - SocketIO, Redis, and Next.js, it features smooth real- time syncing, reconnect logic, and a clean interface optimized for both desktop and mobile. ScoreHub blends utility with polish — fast, intuitive, and made for the chaotic fun of game nights.',
-link: '/projects/score_hub',
-    }
+        title: 'Automated Musicians',
+        duration: '2022',
+        summary: 'A creative fusion of music theory, pattern recognition, and algorithmic composition. This project analyzes sheet music, converts it into ABC notation, learns musical structures, and generates new melodies automatically.<br/><br/>Originally built as a UNB capstone and later featured on CBC Radio for its innovative approach to AI-driven music.',
+        link: '/projects/Automated_Musicians',
+    },
+    //     {
+    //         title: 'ScoreHub',
+    //         duration: 'September 2025 - Present',
+    //         summary: 'ScoreHub is a real-time multiplayer web application designed to make tracking scores in card and party games effortless. It replaces messy paper score sheets with an interactive, synchronized scoreboard that updates live across all players’ devices, letting everyone stay focused on the game instead of the math.<br /><br /> Built with Flask - SocketIO, Redis, and Next.js, it features smooth real- time syncing, reconnect logic, and a clean interface optimized for both desktop and mobile. ScoreHub blends utility with polish — fast, intuitive, and made for the chaotic fun of game nights.',
+    // link: '/projects/score_hub',
+    //     }
 ]

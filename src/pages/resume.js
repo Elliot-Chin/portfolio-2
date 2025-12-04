@@ -112,6 +112,8 @@ export default function Resume() {
                 <meta name="description" content="Resume overview of Elliot Chin" />
             </Head>
 
+            {loading.state && <Loader pageName={loading.name} />}
+
             {/* translucent wavy orange gradient background */}
             <Navbar />
 
@@ -251,7 +253,7 @@ export default function Resume() {
                                         </Chip>
                                     ))}
                                 </div>
-                                <Button variant="flat" color="warning" className="!text-white" onPress={() => { router.push(p.link), setLoading(true) }}>
+                                <Button variant="flat" color="warning" className="!text-white" onPress={() => { router.push(p.link), setLoading({ state: true, name: p.title}) }}>
                                     See More
                                 </Button>
                             </div>
@@ -275,7 +277,6 @@ export default function Resume() {
             </Section>
 
             <BackToTopButton />
-            {loading.state && <Loader pageName={loading.name} />}
 
             <style jsx global>{`
         @keyframes fadein {

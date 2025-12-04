@@ -188,20 +188,20 @@ export const timeline = [
         ],
         tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"]
     },
-    {
-        id: "2025-scorehub",
-        year: 2025,
-        title: '<span class="!text-amber-950">Project<span> — <span class="!text-red-800">ScoreHub',
-        desc: "Multiplayer chaos manager disguised as a score tracker.",
-        type: "project",
-        link: "/projects/Score_Hub",
-        details: [
-            "Real-time rooms with sockets, edge cases, and polite disconnects.",
-            "Score calculators for niche card games (zero rage-quits… mostly).",
-            "UI that feels like a chill friend tapping the scoreboard for you."
-        ],
-        tech: ["Next.js", "Flask", "Full-Stack Development", "Web App"]
-    },
+    // {
+    //     id: "2025-scorehub",
+    //     year: 2025,
+    //     title: '<span class="!text-amber-950">Project<span> — <span class="!text-red-800">ScoreHub',
+    //     desc: "Multiplayer chaos manager disguised as a score tracker.",
+    //     type: "project",
+    //     link: "/projects/Score_Hub",
+    //     details: [
+    //         "Real-time rooms with sockets, edge cases, and polite disconnects.",
+    //         "Score calculators for niche card games (zero rage-quits… mostly).",
+    //         "UI that feels like a chill friend tapping the scoreboard for you."
+    //     ],
+    //     tech: ["Next.js", "Flask", "Full-Stack Development", "Web App"]
+    // },
     {
         id: 'future plans',
         year: `${new Date().getFullYear()}+`,
