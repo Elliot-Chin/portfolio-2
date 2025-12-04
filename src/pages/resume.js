@@ -152,9 +152,9 @@ export default function Resume() {
 
                             {/* UPDATED stats row */}
                             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-                                <Stat label="Years Work Experience" value={stats.yearsExpDisplay} size="3rem" />
-                                <Stat label="Favourite Languages" value="JS · Python" size='1.7rem' />
-                                <Stat label="Core Stack" value="Next.js · Flask" size='1.5rem' />
+                                <Stat label="Years Work Experience" value={stats.yearsExpDisplay} className={'!text-3xl'}/>
+                                <Stat label="Favourite Languages" value="JS · Python" className={'!text-md'}/>
+                                <Stat label="Core Stack" value="NextJS · Flask" className={'!text-md'} />
                             </div>
 
                         </div>
@@ -324,11 +324,11 @@ function Tag({ icon, text }) {
     )
 }
 
-function Stat({ label, value, size }) {
+function Stat({ label, value, size, className }) {
     return (
         <div className="rounded-xl border border-amber-100 flex flex-col justify-between bg-white/80 p-3">
             <div
-                className="text-amber-900 font-extrabold md:text-2xl"
+                className={`text-amber-900 font-extrabold md:text-2xl ${className}`}
                 style={size ? { fontSize: size } : {}}
             >
                 {value}
