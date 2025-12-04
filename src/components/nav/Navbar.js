@@ -1,124 +1,167 @@
-import { ApartmentOutlined, AssignmentOutlined, FaceRetouchingNaturalOutlined, ConnectWithoutContactOutlined, LightModeOutlined, DarkModeOutlined, DarkModeRounded, DarkModeTwoTone } from "@mui/icons-material"
-import { Navbar, NavbarContent, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarBrand, NavbarItem, Switch } from "@nextui-org/react"
-import { Image } from "@nextui-org/react"
+// components/nav/Navbar.jsx
+import { useEffect, useState, useCallback } from "react"
+import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
 import { Loader } from "./Loader"
-import { useTheme } from "@/utils/ThemeProvider"
+import { Menu as MenuIcon, Close as CloseIcon, AccountTreeOutlined } from "@mui/icons-material"
+import {
+    ApartmentOutlined,
+    ArticleOutlined,
+    ContactSupportOutlined,
+    HomeOutlined,
+} from "@mui/icons-material"
 
-export const Nav = ({ currentPage }) => {
-    const [isMenuOpen, setMenuOpen] = useState(false)
-    const [loading, setLoading] = useState({ status: false, pageName: '' })
+export default function Navbar({ pageName = '' }) {
     const router = useRouter()
-    const theme = useTheme()
+    const [selectedName, setSelectedName] = useState("")
+    const [isLoading, setLoading] = useState(false)
+    const [open, setOpen] = useState(false)
 
-    const menuItems = [
-        {
-            icon: <FaceRetouchingNaturalOutlined htmlColor="dark:white" fontSize="lg" />,
-            key: 'About Me',
-            action: () => { router.push('/about') }
-        },
-        {
-            icon: <ApartmentOutlined htmlColor="dark:white" fontSize="lg" />,
-            key: 'Experiences',
-            action: () => { router.push('/experiences') }
-        },
-        {
-            icon: <AssignmentOutlined htmlColor="dark:white" fontSize="lg" />,
-            key: 'Projects',
-            action: () => { router.push('/projects') }
-        },
-        {
-            icon: <ConnectWithoutContactOutlined htmlColor="dark:white" fontSize="lg" />,
-            key: 'Contact',
-            action: () => { router.push('/contact') }
-        },
+    const links = [
+        { href: "/", label: "Home", icon: <HomeOutlined fontSize="small" /> },
+        { href: "/experiences", label: "Experiences", icon: <ApartmentOutlined fontSize="small" /> },
+        { href: "/projects", label: "Projects", icon: <AccountTreeOutlined fontSize="small" /> },
+        { href: "/resume", label: "Resume", icon: <ArticleOutlined fontSize="small" /> },
+        { href: "/contact", label: "Contact", icon: <ContactSupportOutlined fontSize="small" /> },
     ]
 
-    const handleNavClick = (e) => {
-        e.action()
-        setLoading((prev) => ({ ...prev, status: true, pageName: e.key }))
+    const isActive = (href) => router.pathname === href
+    const currentPage = links.find((l) => isActive(l.href))
 
-        if (currentPage == e.key) {
-            setTimeout(() => {
-                setLoading((prev) => ({ ...prev, status: false }))
-            }, 500)
-        }
-    }
-
+    // lock body scroll when menu is open
     useEffect(() => {
-        setLoading((prev) => ({ ...prev, status: false, pageName: currentPage }))
-    }, [currentPage])
+        if (open) document.body.classList.add("overflow-hidden")
+        else document.body.classList.remove("overflow-hidden")
+        return () => document.body.classList.remove("overflow-hidden")
+    }, [open])
+
+    // close menu on route change start
+    useEffect(() => {
+        const handleStart = () => setOpen(false)
+        router.events.on("routeChangeStart", handleStart)
+        return () => router.events.off("routeChangeStart", handleStart)
+    }, [router.events])
+
+    // stop loader on route complete/error
+    useEffect(() => {
+        const stop = () => setLoading(false)
+        router.events.on("routeChangeComplete", stop)
+        router.events.on("routeChangeError", stop)
+        return () => {
+            router.events.off("routeChangeComplete", stop)
+            router.events.off("routeChangeError", stop)
+        }
+    }, [router.events])
+
+    // close on ESC
+    useEffect(() => {
+        const onKey = (e) => e.key === "Escape" && setOpen(false)
+        window.addEventListener("keydown", onKey)
+        return () => window.removeEventListener("keydown", onKey)
+    }, [])
+
+    const navOrNoop = useCallback(
+        (href, label, e) => {
+            if (isActive(href)) {
+                e?.preventDefault()
+                setOpen(false)
+                return
+            }
+            setSelectedName(label)
+            setLoading(true)
+            setOpen(false)
+        },
+        [router.pathname]
+    )
 
     return (
         <>
-            {loading.status && <Loader pageName={loading.pageName} />}
+            {isLoading && <Loader pageName={selectedName} />}
 
-            <Navbar className="bg-transparent dark:text-white text-black" onMenuOpenChange={setMenuOpen}>
-                <NavbarContent className="flex flex-row lg:hidden">
-                    <div className="w-full lg:hidden">
-                        <NavbarBrand>
-                            <Image src={"/icons/logo_black_transparent.png"} height={48} width={48} alt="logo" priority='true' className="dark:hidden" />
-                            <Image src={"/icons/logo_transparent.png"} height={48} width={48} alt="logo" priority='true' className="dark:flex hidden" />
-                            <span className="font-raleway">Elliot Chin | Portfolio</span>
-                        </NavbarBrand>
+            {/* Top bar */}
+            <nav className="fixed top-0 left-0 w-full z-50 bg-black/20 backdrop-blur-md border-b border-white/10">
+                <div className="mx-auto max-w-6xl px-4 h-14 flex items-center">
+                    {/* MOBILE: current page title (left) */}
+                    <div className="sm:hidden flex items-center gap-2 text-amber-200 font-raleway font-semibold tracking-wide">
+                        {currentPage?.icon}
+                        {currentPage?.label || pageName}
                     </div>
 
-                    <NavbarMenu className="bg-slate-600 bg-opacity-20 glass-effect gap-5 lg:hidden">
-                        {menuItems?.map((entry, index) => (
-                            <NavbarMenuItem className="transition duration-300 hover:cursor-pointer" key={`${entry.key}-${index}`} onClick={() => { handleNavClick(entry) }}>
-                                <span className="text-3xl lg:text-5xl font-montserrat text-center px-2 rounded-lg">{entry.icon}</span>
-                                <span className={`text-3xl lg:text-5xl font-montserrat dark:text-slate-200 text-slate-950`}>{entry.key}</span>
-                            </NavbarMenuItem>
-                        ))}
-                    </NavbarMenu>
+                    {/* Desktop links (center) — unchanged from your original desktop layout */}
+                    <ul className="hidden sm:flex justify-center gap-8 w-full text-lg text-amber-200">
+                        {links.map(({ href, label, icon }) => {
+                            const active = isActive(href)
+                            return (
+                                <li key={href} className="relative">
+                                    <Link
+                                        href={href}
+                                        aria-current={active ? "page" : undefined}
+                                        aria-disabled={active ? "true" : undefined}
+                                        onClick={(e) => navOrNoop(href, label, e)}
+                                        className={`flex items-center gap-2 transition-colors ${active
+                                            ? "text-amber-400 pointer-events-none cursor-default"
+                                            : "hover:text-amber-400"
+                                            }`}
+                                    >
+                                        {icon}
+                                        {label}
+                                    </Link>
+                                    {active && (
+                                        <span className="absolute -bottom-2 left-0 right-0 mx-auto h-[2px] w-full bg-amber-400 rounded-full" />
+                                    )}
+                                </li>
+                            )
+                        })}
+                    </ul>
 
-                    <div className="flex flex-col gap-2" >
-                        <Switch
-                            onClick={() => theme.toggleTheme()}
-                            color="default"
-                            endContent={<DarkModeOutlined />}
-                            startContent={<LightModeOutlined />}
-                            classNames={{
-                                label: 'force-white',
-                                wrapper: 'bg-slate-950'
-                            }}
-                        />
+                    {/* Mobile hamburger (right) */}
+                    <div className="sm:hidden ml-auto">
+                        <button
+                            aria-label={open ? "Close menu" : "Open menu"}
+                            onClick={() => setOpen((v) => !v)}
+                            className="p-2 rounded-xl text-amber-200 hover:text-amber-400 hover:bg-white/5 active:scale-95 transition"
+                        >
+                            {open ? <CloseIcon /> : <MenuIcon />}
+                        </button>
                     </div>
+                </div>
+            </nav>
 
-                    <NavbarMenuToggle aria-label={isMenuOpen ? 'Close' : 'Open'} />
-                </NavbarContent>
+            {/* Mobile full-screen overlay menu (unchanged) */}
+            <div
+                className={`sm:hidden fixed inset-0 z-[49] transition-opacity duration-200 ${open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+                    }`}
+            >
+                {/* background */}
+                <div
+                    onClick={() => setOpen(false)}
+                    className="absolute inset-0 bg-black/70 backdrop-blur-md"
+                />
 
-                <NavbarContent className="hidden lg:flex" justify="center">
-                    <NavbarBrand className="border-r pr-5 border-slate-600">
-                    <Image src={"/icons/logo_black_transparent.png"} height={40} width={40} alt="logo" priority='true' className="dark:hidden" />
-                            <Image src={"/icons/logo_transparent.png"} height={40} width={40} alt="logo" priority='true' className="dark:flex hidden" />
-                        <span className="font-raleway">Elliot Chin | Portfolio</span>
-                    </NavbarBrand>
-
-                    {menuItems?.map((entry, index) => (
-                        <NavbarItem className="transition duration-300 hover:cursor-pointer" key={`${entry.key}-${index}`} onClick={() => { handleNavClick(entry) }}>
-                            <span className="text-2xl font-montserrat text-center px-2 rounded-lg dark:text-white text-black">{entry.icon}</span>
-                            <span className={`text-2xl font-montserrat text-black dark:text-slate-200`}>{entry.key}</span>
-                        </NavbarItem>
-                    ))}
-
-                    <div className="flex flex-col gap-2" >
-                        <Switch
-                            onClick={() => theme.toggleTheme()}
-                            color="default"
-                            isSelected={theme.theme == 'light'}
-                            endContent={<DarkModeOutlined />}
-                            startContent={<LightModeOutlined />}
-                            classNames={{
-                                label: 'force-white',
-                                wrapper: 'bg-slate-950'
-                            }}
-                        />
-                    </div>
-
-                </NavbarContent>
-            </Navbar>
+                {/* panel */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 text-amber-100">
+                    {links.map(({ href, label, icon }) => {
+                        const active = isActive(href)
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                aria-current={active ? "page" : undefined}
+                                aria-disabled={active ? "true" : undefined}
+                                onClick={(e) => navOrNoop(href, label, e)}
+                                className={`w-full max-w-sm text-center py-4 rounded-2xl border text-lg font-medium tracking-wide flex items-center justify-center gap-3 transition
+                  ${active
+                                        ? "text-amber-400 border-amber-400/60 pointer-events-none cursor-default bg-white/5"
+                                        : "bg-white/5 hover:bg-white/10 active:bg-white/15 border-white/10"
+                                    }`}
+                            >
+                                {icon}
+                                {label}
+                            </Link>
+                        )
+                    })}
+                </div>
+            </div>
         </>
     )
 }

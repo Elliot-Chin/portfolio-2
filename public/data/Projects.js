@@ -54,24 +54,6 @@ export const exp = {
     },
     duration: '2021, September - Present',
     TLDR: "The Expense Tracker is a tool I developed for managing and recording my daily expenses efficiently. It allows me to log and categorize my expenditures, add monthly budgets to monitor my spending, and instantly see if I've overspent or have extra savings for any given month. With customizable categories, detailed reports, and visualizations, I gain valuable insights into my spending habits, helping me identify areas for potential savings. The user-friendly interface makes managing my finances intuitive and straightforward, making the Expense Tracker my personal financial assistant for achieving my savings goals with ease.",
-    languages: [
-        {
-            label: "JavaScript [76.1%]",
-            value: 76.1,
-        },
-        {
-            label: "Python [18.6%]",
-            value: 18.6,
-        },
-        {
-            label: "HTML [4.7%]",
-            value: 4.7,
-        },
-        {
-            label: "CSS [0.6%]",
-            value: 0.6,
-        }
-    ],
     legacyVersion: "The idea for my Expense Tracker started in 2021 when I wanted to know my spendings. The first prototype was built in Java using Java's Swing UI library, with all information stored in files. Over time, I created additional prototypes, all utilizing Java's Swing UI library.<br /><br /> \
                     \
                     It had multiple panels, and each panel served a different purpose. The \"\"Entry Label panel\"\" was responsible for adding new expenses entries. The \"\"<span className=\"italic\">Stats Panel</span>\"\" displayed a summary of my spendings for the given month. I also have donut graphs that would visualize the amount spent for each category, and calculators to distribute expenses amoung me and my roommates at that time. The \"\"<span className=\"italic\">Report Gen. Panel</span>\"\" allowed me to generate monthly reports in the form of CSV files.",
@@ -97,12 +79,6 @@ export const am = {
     cbcLogoImg: '/projects/am/CBC_logo.svg',
     TLDR: 'This project, conducted during our senior year engineering capstone, aimed to explore automated music generation through programmed music theory and pattern recognition. Divided into three key segments: Musical Algorithms, Pattern Recognition and Extraction, and Music Composition Generator, we sought to develop a system capable of autonomously crafting musically coherent compositions, with each segment building the foundation for the next.',
     ytVideoID: 'sYTcTymlJhc',
-    languages: [
-        {
-            label: "Python [100%]",
-            value: 100,
-        },
-    ],
     musicAlgorithmsDesc: 'In this initial phase, a deep-dive research was conducted to understand the algorithmic essence in music theory. Various code models mirroring this algorithmic nature were studied, analyzing music and setting the groundwork for the creation of new melodies, such as Chords and Triads, Cadences, Musical Scales, Rythm and Time Signatures.',
     patternExtractionDesc: 'Moving on to the next section, we chose sheet music instead of sound files, in line with our main emphasis on music theory. We encoded the sheet music into \'.ABC\' format, and fed hundreds of compositions into our system, which aided in identifying recurring patterns. This data served as a fundamental resource for grasping common musical structures.',
     compositionGenDesc: 'The final stage of our project was the merging of the identified musical patterns. Utilizing our earlier developed musical algorithm models, we aimed to replicate the complex process of music composition. The integration of these patterns through our algorithms led to the creation of new, coherent songs, thus fulfilling our objective of automated music generation.',
@@ -145,42 +121,6 @@ export const am = {
         lg_size: 'w-1/2',
     }
 }
-
-export const sts = {
-    stsLogoImg: {
-        alt: 'Automated Musicians Banner',
-        height: 512,
-        src: '/projects/sts/Logo.png',
-        width: 512,
-    },
-    duration: '2021, September - 2021, December',
-    projectRepo: 'https://github.com/Elliot-Chin/StudentTrackingSystem-1',
-    TLDR: "During the 'Software Quality and Project Management' course at UNB, I engaged in a project to streamline school advisors' management of student and course data. The task entailed processing text files into analytics, presented on a dashboard and evaluated through user testing by the class and professor. Utilizing agile scrum, we held pre-class standups for progress reporting and pair programming for feature development, culminating in a robust solution with a full CI/CD pipeline, live hosting, and comprehensive test coverage. This facilitative dashboard led to my recruitment by the professor to expand a similar tool for broader departmental use, transitioning from a class project to a larger-scale initiative.",
-
-    languages: [
-        {
-            label: "Python [85.9%]",
-            value: 85.9,
-        },
-        {
-            label: "HTML [10.6%]",
-            value: 10.6,
-        },
-        {
-            label: "CSS [3.5%]",
-            value: 3.5,
-        },
-    ],
-
-    projectOutlineDesc: "The University of New Brunswick's engineering faculty needs a web-based system to monitor student progress, schedules, and enrollments using raw data from student files. Three user types will use this system: Program Advisors for creating personalized student audits and schedules, Program Coordinators for generating various student group reports and rankings, and Accreditation Coordinators for producing accreditation-related reports. Although multiple engineering programs will use the application, only one program coordinator will have access to upload the raw data. With sufficient security, students could also use the system for unofficial progress audits.",
-    initPhaseDesc: "In the initial phase of our project, I was new to the realm of web development and the frameworks that were to be employed. Despite my initial unfamiliarity, I was able to contribute to the development of database models essential for data storage. This foundational work was crucial as it laid the groundwork for the more advanced functionalities that were to follow. We decided to use Django as the framework since we were planning on using Python for the backend, and Django is adept at creating web apps using Python, setting a solid foundation for the subsequent phases of the project.",
-    progressDesc: "As the project progressed, we unanimously chose to switch the user interface to React, anticipating a more interactive and user-centric experience. At this point, we had achieved several system requirements. Our initial demonstration went well, highlighting the basic functionalities we had accomplished. This milestone reflected our escalating proficiency and the potency of our collaborative efforts.",
-    finalStretchDesc: "As the semester neared its end, we were on the brink of meeting all the outlined requirements. The system had now become adept at producing significant information for advisors, a functionality that was pivotal to the project's goals. The considerable progress we achieved was a testament to the team's hard work and unwavering commitment.",
-    finalThoughts: "Reflecting on this endeavor, it was a rewarding and enjoyable project. The camaraderie and collective effort of a remarkable team made the journey worthwhile. Everyone was eager to share their knowledge, bridging the skill gap, and fostering a culture of mutual growth and accomplishment. Through this project, we not only built a functional system but also forged lasting relationships and acquired invaluable skills that would serve us well in our future endeavors.",
-}
-
-
-
 
 
 export const ECAvatarLink = 'https://media.licdn.com/dms/image/D5603AQGd9kzqFjrfmw/profile-displayphoto-shrink_200_200/0/1710538487473?e=2147483647&v=beta&t=Y8wQXmO8Hle0rFhdqg-lCYLG2Zwslu2Dv9RSQ3-oaKA'

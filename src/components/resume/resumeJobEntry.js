@@ -1,51 +1,92 @@
-import { AddOutlined, CalendarMonth, GpsFixed, PersonOutline, RemoveOutlined } from "@mui/icons-material";
-import { Button, Divider } from "@nextui-org/react";
-import { useRouter } from "next/router";
-
-
+import {
+    AddOutlined,
+    CalendarMonth,
+    GpsFixed,
+    PersonOutline,
+    RemoveOutlined,
+} from "@mui/icons-material"
+import { Button, Divider } from "@nextui-org/react"
+import { useRouter } from "next/router"
 
 export default function ResumeJobEntry({ toggle, bool, title, jobs, setLoading }) {
-
     const router = useRouter()
 
     return (
         <>
-            <div className="w-full px-2 mt-3 flex hover:cursor-pointer items-center " onClick={() => toggle((p) => !p)}>
-                <span className="dark:text-white font-montserrat text-2xl pr-3 lg:text-4xl">{title || '<TITLE>'}</span>
-                <div className="border w-full h-0 my-auto mr-2 border-blue-600" />
-                <div className="dark:text-white font-2xl  flex items-center">
-                    {bool && <RemoveOutlined className="text-red-600" /> || <AddOutlined className="text-green-600" />}
+            <div
+                className="w-full mt-1 flex items-center select-none cursor-pointer"
+                onClick={() => toggle((p) => !p)}
+            >
+                <span className="font-bold text-2xl lg:text-4xl text-white
+          ">
+                    {title || "<TITLE>"}
+                </span>
+                <div className="mx-3 h-[2px] flex-1 bg-gradient-to-r from-amber-500  via-yellow-400 to-amber-300 dark:from-amber-400 dark:via-amber-300 dark:to-yellow-300 rounded-full" />
+                <div>
+                    {bool ? (
+                        <RemoveOutlined className="text-red-500 transition-transform duration-200" />
+                    ) : (
+                        <AddOutlined className="text-green-500 transition-transform duration-200" />
+                    )}
                 </div>
             </div>
 
-            <div className={`${bool && 'show-grid' || 'hidden-grid'}`}>
-                <div className="flex flex-col gap-2">
-                    {
-                        jobs?.map((job, index) => (
-                            <div key={index}>
-                                <div className={`w-full px-2 mt-3 gap-y-2`}>
-                                    <div className="flex gap-2">
-                                        <PersonOutline className="text-2xl  dark:text-white" />
-                                        <span className="dark:text-white font-raleway text-xl lg:text-2xl">{job.title}</span>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <CalendarMonth className="text-2xl  dark:text-white" />
-                                        <span className="dark:text-white font-raleway lg:text-xl">{job.duration}</span>
-                                    </div>
-                                    <div className="flex gap-2">
-                                        <GpsFixed className="text-2xl  dark:text-white" />
-                                        <span className="dark:text-white font-raleway lg:text-xl">{job.location}</span>
-                                    </div>
-                                    <p className="dark:text-white font-montserrat text-sm mt-3 lg:text-medium" dangerouslySetInnerHTML={{ __html: job.description }} />
+            <div className={`${(bool && "show-grid") || "hidden-grid"}`}>
+                <div className="flex flex-col gap-4 mt-3">
+                    {jobs?.map((job, index) => (
+                        <div key={index}>
+                            <div className="w-full gap-y-2">
+                                <div className="flex gap-2 items-center text-white font-semibold">
+                                    <PersonOutline className="text-2xl 
+                    " />
+                                    <span className="font-raleway lg:text-2xl text-white font-semibold ">
+                                        {job.title}
+                                    </span>
                                 </div>
 
-                                {index != jobs.length - 1 && <Divider className="bg-blue-600 w-11/12 mx-auto my-3" />}
-                            </div >
-                        ))
+                                <div className="flex gap-2 items-center mt-1 text-slate-100/80 font-semibold">
+                                    <CalendarMonth className="text-2xl 
+                    " />
+                                    <span className="font-raleway lg:text-xl text-slate-310/780 font-semibold ">
+                                        {job.duration}
+                                    </span>
+                                </div>
 
-                    }
-                    <div className="w-full px-2 mt-5">
-                        <Button color="success" variant="flat" className="font-oswald dark:text-white lg:text-2xl" onClick={() => {setLoading({state: true, name: 'experiences'}), router.push('/experiences')}}>See More</Button>
+                                <div className="flex gap-2 items-center mt-1 text-slate-100/80 font-semibold">
+                                    <GpsFixed className="text-2xl 
+                    " />
+                                    <span className="font-raleway lg:text-xl text-slate-100/80 font-semibold ">
+                                        {job.location}
+                                    </span>
+                                </div>
+
+                                <p
+                                    className="font-montserrat mt-3 leading-relaxed text-white "
+                                    dangerouslySetInnerHTML={{ __html: job.description }}
+                                />
+                            </div>
+
+                            {index !== jobs.length - 1 && (
+                                <Divider className="bg-gradient-to-r from-transparent via-amber-300/60 to-transparent dark:via-amber-400/40 w-11/12 mx-auto my-3 h-[2px]" />
+                            )}
+                        </div>
+                    ))}
+
+                    <div className="w-full mt-2">
+                        <Button
+                            variant="flat"
+                            className="
+                  font-montserrat lg:text-2xl
+                text-white shadow-md hover:opacity-95
+                hover:!bg-amber-900
+                "
+                            onPress={() => {
+                                setLoading({ state: true, name: "experiences" })
+                                router.push("/experiences")
+                            }}
+                        >
+                            See More
+                        </Button>
                     </div>
                 </div>
             </div>
