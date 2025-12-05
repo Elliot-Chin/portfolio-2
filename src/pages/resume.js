@@ -152,7 +152,7 @@ export default function Resume() {
 
                             {/* UPDATED stats row */}
                             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-                                <Stat label="Years Work Experience" value={stats.yearsExpDisplay} className={'!text-3xl'}/>
+                                <Stat label="Years With SIEMENS" value={stats.yearsExpDisplay} className={'!text-3xl'}/>
                                 <Stat label="Favourite Languages" value="JS · Python" className={'!text-md'}/>
                                 <Stat label="Core Stack" value="NextJS · Flask" className={'!text-md'} />
                             </div>
