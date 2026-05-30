@@ -169,7 +169,8 @@ export const timeline = [
             "Flask serving clean JSON straight to the Next.js dashboard.",
             "UI focuses on clarity: every cent, every category, zero clutter."
         ],
-        tech: ["Next.js", "Flask", "PostgreSQL", "Tailwind"]
+        tech: ["Next.js", "Flask", "PostgreSQL", "Tailwind"],
+        deploy: "expenses_recorder"
     },
 
     {
@@ -186,7 +187,8 @@ export const timeline = [
             "Presented at UNB as a capstone project, later featured on CBC Radio for its innovation in AI-driven music.",
             "Team project built with collaboration across data analysis, algorithm design, and full-stack development."
         ],
-        tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"]
+        tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"],
+        deploy: "automated_musicians"
     },
     // {
     //     id: "2025-scorehub",
