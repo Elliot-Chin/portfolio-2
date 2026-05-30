@@ -69,13 +69,13 @@ function ProjectPanel({ project, index, onOpen }) {
     return (
         <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-blue-200">
-                    <span className="text-slate-300">&gt;_</span>
+                <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
+                    <span className="text-amber-100/85">&gt;_</span>
                     <span>~/projects/{label.toLowerCase().replace(/\s+/g, "-")}</span>
                 </div>
                 <div className="flex items-center gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
                     <span>
-                        Branch: <span className="text-emerald-300">{metadata.branch}</span>
+                        Branch: <span className="text-amber-300">{metadata.branch}</span>
                     </span>
                     <span>{metadata.version}</span>
                 </div>
@@ -83,14 +83,14 @@ function ProjectPanel({ project, index, onOpen }) {
 
             <div className="grid gap-8 px-6 py-6 lg:grid-cols-[minmax(0,1.65fr)_18rem] lg:px-8 lg:py-7">
                 <div className="min-w-0">
-                    <h2 className="font-montserrat text-[2rem] font-semibold tracking-tight text-blue-100 md:text-[2.3rem]">
+                    <h2 className="font-montserrat text-[2rem] font-semibold tracking-tight text-amber-100 md:text-[2.3rem]">
                         {heading}
                     </h2>
                     <p className="mt-4 max-w-4xl font-montserrat text-lg leading-relaxed text-slate-100/92">
                         {stripTags(project.desc)}
                     </p>
 
-                    <div className="mt-7 font-spacemono text-base font-bold text-emerald-300">
+                    <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
                         {">> "}
                         {project.deploy
                             ? `deploy ${project.deploy.toLowerCase().replace(/\s+/g, "-")} --inspect`
@@ -103,7 +103,7 @@ function ProjectPanel({ project, index, onOpen }) {
                                 <div className="space-y-2 font-spacemono text-[14px] leading-6 text-slate-300/88">
                                     {(project.details ?? []).map((detail, detailIndex) => (
                                         <div key={detailIndex} className="flex gap-3">
-                                            <span className="text-blue-200">+</span>
+                                            <span className="text-amber-200">+</span>
                                             <span>{stripTags(detail)}</span>
                                         </div>
                                     ))}
@@ -124,7 +124,7 @@ function ProjectPanel({ project, index, onOpen }) {
                 </div>
 
                 <aside className="border-l-0 border-slate-200/8 pl-0 lg:border-l lg:pl-8">
-                    <h3 className="font-spacemono text-sm font-bold uppercase tracking-[0.24em] text-blue-100">
+                    <h3 className="font-spacemono text-sm font-bold uppercase tracking-[0.24em] text-amber-100">
                         Metadata
                     </h3>
 
@@ -135,7 +135,7 @@ function ProjectPanel({ project, index, onOpen }) {
                         </div>
                         <div className="flex items-center justify-between gap-6">
                             <dt>Risk Profile:</dt>
-                            <dd className="text-right text-blue-100">{metadata.risk}</dd>
+                            <dd className="text-right text-amber-100">{metadata.risk}</dd>
                         </div>
                     </dl>
 
@@ -144,7 +144,7 @@ function ProjectPanel({ project, index, onOpen }) {
                             {project.tech.map((item) => (
                                 <span
                                     key={item}
-                                    className="border border-blue-200/8 bg-blue-300/10 px-2.5 py-1 font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-blue-100"
+                                    className="border border-amber-200/10 bg-amber-300/10 px-2.5 py-1 font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-amber-100"
                                 >
                                     {item}
                                 </span>
@@ -207,8 +207,8 @@ export default function ProjectsPage() {
                                     <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
                                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
                                 </div>
-                                <div className="font-spacemono text-[clamp(1.5rem,3vw,2.2rem)] leading-tight text-emerald-300">
-                                    <span className="text-cyan-300">visitor@elliot-chin</span>
+                                <div className="font-spacemono text-[clamp(1.5rem,3vw,2.2rem)] leading-tight text-amber-300">
+                                    <span className="text-amber-100">visitor@elliot-chin</span>
                                     <span className="text-slate-200">:~/projects$ </span>
                                     <ReactTyped
                                         strings={["ls -la --deep-inspect"]}

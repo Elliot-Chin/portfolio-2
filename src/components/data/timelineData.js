@@ -155,7 +155,22 @@ export const timeline = [
 
 
     /* ---------------- Projects ---------------- */
-
+    {
+        id: "2026-industrial-protocol-analysis",
+        year: 2026,
+        title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Industrial Protocol Analysis</span>',
+        desc: "Protocol-aware OT security research for OPC UA environments, detection engineering, and industrial traffic inspection workflows.",
+        type: "project",
+        link: "/projects",
+        logo: "/projects/sts/Logo.png",
+        details: [
+            "Researched OPC UA protocol behavior within an R&D lab environment using PLCs, generated OPC UA traffic, Wireshark, and UAExpert to simulate and understand normal and abnormal industrial communication scenarios.",
+            "Developed a Zeek-based protocol-analysis plugin for SINEC Security Monitor to inspect and parse OPC UA traffic and generate event-specific logs for selected cybersecurity monitoring use cases.",
+            "Defined attack procedures and generated test-data scenarios to validate how the plugin detected and logged protocol events, communication behavior, certificate handling, access-level checks, and write-response conditions."
+        ],
+        tech: ["Zeek", "C++", "OPC UA", "Wireshark", "PLCs", "OT Security"],
+        deploy: "industrial_protocol_analysis"
+    },
     {
         id: "2024-expenses-recorder",
         year: 2024,
@@ -190,6 +205,7 @@ export const timeline = [
         tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"],
         deploy: "automated_musicians"
     },
+   
     // {
     //     id: "2025-scorehub",
     //     year: 2025,

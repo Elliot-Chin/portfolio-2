@@ -6,7 +6,7 @@ function NavItem({ item }) {
         return (
             <Link
                 href={item.href}
-                className="font-spacemono text-[12px] font-bold text-slate-200/86 transition hover:text-cyan-200"
+                className="font-spacemono text-[12px] font-bold text-slate-200/86 transition hover:text-amber-200"
             >
                 {item.label}
             </Link>
@@ -17,7 +17,7 @@ function NavItem({ item }) {
         <button
             type="button"
             onClick={item.onClick}
-            className="font-spacemono text-[12px] font-bold text-slate-200/86 transition hover:text-cyan-200"
+            className="font-spacemono text-[12px] font-bold text-slate-200/86 transition hover:text-amber-200"
         >
             {item.label}
         </button>
@@ -46,14 +46,14 @@ export function HomeTopNav({
                     <button
                         type="button"
                         onClick={brandOnClick}
-                        className="font-spacemono text-[1.15rem] font-bold uppercase tracking-[-0.04em] text-blue-200"
+                        className="font-spacemono text-[1.15rem] font-bold uppercase tracking-[-0.04em] text-amber-100"
                     >
                         {brandLabel}
                     </button>
                 ) : (
                     <Link
                         href={brandHref}
-                        className="font-spacemono text-[1.15rem] font-bold uppercase tracking-[-0.04em] text-blue-200"
+                        className="font-spacemono text-[1.15rem] font-bold uppercase tracking-[-0.04em] text-amber-100"
                     >
                         {brandLabel}
                     </Link>

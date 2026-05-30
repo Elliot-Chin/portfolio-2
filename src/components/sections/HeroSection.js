@@ -65,18 +65,18 @@ export function HeroSection({ containerRef }) {
             <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[80%] items-center px-6 pb-16 pt-24 sm:px-10 lg:px-14">
                 <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
                     <div className={`${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
-                        <div className="inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/8 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-300 shadow-[0_0_30px_rgba(45,212,191,0.08)]">
-                            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(74,222,128,0.8)]" />
+                        <div className="inline-flex items-center gap-3 rounded-full border border-amber-300/20 bg-amber-300/8 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-200 shadow-[0_0_30px_rgba(251,146,60,0.08)]">
+                            <span className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]" />
                             <span>System_Active // Secure_Link_Established</span>
                         </div>
 
                         <h1 className="mt-8 max-w-4xl font-spacemono text-[clamp(3rem,8vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-slate-100">
-                            <span className="block text-blue-200">Elliot Chin</span>
+                            <span className="block text-amber-100">Elliot Chin</span>
                             <span className="mt-2 block text-slate-100 text-3xl tracking-normal">JR. Cybersecurity application Specialist</span>
                         </h1>
 
                         <div className="mt-8 min-h-[2rem] flex font-spacemono text-lg text-emerald-300 sm:text-xl">
-                            <span className="mr-3 text-cyan-500">&gt;</span>
+                            <span className="mr-3 text-amber-400">&gt;</span>
                             <Typewriter
                                 options={{
                                     strings: descriptorLines,
@@ -87,7 +87,7 @@ export function HeroSection({ containerRef }) {
                                     pauseFor: 1500,
                                     cursor: "_",
                                     wrapperClassName: "inline",
-                                    cursorClassName: "typewriter-cursor inline-block text-emerald-300",
+                                    cursorClassName: "typewriter-cursor inline-block text-amber-300",
                                 }}
                             />
                         </div>
@@ -120,22 +120,22 @@ export function HeroSection({ containerRef }) {
 
                     <div className={`relative hidden min-h-[540px] lg:flex lg:items-end lg:justify-end ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
                         <div className="relative h-[72vh] w-[30rem] max-h-[820px] min-h-[580px] xl:w-[36rem]">
-                            <div className="absolute inset-x-[12%] bottom-[4%] h-32 rounded-full bg-cyan-400/12 blur-3xl" />
-                            <div className="absolute inset-x-[4%] top-[4%] bottom-[3%] overflow-hidden rounded-[2.35rem] border border-cyan-200/10 bg-slate-950/42 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_50px_rgba(2,8,23,0.34)] backdrop-blur-[3px]">
-                                <div className="absolute inset-x-0 top-0 z-20 flex h-12 items-center justify-between border-b border-cyan-200/10 bg-slate-950/42 px-5">
+                            <div className="absolute inset-x-[12%] bottom-[4%] h-32 rounded-full bg-amber-400/12 blur-3xl" />
+                            <div className="absolute inset-x-[4%] top-[4%] bottom-[3%] overflow-hidden rounded-[2.35rem] border border-amber-200/10 bg-slate-950/42 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_50px_rgba(2,8,23,0.34)] backdrop-blur-[3px]">
+                                <div className="absolute inset-x-0 top-0 z-20 flex h-12 items-center justify-between border-b border-amber-200/10 bg-slate-950/42 px-5">
                                     <div className="flex items-center gap-2">
                                         <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
                                         <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
                                         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
                                     </div>
-                                    <span className="font-spacemono text-[10px] uppercase tracking-[0.3em] text-cyan-200/75">
+                                    <span className="font-spacemono text-[10px] uppercase tracking-[0.3em] text-amber-200/75">
                                         coding_session.exe
                                     </span>
                                 </div>
 
                                 <div className="absolute inset-x-0 top-12 bottom-0 overflow-hidden">
                                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,22,40,0.04),rgba(8,22,40,0.34))] z-10 pointer-events-none" />
-                                    <div className="absolute inset-x-0 top-0 h-px bg-cyan-200/14" />
+                                    <div className="absolute inset-x-0 top-0 h-px bg-amber-200/14" />
                                     <div className="absolute inset-0">
                                         <Model2 modelScale={1.1} modelY={-1.16} cameraZ={1.55} fov={40} dprMax={10} onReady={() => setIsModelReady(true)} />
                                     </div>
