@@ -1,46 +1,39 @@
 import Head from "next/head"
-import { useRef, useState } from "react"
-import { useRouter } from "next/router"
-import { Loader } from "@/components/nav/Loader"
+import { useEffect, useRef } from "react"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { HomeTopNav } from "@/components/nav/HomeTopNav"
 
 import { useScrollProgress } from "@/components/hooks/useScrollProgress"
-import { getJobDuration } from "@/components/utils/getJobDuration"
+import { useScreenSnap } from "@/components/hooks/useScreenSnap"
 import { HeroSection } from "@/components/sections/HeroSection"
 import { AboutIntroSection } from "@/components/sections/AboutIntroSection"
-import { AboutDetailsSection } from "@/components/sections/AboutDetailsSection"
 
 export default function Home() {
-    const [pageLoading, setPageLoading] = useState(false)
-    const [selectedPage, setSelectedPage] = useState("")
-    const router = useRouter()
     const containerRef = useRef(null)
 
     useScrollProgress(containerRef)
+    useScreenSnap(containerRef)
+
+    useEffect(() => {
+        document.body.classList.add("home-grid-bg")
+        return () => document.body.classList.remove("home-grid-bg")
+    }, [])
 
     return (
         <main
             ref={containerRef}
             className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth overscroll-contain"
         >
+            <HomeTopNav containerRef={containerRef} />
             <BackToTopButton targetRef={containerRef} />
             <Head>
                 <title>Elliot Chin — Portfolio</title>
                 <meta name="description" content="Hey — I’m Elliot. I like making things that feel good to use." />
             </Head>
 
-            {pageLoading && <Loader pageName={selectedPage} />}
+            <HeroSection containerRef={containerRef} />
 
-            <HeroSection
-                setSelectedPage={setSelectedPage}
-                setPageLoading={setPageLoading}
-                router={router}
-                containerRef={containerRef}
-            />
-
-            <AboutIntroSection getJobDuration={getJobDuration} />
-
-            <AboutDetailsSection />
+            <AboutIntroSection />
         </main>
     )
 }

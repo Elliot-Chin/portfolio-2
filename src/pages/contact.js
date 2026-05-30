@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser"
 
 import NavBar from "@/components/nav/Navbar"
 import { useScrollProgress } from "@/components/hooks/useScrollProgress"
+import { useScreenSnap } from "@/components/hooks/useScreenSnap"
 import { useDesktop } from "@/components/hooks/useDesktop"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
 
@@ -28,8 +29,9 @@ const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test((v || "").trim
 // ---------- Main ----------
 export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     const containerRef = useRef(null)
-    useScrollProgress(containerRef)
     const isDesktop = useDesktop()
+    useScrollProgress(containerRef)
+    useScreenSnap(containerRef, { enabled: !isDesktop })
 
     const formRef = useRef(null)
     const [toast, setToast] = useState(null)

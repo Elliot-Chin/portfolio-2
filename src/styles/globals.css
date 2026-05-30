@@ -282,6 +282,40 @@ body::after {
     animation: wave var(--bg-speed-3) ease-in-out infinite alternate-reverse;
 }
 
+body.home-grid-bg {
+    background-color: #081628;
+    background-image:
+        linear-gradient(rgba(151, 190, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(151, 190, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 34, 58, 0) 0%, rgba(5, 15, 28, 0.2) 100%);
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0;
+    animation: none;
+    will-change: auto;
+}
+
+body.home-grid-bg::before,
+body.home-grid-bg::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    animation: none;
+}
+
+body.home-grid-bg::before {
+    background:
+        linear-gradient(178deg, transparent 0 calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 41px), transparent calc(100% - 41px)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+    opacity: 1;
+}
+
+body.home-grid-bg::after {
+    background: radial-gradient(circle at 50% -20%, rgba(72, 128, 206, 0.12), transparent 55%);
+    opacity: 1;
+}
+
 /* ---------------------------
    REDUCED MOTION SAFETY
 ---------------------------- */
@@ -371,4 +405,52 @@ body::after {
 
 .animate-skill-out {
     animation: skillOut 0.18s ease-in both;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(191, 219, 254, 0.2);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.home-btn:hover {
+    transform: translateY(-1px);
+}
+
+.home-btn-primary {
+    border-color: rgba(191, 219, 254, 0.6);
+    background: rgb(191, 219, 254);
+    color: rgb(15, 23, 42);
+}
+
+.home-btn-primary:hover {
+    background: rgb(165, 243, 252);
+}
+
+.home-btn-secondary {
+    border-color: rgba(148, 163, 184, 0.25);
+    background: rgba(2, 6, 23, 0.2);
+    color: rgba(241, 245, 249, 0.95);
+}
+
+.home-btn-secondary:hover {
+    border-color: rgba(103, 232, 249, 0.4);
+    background: rgba(34, 211, 238, 0.08);
+}
+
+.home-btn-icon {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    padding: 0.5rem;
+    letter-spacing: normal;
 }

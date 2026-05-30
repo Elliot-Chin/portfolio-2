@@ -4,10 +4,12 @@ import { Experience2 } from "./Experience_2";
 
 export const Model2 = ({
     modelScale = 4,   // how big the avatar looks
+    modelY = -0.89,
     cameraZ = 1.8,    // bring camera closer for bigger look
     fov = 40,         // wider fov can also make it feel larger
     dprMax = 2,       // 2 is crisp on most screens
     className = "",
+    onReady,
 }) => {
     return (
         <Canvas
@@ -16,7 +18,7 @@ export const Model2 = ({
             camera={{ position: [0, 0, cameraZ], fov }}
             gl={{ antialias: true }}
         >
-            <Experience2 modelScale={modelScale} />
+            <Experience2 modelScale={modelScale} modelY={modelY} onReady={onReady} />
         </Canvas>
     );
 };

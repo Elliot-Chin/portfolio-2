@@ -1,38 +1,38 @@
-import { useEffect, useMemo, useState } from "react"
+import dynamic from "next/dynamic"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 import Typewriter from "typewriter-effect"
-import { KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
-import { Model2 } from "@/components/avatar/Model_2"
-import { facts, navLinks } from "@/components/data/heroData"
+import { ArrowOutward, KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
+import { AvatarCanvasSkeleton, HeroSectionOverlaySkeleton } from "@/components/sections/SectionSkeletons"
 
-export function HeroSection({ setSelectedPage, setPageLoading, router, containerRef }) {
-    const shuffledFacts = useMemo(() => {
-        const arr = [...facts]
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1))
-            const t = arr[i]; arr[i] = arr[j]; arr[j] = t
-        }
-        return arr
-    }, [])
+const Model2 = dynamic(
+    () => import("@/components/avatar/Model_2").then((mod) => mod.Model2),
+    { ssr: false, loading: () => <AvatarCanvasSkeleton /> }
+)
 
+const descriptorLines = [
+    "Cybersecurity architecture.",
+    "OT network resilience.",
+    "Infrastructure hardening.",
+]
+
+export function HeroSection({ containerRef }) {
+    const [isModelReady, setIsModelReady] = useState(false)
     const [showScrollHint, setShowScrollHint] = useState(true)
 
-    const handleNavClick = (href, label) => {
-        if (label === "About Me" && containerRef.current) {
-            const secs = Array.from(containerRef.current.querySelectorAll("section[data-fade]"))
-            if (secs.length > 1) secs[1].scrollIntoView({ behavior: "smooth", block: "start" })
-            return
-        }
-        setSelectedPage(label)
-        setPageLoading(true)
-        router.push(href)
+    const goToAbout = () => {
+        if (!containerRef.current) return
+        const secs = Array.from(containerRef.current.querySelectorAll("section[data-fade]"))
+        if (secs.length > 1) secs[1].scrollIntoView({ behavior: "smooth", block: "start" })
     }
 
-    // scroll hint hide on user interaction
     useEffect(() => {
         const el = containerRef.current
         if (!el || !showScrollHint) return
         let userInteracted = false
-        const markInteracted = () => { userInteracted = true }
+        const markInteracted = () => {
+            userInteracted = true
+        }
         const onScroll = () => {
             if (!userInteracted) return
             if (el.scrollTop > 0) setShowScrollHint(false)
@@ -54,73 +54,104 @@ export function HeroSection({ setSelectedPage, setPageLoading, router, container
     return (
         <section
             data-fade
-            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden
-             transition-[opacity,transform] duration-200 ease-linear
-             will-change-[opacity,transform]"
+            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden"
             style={{
-                opacity: "var(--vis, 0)",
-                transform: "translateY(calc((1 - var(--vis, 0)) * 8vh))",
+                opacity: "var(--vis, 1)",
+                transform: "translateY(calc((1 - var(--vis, 1)) * 4vh))",
             }}
         >
-            <div
-                className="absolute inset-x-0 z-0 pointer-events-none
-             bottom-[max(0px,env(safe-area-inset-bottom))]
-             h-[55svh] sm:inset-0 sm:h-full
-             supports-[height:100dvh]:h-[55dvh]"
-            >
-                <Model2 modelScale={0.7} cameraZ={1.5} fov={38} dprMax={2} />
-            </div>
+            {!isModelReady && <HeroSectionOverlaySkeleton />}
 
-            {/* Foreground overlay */}
-            <div className="relative z-10 flex flex-col items-center h-full px-4">
-                <div className="rounded-3xl p-6 sm:p-8 lg:p-10 text-center flex flex-col items-center justify-center">
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 mb-4">
-                        Hey! I’m Elliot.
-                    </h1>
-
-                    <div className="text-sm md:text-2xl lg:text-3xl font-spacemono leading-relaxed text-slate-50 min-h-[4rem] sm:min-h-[4.5rem]">
-                        <Typewriter
-                            options={{
-                                strings: shuffledFacts,
-                                autoStart: true,
-                                loop: true,
-                                delay: 75,
-                                deleteSpeed: 20,
-                                pauseFor: 2200,
-                                cursor: "▍",
-                                wrapperClassName: "inline whitespace-pre-wrap align-baseline",
-                                cursorClassName: "typewriter-cursor inline-block align-baseline ml-2 opacity-90",
-                            }}
-                        />
-                    </div>
-
-                    <div className="mt-4 flex gap-3 justify-center items-center flex-wrap">
-                        {navLinks.map(({ label, href, Icon }) => (
-                            <button
-                                key={href}
-                                onClick={() => handleNavClick(href, label)}
-                                className="text-amber-950 font-semibold px-6 py-2 bg-gradient-to-r from-amber-500 to-pink-400 shadow-md rounded-full
-                                focus:border-none outline-none
-                                text-sm w-40 sm:w-48
-                                hover:-translate-y-1 hover:from-pink-400 hover:to-amber-500
-                                transition-transform duration-100"
-                                // className="glass px-4 py-3 w-32 sm:w-40 justify-center rounded-xl flex items-center gap-2 transition transform hover:-translate-y-2 !focus:translate-y-0 active:translate-y-0"
-                                aria-label={label}
-                            >
-                                <Icon fontSize="small" />
-                                <span className="ml-2 text-sm sm:text-base font-medium">{label}</span>
-                            </button>
-                        ))}
-                    </div>
-
-                    {showScrollHint && (
-                        <div className="flex flex-col gap-2 mt-[5vh] font-montserrat text-sm sm:text-xl items-center justify-center animate-bounce">
-                            <span>Scroll</span>
-                            <KeyboardDoubleArrowDownOutlined fontSize="medium" />
+            <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[80%] items-center px-6 pb-16 pt-24 sm:px-10 lg:px-14">
+                <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
+                    <div className={`${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
+                        <div className="inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-400/8 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-300 shadow-[0_0_30px_rgba(45,212,191,0.08)]">
+                            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(74,222,128,0.8)]" />
+                            <span>System_Active // Secure_Link_Established</span>
                         </div>
-                    )}
+
+                        <h1 className="mt-8 max-w-4xl font-spacemono text-[clamp(3rem,8vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-slate-100">
+                            <span className="block text-blue-200">Elliot Chin</span>
+                            <span className="mt-2 block text-slate-100 text-3xl tracking-normal">JR. Cybersecurity application Specialist</span>
+                        </h1>
+
+                        <div className="mt-8 min-h-[2rem] flex font-spacemono text-lg text-emerald-300 sm:text-xl">
+                            <span className="mr-3 text-cyan-500">&gt;</span>
+                            <Typewriter
+                                options={{
+                                    strings: descriptorLines,
+                                    autoStart: true,
+                                    loop: true,
+                                    delay: 42,
+                                    deleteSpeed: 18,
+                                    pauseFor: 1500,
+                                    cursor: "_",
+                                    wrapperClassName: "inline",
+                                    cursorClassName: "typewriter-cursor inline-block text-emerald-300",
+                                }}
+                            />
+                        </div>
+
+                        <p className="mt-8 max-w-3xl text-balance font-montserrat text-lg leading-relaxed text-slate-200/88 sm:text-xl">
+                            Software developer with experience across cybersecurity, OT/industrial networking,
+                            infrastructure management, full-stack application development, and applied AI research
+                            support. Specialized in bridging the gap between legacy industrial stability and modern
+                            digital security architectures.
+                        </p>
+
+                        <div className="mt-10 flex flex-wrap gap-4">
+                            <button
+                                onClick={goToAbout}
+                                className="home-btn home-btn-primary group"
+                            >
+                                <span>Initiate_Handshake</span>
+                                <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                            </button>
+
+                            <Link
+                                href="/wtr/EC_Resume.pdf"
+                                target="_blank"
+                                className="home-btn home-btn-secondary"
+                            >
+                                Download_Manifest
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className={`relative hidden min-h-[540px] lg:flex lg:items-end lg:justify-end ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
+                        <div className="relative h-[72vh] w-[30rem] max-h-[820px] min-h-[580px] xl:w-[36rem]">
+                            <div className="absolute inset-x-[12%] bottom-[4%] h-32 rounded-full bg-cyan-400/12 blur-3xl" />
+                            <div className="absolute inset-x-[4%] top-[4%] bottom-[3%] overflow-hidden rounded-[2.35rem] border border-cyan-200/10 bg-slate-950/42 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_50px_rgba(2,8,23,0.34)] backdrop-blur-[3px]">
+                                <div className="absolute inset-x-0 top-0 z-20 flex h-12 items-center justify-between border-b border-cyan-200/10 bg-slate-950/42 px-5">
+                                    <div className="flex items-center gap-2">
+                                        <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
+                                        <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
+                                        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
+                                    </div>
+                                    <span className="font-spacemono text-[10px] uppercase tracking-[0.3em] text-cyan-200/75">
+                                        coding_session.exe
+                                    </span>
+                                </div>
+
+                                <div className="absolute inset-x-0 top-12 bottom-0 overflow-hidden">
+                                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,22,40,0.04),rgba(8,22,40,0.34))] z-10 pointer-events-none" />
+                                    <div className="absolute inset-x-0 top-0 h-px bg-cyan-200/14" />
+                                    <div className="absolute inset-0">
+                                        <Model2 modelScale={1.1} modelY={-1.16} cameraZ={1.55} fov={40} dprMax={10} onReady={() => setIsModelReady(true)} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            {showScrollHint && isModelReady && (
+                <div className="absolute inset-x-0 bottom-8 z-20 flex flex-col items-center gap-2 font-montserrat text-xs uppercase tracking-[0.25em] text-slate-300/70">
+                    <span>Scroll</span>
+                    <KeyboardDoubleArrowDownOutlined fontSize="small" />
+                </div>
+            )}
         </section>
     )
 }

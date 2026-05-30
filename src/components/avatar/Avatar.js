@@ -7,7 +7,7 @@ import React, { useEffect, useRef } from 'react'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
 import { useRouter } from 'next/router'
 
-export function Avatar(props) {
+export function Avatar({ onReady, ...props }) {
     const group = useRef()
     const { basePath } = useRouter()
     const { nodes, materials } = useGLTF(basePath + '/models/avatar_2.glb')
@@ -21,6 +21,10 @@ export function Avatar(props) {
     useEffect(() => {
         actions["Waving"].play()
     }, [props.animate])
+
+    useEffect(() => {
+        onReady?.()
+    }, [onReady, nodes, materials, actions])
 
 
     return (

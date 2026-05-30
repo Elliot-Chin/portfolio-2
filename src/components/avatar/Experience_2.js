@@ -2,7 +2,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Avatar2 } from "./Avatar_2";
 
-export const Experience2 = ({ modelScale = 4 }) => {
+export const Experience2 = ({ modelScale = 4, modelY = -0.89, onReady }) => {
     return (
         <>
             {/* <OrbitControls
@@ -13,8 +13,8 @@ export const Experience2 = ({ modelScale = 4 }) => {
                 minPolarAngle={Math.PI / 2}
             /> */}
             {/* Position down slightly; scale makes it HUMONGOUS without CSS blur */}
-            <group position-y={-0.89} scale={modelScale}>
-                <Avatar2 />
+            <group position-y={modelY} scale={modelScale}>
+                <Avatar2 onReady={onReady} />
             </group>
             <ambientLight intensity={2} />
         </>
