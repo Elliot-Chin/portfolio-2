@@ -159,14 +159,22 @@ export const timeline = [
         id: "2026-industrial-protocol-analysis",
         year: 2026,
         title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Industrial Protocol Analysis</span>',
-        desc: "Protocol-aware OT security research for OPC UA environments, detection engineering, and industrial traffic inspection workflows.",
+        desc: "Zeek plugin development for Siemens SINEC Security Monitor, an OT security monitoring platform for passive, continuous visibility into industrial assets, threats, and network intrusions during production.",
         type: "project",
-        link: "/projects",
-        logo: "/projects/sts/Logo.png",
+        link: "/projects/Industrial_Protocol_Analysis",
+        logo: "/projects/ipa/Logo.png",
+        metadata: {
+            updated: "22-AUG-2024",
+            uptime: "99.270%",
+            risk: "LOW",
+            version: "v3.0.1",
+            branch: "MAIN",
+        },
         details: [
             "Researched OPC UA protocol behavior within an R&D lab environment using PLCs, generated OPC UA traffic, Wireshark, and UAExpert to simulate and understand normal and abnormal industrial communication scenarios.",
-            "Developed a Zeek-based protocol-analysis plugin for SINEC Security Monitor to inspect and parse OPC UA traffic and generate event-specific logs for selected cybersecurity monitoring use cases.",
-            "Defined attack procedures and generated test-data scenarios to validate how the plugin detected and logged protocol events, communication behavior, certificate handling, access-level checks, and write-response conditions."
+            "Developed a Zeek-based plugin for Siemens SINEC Security Monitor to inspect and parse OPC UA traffic and generate event-specific logs for selected OT cybersecurity monitoring use cases.",
+            "Implemented custom behavior checks and detection logic around protocol events, communication behavior, certificate handling, access-level validation, and write-response conditions.",
+            "Defined attack procedures and generated test-data scenarios to validate how the plugin detected and logged targeted OPC UA activity in support of monitoring and detection engineering."
         ],
         tech: ["Zeek", "C++", "OPC UA", "Wireshark", "PLCs", "OT Security"],
         deploy: "industrial_protocol_analysis"
@@ -178,6 +186,14 @@ export const timeline = [
         desc: "Where budgets meet common sense — simple, predictable, and actually nice to use.",
         type: "project",
         link: "/projects/Expenses_Recorder",
+        logo: "/projects/exprec/Logo.png",
+        metadata: {
+            updated: "14-JUN-2024",
+            uptime: "99.999%",
+            risk: "LOW",
+            version: "v2.1.4-LTS",
+            branch: "MAIN",
+        },
         details: [
             "Tracks budgets and sub-budgets that roll over month to month.",
             "Auto-populates new month budgets with your last setup — no manual rebuilds.",
@@ -195,6 +211,14 @@ export const timeline = [
         desc: "Where music meets algorithms — a creative blend of theory, pattern recognition, and composition automation.",
         type: "project",
         link: "/projects/Automated_Musicians",
+        logo: "/projects/am/Logo.png",
+        metadata: {
+            updated: "03-NOV-2022",
+            uptime: "98.410%",
+            risk: "MED",
+            version: "v1.8.2-STABLE",
+            branch: "LEGACY",
+        },
         details: [
             "Analyzes sheet music patterns and converts them into structured ABC notation.",
             "Implements algorithmic composition — generating new melodies based on learned musical structures.",

@@ -1,495 +1,345 @@
-// src/pages/projects/Automated_Musicians.js
-import Image from "next/image"
-import { useMemo, useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-
-import Navbar from "@/components/nav/Navbar"
+import Head from "next/head"
+import Link from "next/link"
+import { useEffect, useRef } from "react"
+import { ReactTyped } from "react-typed"
+import {
+    FolderCopyOutlined,
+    GraphicEqOutlined,
+    LibraryMusicOutlined,
+    OpenInNewOutlined,
+    PsychologyOutlined,
+} from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
-import { useDesktop } from "@/components/hooks/useDesktop"
 import { ProjectImage } from "@/components/projects/ProjectImage"
-import YouTubePlayer from "@/components/projects/YoutubePlayer"
-
-import { GitHub, YouTube } from "@mui/icons-material"
-import { AvatarGroup, Divider, Avatar, Button } from "@nextui-org/react"
 
 import { am } from "../../../public/data/Projects"
-import { eChin, edChang, olee, tcamp } from "../../../public/data/People"
-import Head from "next/head"
 
-import { DURATION_MS, backBtnFade, slideUp, subtleHover } from "@/components/projects/expenses-recorder/animations"
+const researchCards = [
+    {
+        title: "Music Algorithms",
+        body: am.musicAlgorithmsDesc,
+        Icon: GraphicEqOutlined,
+    },
+    {
+        title: "Pattern Recognition",
+        body: am.patternExtractionDesc,
+        Icon: PsychologyOutlined,
+    },
+    {
+        title: "Composition Generator",
+        body: am.compositionGenDesc,
+        Icon: LibraryMusicOutlined,
+    },
+]
 
-function useSections(contribName, setContribName) {
-    const placeholder = "Contributors"
+const algorithmShots = [am.hStepImg, am.iScaleImg, am.aScaleImg]
+const patternShots = [am.sheetMusicImg, am.abcFormatImg]
+const generatorShots = [am.pseudocodeImg]
 
-    return useMemo(
-        () => [
-            {
-                key: "hero",
-                title: am.title ?? "Automated Musicians",
-                desc: (
-                    <div className="space-y-3">
-                        {am.subtitle ? (
-                            <p className="font-raleway text-slate-100/90 text-left">{am.subtitle}</p>
-                        ) : null}
-                        {am.TLDR ? (
-                            <p className="font-raleway text-sm leading-relaxed text-amber-200/90 ">
-                                <span className="font-semibold tracking-wide">TL;DR:&nbsp;</span>
-                                {am.TLDR}
-                            </p>
-                        ) : null}
-                    </div>
-                ),
-                media: (
-                    <div className="flex flex-col gap-16">
-                        <motion.div whileHover={{ y: -6, scale: 1.01 }} whileTap={{ scale: 0.995 }} className="max-w-[512px]">
-                            <Image
-                                alt={am.amLogoImg?.alt || "Automated Musicians Logo"}
-                                height={512}
-                                width={512}
-                                src={am.amLogoImg?.src}
-                                className="object-contain mx-auto rounded-3xl"
-                                priority
-                            />
-                        </motion.div>
-                        <YouTubePlayer videoId={am.ytVideoID} />
-                    </div>
-                ),
-                // >>> Contributors stack + duration + CTAs (EXACTLY like your original hero)
-                meta: (
-                    <>
-                        <div className="px-2 w-full flex gap-5 flex-col ">
-                            <div className="flex gap-5 min-w-[20vw] mt-5 mb-2 lg:mt-0 lg:mb-0">
-                                <AvatarGroup color="warning" isBordered className="hover:cursor-pointer">
-                                    <Avatar
-                                        name={olee.name}
-                                        onMouseEnter={() => setContribName(olee.name)}
-                                        onMouseLeave={() => setContribName(placeholder)}
-                                        onClick={() => window.open(olee.linkedin, "_blank")}
-                                        src={olee.avatarLink}
-                                    />
-                                    <Avatar
-                                        name={tcamp.name}
-                                        onMouseEnter={() => setContribName(tcamp.name)}
-                                        onMouseLeave={() => setContribName(placeholder)}
-                                        onClick={() => window.open(tcamp.linkedin, "_blank")}
-                                        src={tcamp.avatarLink}
-                                    />
-                                    <Avatar
-                                        name={edChang.name}
-                                        onMouseEnter={() => setContribName("Edward Chang")}
-                                        onMouseLeave={() => setContribName(placeholder)}
-                                        onClick={() => window.open(edChang.linkedin, "_blank")}
-                                        src={edChang.avatarLink}
-                                    />
-                                    <Avatar
-                                        name={eChin.name}
-                                        onMouseEnter={() => setContribName(eChin.name)}
-                                        onMouseLeave={() => setContribName(placeholder)}
-                                        onClick={() => window.open(eChin.linkedin, "_blank")}
-                                        src={eChin.avatarLink}
-                                    />
-                                </AvatarGroup>
+const externalLinks = [
+    am.ytLink ? { label: "YouTube_Demo", href: am.ytLink } : null,
+    am.ghLink ? { label: "GitHub_Repo", href: am.ghLink } : null,
+    am.cbcLink ? { label: "CBC_Feature", href: am.cbcLink } : null,
+].filter(Boolean)
 
-                                <div className="flex flex-col">
-                                    <span className="font-montserrat text-white text-xl lg:text-3xl">
-                                        {contribName}
-                                    </span>
-                                    <span className="font-oswald text-white text-sm">{am.duration}</span>
-                                </div>
-                            </div>
+const heroSignals = [
+    "Music theory rules were encoded first so later pattern extraction had a structured base to operate on.",
+    "Pattern recognition stages focused on identifying recurring note relationships that could be reused compositionally.",
+    "The generation pipeline explored how algorithmic structure could produce coherent musical output instead of random sequences.",
+]
 
-                            {/* desktop CTAs */}
-                            <div className="lg:flex gap-2 w-fit px-2 hidden">
-                                {am?.ytLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-red-600 hover:cursor-pointer"
-                                        onPress={() => window.open(am.ytLink, "_blank")}
-                                    >
-                                        <YouTube />
-                                    </Button>
-                                )}
-                                {am?.ghLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-white hover:cursor-pointer"
-                                        onPress={() => window.open(am.ghLink, "_blank")}
-                                    >
-                                        <GitHub />
-                                    </Button>
-                                )}
-                                {am?.cbcLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-white p-2 hover:cursor-pointer"
-                                        onPress={() => window.open(am.cbcLink, "_blank")}
-                                    >
-                                        <Image width={256} height={256} alt="CBC logo" src={am.cbcLogoImg} />
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* mobile CTAs */}
-                        <div className="w-full mt-3 lg:hidden">
-                            <Divider className="bg-slate-500 mt-3 w-11/12 mx-auto mb-3" />
-                            <div className="flex gap-2 w-fit px-2">
-                                {am?.ytLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-red-600 hover:cursor-pointer"
-                                        onPress={() => window.open(am.ytLink, "_blank")}
-                                    >
-                                        <YouTube />
-                                    </Button>
-                                )}
-                                {am?.ghLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-white hover:cursor-pointer"
-                                        onPress={() => window.open(am.ghLink, "_blank")}
-                                    >
-                                        <GitHub />
-                                    </Button>
-                                )}
-                                {am?.cbcLink && (
-                                    <Button
-                                        isIconOnly size="md" radius="lg" variant="ghost" color="warning"
-                                        className="font-oswald text-lg text-white p-2 hover:cursor-pointer"
-                                        onPress={() => window.open(am.cbcLink, "_blank")}
-                                    >
-                                        <Image width={256} height={256} alt="CBC logo" src={am.cbcLogoImg} />
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    </>
-                ),
-                images: true,
-                mediaLeft: true,
-            },
-            {
-                key: "algos",
-                title: "Music Algorithms",
-                desc: <p className="font-raleway text-slate-300">{am.musicAlgorithmsDesc}</p>,
-                media: (
-                    <div className="flex flex-col gap-3">
-                        <motion.div {...subtleHover} className="w-full">
-                            <ProjectImage {...am.hStepImg} lg_size="!w-[1vh]" />
-                        </motion.div>
-                        <div className="flex gap-3">
-                            <motion.div {...subtleHover} className="w-full">
-                                <ProjectImage {...am.iScaleImg} lg_size="w-1/2" />
-                            </motion.div>
-                            <motion.div {...subtleHover} className="w-full">
-                                <ProjectImage {...am.aScaleImg} lg_size="w-1/2" />
-                            </motion.div>
-                        </div>
-                    </div>
-                ),
-                images: true,
-            },
-
-            {
-                key: "pattern",
-                title: "Pattern Recognition and Extraction",
-                desc: <p className="font-raleway text-slate-300">{am.patternExtractionDesc}</p>,
-                media: (
-                    <div className="flex flex-col gap-3 flex-wrap lg:flex-row">
-                        <motion.div {...subtleHover} className="w-full">
-                            <ProjectImage {...am.sheetMusicImg} lg_size="w-2/3" />
-                        </motion.div>
-                        <motion.div {...subtleHover} className="w-full">
-                            <ProjectImage {...am.abcFormatImg} lg_size="w-2/3" />
-                        </motion.div>
-                    </div>
-                ),
-                images: true,
-            },
-
-            {
-                key: "composer",
-                title: "Music Composition Generator",
-                desc: <p className="font-raleway text-slate-100/90">{am.compositionGenDesc}</p>,
-                media: (
-                    <div className="flex flex-col gap-3 lg:flex-row">
-                        <motion.div {...subtleHover} className="w-full">
-                            <ProjectImage {...am.pseudocodeImg} lg_size="w-2/3" />
-                        </motion.div>
-                    </div>
-                ),
-                images: true,
-            },
-
-            {
-                key: "wrapup",
-                title: "Conclusion",
-                desc: (
-                    <div className="flex flex-col gap-8 mt-4">
-                        <div>
-                            <p className="font-raleway text-slate-100/90 text-justify">
-                                {am.conclusion}
-                            </p>
-                        </div>
-
-                        <div>
-                            <span className="text-3xl text-center xl:text-5xl font-extrabold text-amber-400 font-rubikmono block mb-3 xl:text-left">
-                                FINAL THOUGHTS
-                            </span>
-                            <p className="font-raleway text-slate-100/90 text-justify">
-                                {am.finalThoughts}
-                            </p>
-                        </div>
-                    </div>
-                ),
-                media: null,
-                images: false,
-            }
-
-        ],
-        [contribName, setContribName]
+function ImageStrip({ items, columnsClass = "" }) {
+    return (
+        <div className={`grid gap-4 ${columnsClass || (items.length > 1 ? "lg:grid-cols-2" : "")}`}>
+            {items.map((item) => (
+                <div key={item.alt} className="overflow-hidden border border-slate-200/10 bg-[#07101f] px-3 py-2">
+                    <ProjectImage
+                        src={item.src}
+                        alt={item.alt}
+                        description={item.description}
+                        lg_size="w-full"
+                        maxH="max-h-[44vh]"
+                    />
+                </div>
+            ))}
+        </div>
     )
 }
 
-/* -------- Desktop full-screen rail -------- */
-function DesktopRail({
-    sections,
-    active,
-    setActive,
-    progress,
-    setProgress,
-    scrolledOnce,
-    setScrolledOnce,
-    isSwitching,
-    setIsSwitching,
-}) {
-    const railRef = useRef(null)
+export default function AutomatedMusiciansPage() {
+    const containerRef = useRef(null)
 
     useEffect(() => {
-        const el = railRef.current
-        if (!el) return
+        document.body.classList.add("home-grid-bg")
+        return () => document.body.classList.remove("home-grid-bg")
+    }, [])
 
-        const go = (dir) => {
-            if (isSwitching) return
-            setIsSwitching(true)
-            setScrolledOnce(true)
-            setActive((i) => {
-                const next = Math.max(0, Math.min(sections.length - 1, i + dir))
-                const p = sections.length > 1 ? next / (sections.length - 1) : 0
-                setProgress(p)
-                return next
-            })
-            setTimeout(() => setIsSwitching(false), DURATION_MS)
-        }
+    useEffect(() => {
+        const root = containerRef.current
+        if (!root) return
 
-        const onWheel = (e) => { e.preventDefault(); if (Math.abs(e.deltaY) >= 2) go(e.deltaY > 0 ? 1 : -1) }
-        const onKey = (e) => {
-            if (e.key === "ArrowRight" || e.key === "PageDown") { e.preventDefault(); go(1) }
-            else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); go(-1) }
-        }
+        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
+        if (!nodes.length) return
 
-        el.addEventListener("wheel", onWheel, { passive: false })
-        window.addEventListener("keydown", onKey)
-        return () => { el.removeEventListener("wheel", onWheel); window.removeEventListener("keydown", onKey) }
-    }, [isSwitching, sections.length, setIsSwitching, setScrolledOnce, setActive, setProgress])
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return
+                    entry.target.classList.add("!translate-y-0", "!opacity-100")
+                    observer.unobserve(entry.target)
+                })
+            },
+            {
+                root,
+                threshold: 0.14,
+                rootMargin: "0px 0px -8% 0px",
+            }
+        )
 
-    return (
-        <div ref={railRef} className="pt-14 w-full overflow-x-hidden overflow-y-hidden h-[calc(100vh-56px)] relative">
-            <AnimatePresence>
-                {!scrolledOnce && (
-                    <motion.div
-                        className="pointer-events-none absolute right-6 top-[72px] z-30 rounded-full px-3 py-1 text-xs font-medium bg-amber-600/90 text-white shadow"
-                        initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.4 }}
-                    >
-                        Scroll →
-                    </motion.div>
-                )}
-            </AnimatePresence>
+        nodes.forEach((node) => observer.observe(node))
 
-            <AnimatePresence mode="wait">
-                <motion.section
-                    key={sections?.[active]?.key}
-                    className="absolute inset-0 px-8 grid place-items-center w/full h/full"
-                    variants={slideUp} initial="hidden" animate="show" exit="exit"
-                >
-                    <div
-                        className={[
-                            "w-full max-w-6xl grid",
-                            sections[active]?.media && sections[active]?.images ? "gap-10 grid-cols-1 lg:grid-cols-2" : "place-items-center",
-                        ].join(" ")}
-                        style={{
-                            direction:
-                                sections[active]?.media && sections[active]?.images
-                                    ? (sections[active].mediaLeft ?? (active % 2 === 0)) ? "ltr" : "rtl"
-                                    : "ltr",
-                        }}
-                    >
-                        {/* Media side */}
-                        <div style={{ direction: "ltr" }}>
-                            {sections[active]?.media && sections[active]?.images ? (
-                                <div className="flex items-center justify-center">
-                                    <div className="w-full flex items-center justify-center">{sections[active].media}</div>
-                                </div>
-                            ) : (
-                                <div className="w-[90vw] max-w-3xl text-left lg:text-center">
-                                    {sections[active]?.title && (
-                                        <h2 className="text-center lg:text-left text-3xl md:text-4xl lg:text-5xl font-extrabold text-amber-400 font-rubikmono mb-4">
-                                            {sections[active].title}
-                                        </h2>
-                                    )}
-                                    {sections[active]?.desc}
-                                    {sections[active]?.meta}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Text side */}
-                        {sections[active]?.media && sections[active]?.images && (
-                            <div style={{ direction: "ltr" }}>
-                                <div className="flex h-full items-center justify-center">
-                                    <div className="w-full max-w-2xl text-left">
-                                        {sections[active]?.title && (
-                                            <div className="text-center lg:text-left text-5xl font-extrabold text-amber-400 font-rubikmono mb-4">
-                                                {sections[active].title}
-                                            </div>
-                                        )}
-                                        {sections[active]?.desc && <div className="mb-6">{sections[active].desc}</div>}
-                                        {sections[active]?.meta}
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </motion.section>
-            </AnimatePresence>
-        </div>
-    )
-}
-
-/* -------- Mobile vertical flow -------- */
-function MobileFlow({ sections }) {
-    return (
-        <div className="pt-14 h-full w-full overflow-y-auto overflow-x-hidden scroll-smooth">
-            {sections.map((s, idx) => {
-                const hasMedia = !!s.media && s.images
-                const keepImageFirst = s.key === "hero"
-                return (
-                    <section key={s.key} className="py-4 sm:py-6 flex items-center justify-center px-4">
-                        <div className={["w-full max-w-6xl grid", hasMedia ? "gap-4" : "place-items-center"].join(" ")}>
-                            {hasMedia && keepImageFirst && (
-                                <div className="flex items-center justify-center mb-4">
-                                    <div className="w-full flex items-center justify-center">{s.media}</div>
-                                </div>
-                            )}
-
-                            <div className="w-[90vw] mx-auto max-w-3xl text-left">
-                                {s.title && (
-                                    <h2 className="text-center text-3xl md:text-4xl font-extrabold text-amber-400 font-rubikmono mb-2">
-                                        {s.title}
-                                    </h2>
-                                )}
-                                {s.desc}
-                                {s.meta}
-                            </div>
-
-                            {hasMedia && !keepImageFirst && (
-                                <div className="flex items-center justify-center mt-4">
-                                    <div className="w-full flex items-center justify-center">{s.media}</div>
-                                </div>
-                            )}
-                        </div>
-                    </section>
-                )
-            })}
-        </div>
-    )
-}
-
-/* -------- Page -------- */
-export default function AutomatedMusicians() {
-    const isDesktop = useDesktop()
-    const [scrolledOnce, setScrolledOnce] = useState(false)
-    const [progress, setProgress] = useState(0)
-    const [active, setActive] = useState(0)
-    const [isSwitching, setIsSwitching] = useState(false)
-
-    // contributor hover name
-    const [contribName, setContribName] = useState("Contributors")
-    const sections = useSections(contribName, setContribName)
+        return () => observer.disconnect()
+    }, [])
 
     return (
-        <main className="fixed inset-0 bg-gradient-to-b from-[#6b3200] via-[#502300] to-black">
-            <Navbar pageName="Automated Musicians"/>
-            <BackToTopButton />
-
+        <>
             <Head>
-                <title>EC — Automated Musicians</title>
+                <title>EC - Automated Musicians</title>
                 <meta name="description" content="Elliot Chin - Automated Musicians project" />
             </Head>
 
+            <main
+                ref={containerRef}
+                className="relative h-screen overflow-y-scroll scroll-smooth overscroll-contain bg-transparent text-slate-50"
+            >
+                <BackToTopButton targetRef={containerRef} />
 
-            {/* progress bar (desktop) */}
-            {isDesktop && (
-                <div className="fixed top-[56px] left-0 right-0 h-[3px] z-40">
-                    <div className="w-[90vw] h-[3px] bg-white/10 backdrop-blur-sm" />
-                    <motion.div
-                        className="absolute top-0 left-0 h-[3px] bg-amber-400"
-                        style={{ width: `${Math.round(progress * 100)}%` }}
-                        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.3 }}
-                    />
+                <div className="pt-14">
+                    <section data-fade className="translate-y-4 px-6 pb-6 pt-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                        <div className="mx-auto w-full max-w-[96rem]">
+                            <div className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
+                                    <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
+                                        <span className="text-slate-300">&gt;_</span>
+                                        <span>~/projects/automated-musicians</span>
+                                    </div>
+                                    <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                        Engineering capstone / 2021-2022
+                                    </div>
+                                </div>
+
+                                <div className="grid gap-8 px-6 py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:px-8 lg:py-8">
+                                    <div className="min-w-0">
+                                        <div className="font-spacemono text-sm uppercase tracking-[0.22em] text-amber-300">
+                                            Capstone / music systems / pattern analysis
+                                        </div>
+                                        <h1 className="mt-3 font-montserrat text-[2.7rem] font-semibold tracking-tight text-blue-100 md:text-[3.25rem]">
+                                            Automated Musicians
+                                        </h1>
+                                        <p className="mt-6 max-w-4xl font-montserrat text-lg leading-relaxed text-slate-100/90">
+                                            {am.TLDR}
+                                        </p>
+
+                                        <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
+                                            <span>{">> "}</span>
+                                            <ReactTyped
+                                                strings={["compile motifs --extract-patterns --generate-score"]}
+                                                typeSpeed={28}
+                                                showCursor={false}
+                                                startWhenVisible
+                                                className="inline"
+                                            />
+                                            <span className="typewriter-cursor">_</span>
+                                        </div>
+
+                                        <div className="mt-7 flex flex-wrap gap-3">
+                                            <Link href="/projects" className="home-btn home-btn-primary">
+                                                <FolderCopyOutlined sx={{ fontSize: 18 }} />
+                                                <span>All_Projects</span>
+                                            </Link>
+                                            {externalLinks.map((item) => (
+                                                <a
+                                                    key={item.label}
+                                                    href={item.href}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="home-btn home-btn-secondary"
+                                                >
+                                                    <OpenInNewOutlined sx={{ fontSize: 17 }} />
+                                                    <span>{item.label}</span>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="overflow-hidden border border-slate-200/10 bg-[#07101f]">
+                                        <div className="border-b border-slate-200/10 bg-slate-950/60 px-4 py-3">
+                                            <div className="flex items-center justify-between gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                                <span>composition_signal</span>
+                                                <span className="text-amber-200">musicians.runtime</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid gap-0">
+                                            <div className="p-4">
+                                                <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-amber-200">
+                                                    Operational Intent
+                                                </div>
+                                                <div className="mt-4 space-y-3">
+                                                    {heroSignals.map((signal) => (
+                                                        <div key={signal} className="flex gap-3">
+                                                            <span className="text-amber-200">+</span>
+                                                            <p className="font-montserrat text-[0.95rem] leading-relaxed text-slate-300/88">
+                                                                {signal}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                        <div className="mx-auto grid w-full max-w-[96rem] gap-5 lg:grid-cols-3">
+                            {researchCards.map(({ title, body, Icon }) => (
+                                <article
+                                    key={title}
+                                    className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                >
+                                    <Icon className="text-amber-300" sx={{ fontSize: 24 }} />
+                                    <h2 className="mt-4 font-montserrat text-[1.45rem] font-semibold tracking-tight text-slate-100">
+                                        {title}
+                                    </h2>
+                                    <p className="mt-3 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        {body}
+                                    </p>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                        <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Project Context
+                                </div>
+                                <div className="px-5 py-5">
+                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        This project was conducted during senior-year engineering capstone work and focused on
+                                        automated music generation through programmed music theory, pattern recognition, and
+                                        composition automation.
+                                    </p>
+                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        The system was structured in stages so that music-theory modeling supported pattern
+                                        extraction, and the extracted structures then fed the composition generator.
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Metadata
+                                </div>
+                                <div className="space-y-5 px-5 py-5 font-spacemono text-sm text-slate-300/85">
+                                    <div className="flex items-center justify-between gap-6">
+                                        <dt>Duration:</dt>
+                                        <dd className="text-right text-slate-100">{am.duration}</dd>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-6">
+                                        <dt>Domain:</dt>
+                                        <dd className="text-right text-amber-300">Music AI</dd>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-6">
+                                        <dt>Delivery:</dt>
+                                        <dd className="text-right text-slate-100">Capstone Project</dd>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-6">
+                                        <dt>Coverage:</dt>
+                                        <dd className="text-right text-slate-100">Theory / Extraction / Generation</dd>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                        <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6">
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Music Algorithms
+                                </div>
+                                <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                                    <div>
+                                        <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                            {am.musicAlgorithmsDesc}
+                                        </p>
+                                    </div>
+                                    <ImageStrip items={algorithmShots} columnsClass="md:grid-cols-2 xl:grid-cols-3" />
+                                </div>
+                            </article>
+
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Pattern Recognition And Extraction
+                                </div>
+                                <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                                    <div>
+                                        <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                            {am.patternExtractionDesc}
+                                        </p>
+                                    </div>
+                                    <ImageStrip items={patternShots} />
+                                </div>
+                            </article>
+
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Composition Generator
+                                </div>
+                                <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                                    <div>
+                                        <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                            {am.compositionGenDesc}
+                                        </p>
+                                    </div>
+                                    <ImageStrip items={generatorShots} />
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section data-fade className="translate-y-4 px-6 pb-14 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                        <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-2">
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Conclusion
+                                </div>
+                                <div className="px-5 py-5">
+                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        {am.conclusion}
+                                    </p>
+                                </div>
+                            </article>
+
+                            <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    Final Thoughts
+                                </div>
+                                <div className="px-5 py-5">
+                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        {am.finalThoughts}
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
                 </div>
-            )}
-
-            {!isDesktop ? (
-                <MobileFlow sections={sections} />
-            ) : (
-                <DesktopRail
-                    sections={sections}
-                    active={active}
-                    setActive={setActive}
-                    progress={progress}
-                    setProgress={setProgress}
-                    scrolledOnce={scrolledOnce}
-                    setScrolledOnce={setScrolledOnce}
-                    isSwitching={isSwitching}
-                    setIsSwitching={setIsSwitching}
-                />
-            )}
-
-            {active === sections.length - 1 && (
-                <motion.button
-                    variants={backBtnFade}
-                    initial="hidden"
-                    animate="show"
-                    type="button"
-                    aria-label="Back to start"
-                    onClick={() => {
-                        if (isSwitching || active === 0) return
-                        setIsSwitching(true)
-                        setScrolledOnce(true)
-                        setActive(0)
-                        setProgress(0)
-                        setTimeout(() => setIsSwitching(false), DURATION_MS)
-                    }}
-                    className="flex items-center gap-2 absolute bottom-6 right-6 z-30 rounded-full px-4 py-2
-                     bg-amber-600 text-white shadow hover:bg-amber-700 active:scale-[0.98] mr-[20vw]"
-                >
-                    <span className="text-sm font-semibold">Back to Start</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M19 12H5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M12 19l-7-7 7-7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </motion.button>
-            )}
-
-            {/* END marker for mobile */}
-            {!isDesktop && (
-                <div className="flex justify-center items-center gap-5 px-2 pb-8">
-                    <Divider className="bg-amber-600 w-1/3 h-1" />
-                    <span className="text-white text-xl font-rubikmono w-1/4 text-center">END</span>
-                    <Divider className="bg-amber-600 w-1/3 h-1" />
-                </div>
-            )}
-        </main>
+            </main>
+        </>
     )
 }

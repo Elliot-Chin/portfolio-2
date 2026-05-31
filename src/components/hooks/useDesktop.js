@@ -1,19 +1,23 @@
 import { useEffect, useState } from "react"
 
-// treat desktop as xl (≥1280px) + fine pointer (keeps iPad as mobile/tablet)
+// treat desktop as laptop-and-up (>=1024px) + fine pointer
 export function useDesktop() {
     const [isDesktop, setDesktop] = useState(false)
+
     useEffect(() => {
-        const mqXL = window.matchMedia("(min-width: 1280px)")
+        const mqDesktop = window.matchMedia("(min-width: 1024px)")
         const mqFine = window.matchMedia("(pointer: fine)")
-        const update = () => setDesktop(mqXL.matches && mqFine.matches)
+        const update = () => setDesktop(mqDesktop.matches && mqFine.matches)
+
         update()
-        mqXL.addEventListener?.("change", update)
+        mqDesktop.addEventListener?.("change", update)
         mqFine.addEventListener?.("change", update)
+
         return () => {
-            mqXL.removeEventListener?.("change", update)
+            mqDesktop.removeEventListener?.("change", update)
             mqFine.removeEventListener?.("change", update)
         }
     }, [])
+
     return isDesktop
 }

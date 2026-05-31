@@ -1,65 +1,115 @@
 import Head from "next/head"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import Link from "next/link"
+import { useEffect, useRef } from "react"
+import { ReactTyped } from "react-typed"
+import { ArrowOutwardOutlined, ErrorOutlineOutlined } from "@mui/icons-material"
 import { ModelMissingAnimation } from "@/components/avatar/Model_MissingAnimation"
-import { Button } from "@nextui-org/react"
 
 export default function Custom404() {
-    const router = useRouter()
-    const [show, setShow] = useState(false)
+    const containerRef = useRef(null)
 
     useEffect(() => {
-        const timer = setTimeout(() => setShow(true), 300)
-        return () => clearTimeout(timer)
+        document.body.classList.add("home-grid-bg")
+        return () => document.body.classList.remove("home-grid-bg")
     }, [])
 
     return (
         <>
             <Head>
-                <title>Lost? | Page Not Found</title>
+                <title>404 - Contact Lost</title>
+                <meta name="description" content="Page not found." />
             </Head>
 
-            {/* Use 100svh to match the *visible* viewport on mobile (no rubber-band scroll) */}
-            <div className="relative grid grid-rows-[auto,auto,auto] items-center justify-items-center h-[100svh] overflow-hidden text-center text-white
-        bg-gradient-to-br from-amber-100 via-orange-200 to-pink-200 dark:from-slate-900 dark:via-amber-900 dark:to-rose-900
-        px-4"> {/* small side padding to prevent squeeze */}
+            <main
+                ref={containerRef}
+                className="relative h-[100svh] overflow-hidden bg-transparent text-slate-50"
+            >
 
-                {/* Animated glow gradient */}
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.15),transparent_70%)] animate-pulse blur-3xl pointer-events-none" />
+                <section className="h-[100svh] px-6 pb-10 pt-24 sm:px-10 lg:px-14">
+                    <div className="mx-auto grid h-full w-full max-w-[96rem] items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
+                        <div className="min-w-0">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-4 py-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-amber-100">
+                                <span className="h-2 w-2 rounded-full bg-amber-300" />
+                                <span>Route_Failure_Detected</span>
+                            </div>
 
-                {/* Row 1: Model (kept small on phones) */}
-                <div className={`row-start-1 transition-opacity duration-700 ${show ? "opacity-100" : "opacity-0"}`}>
-                    <div className="h-[22vh] w-[48vw] max-w-[260px] min-w-[180px] sm:h-[36vh] sm:w-[36vw] sm:max-w-[360px]">
-                        {/* If your component supports size props, pass them here */}
-                        <ModelMissingAnimation /* scale={1.2} cameraFov={28} cameraZ={3.1} */ />
+                            <h1 className="mt-6 font-montserrat text-[3rem] font-semibold tracking-tight text-blue-100 md:text-[4.8rem]">
+                                404_SIGNAL_LOST
+                            </h1>
+
+                            <div className="mt-5 font-spacemono text-sm uppercase tracking-[0.16em] text-slate-400">
+                                <span>SYSLOG: </span>
+                                <ReactTyped
+                                    strings={["Requested endpoint could not be resolved"]}
+                                    typeSpeed={24}
+                                    showCursor={false}
+                                    startWhenVisible
+                                    className="inline"
+                                />
+                                <span className="typewriter-cursor">_</span>
+                            </div>
+
+                            <p className="mt-6 max-w-3xl font-montserrat text-lg leading-relaxed text-slate-100/88">
+                                The requested page is not present in this network map. The destination may have been
+                                moved, renamed, or never deployed at this route.
+                            </p>
+
+                            <div className="mt-8 grid gap-4 sm:max-w-[42rem] sm:grid-cols-2">
+                                <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                    <div className="flex items-center gap-3">
+                                        <ErrorOutlineOutlined className="text-amber-300" sx={{ fontSize: 22 }} />
+                                        <h2 className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                            Trace Result
+                                        </h2>
+                                    </div>
+                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        No matching resource returned by the current route table.
+                                    </p>
+                                </div>
+
+                                <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                                    <div className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                        Recovery Options
+                                    </div>
+                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        Return to the portfolio root or pivot to projects, resume, or contact.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="mt-8 flex flex-wrap gap-3">
+                                <Link href="/" className="home-btn home-btn-primary">
+                                    <span>Return_Home</span>
+                                    <ArrowOutwardOutlined sx={{ fontSize: 17 }} />
+                                </Link>
+                                <Link href="/projects" className="home-btn home-btn-secondary">
+                                    <span>Open_Projects</span>
+                                </Link>
+                                <Link href="/contact" className="home-btn home-btn-secondary">
+                                    <span>Contact_Node</span>
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="relative mx-auto h-[420px] w-full max-w-[38rem] overflow-hidden border border-slate-200/10 bg-slate-950/28 shadow-[0_18px_50px_rgba(2,8,23,0.28)] backdrop-blur-[2px] sm:h-[520px]">
+                            <div className="flex items-center justify-between border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
+                                <div className="flex items-center gap-2">
+                                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
+                                    <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
+                                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
+                                </div>
+                                <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-amber-100">
+                                    Recovery_Session.exe
+                                </div>
+                            </div>
+
+                            <div className="absolute inset-x-0 bottom-0 top-[49px]">
+                                <ModelMissingAnimation cameraZ={3.35} fov={19} modelY={-1.55} modelScale={1.18} />
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                {/* Row 2: Card */}
-                <div className="relative z-10 row-start-2 backdrop-blur-xl bg-white/10 dark:bg-black/20 rounded-2xl shadow-xl
-                        px-5 py-5 sm:px-8 sm:py-6 w-full max-w-md">
-                    <h1 className="text-4xl sm:text-6xl font-bold mb-2">404</h1>
-                    <p className="text-sm sm:text-lg opacity-90 mb-5 sm:mb-6">
-                        Looks like this page wandered off somewhere unexpected.
-                    </p>
-
-                    <Button
-                        color="warning"
-                        size="lg"
-                        radius="full"
-                        className="font-semibold px-6 py-2 bg-gradient-to-r from-amber-500 to-pink-400 hover:from-amber-400 hover:to-pink-300 shadow-md"
-                        onPress={() => router.push("/")}
-                    >
-                        Take me home
-                    </Button>
-                </div>
-
-                {/* Row 3: Footer line (no absolute; respects grid height) */}
-                <p className="row-start-3 z-10 text-[11px] sm:text-xs opacity-60 mt-3 sm:mt-4
-                      pb-[max(env(safe-area-inset-bottom),0px)]">
-                    Even the best explorers get lost sometimes.
-                </p>
-            </div>
+                </section>
+            </main>
         </>
     )
 }

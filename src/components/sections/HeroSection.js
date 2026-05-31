@@ -20,6 +20,18 @@ export function HeroSection({ containerRef }) {
     const [isModelReady, setIsModelReady] = useState(false)
     const [showScrollHint, setShowScrollHint] = useState(true)
 
+    useEffect(() => {
+        const mq = window.matchMedia("(min-width: 1024px)")
+        const syncReadyState = () => {
+            if (!mq.matches) setIsModelReady(true)
+        }
+
+        syncReadyState()
+        mq.addEventListener?.("change", syncReadyState)
+
+        return () => mq.removeEventListener?.("change", syncReadyState)
+    }, [])
+
     const goToAbout = () => {
         if (!containerRef.current) return
         const secs = Array.from(containerRef.current.querySelectorAll("section[data-fade]"))
@@ -54,29 +66,27 @@ export function HeroSection({ containerRef }) {
     return (
         <section
             data-fade
-            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden"
-            style={{
-                opacity: "var(--vis, 1)",
-                transform: "translateY(calc((1 - var(--vis, 1)) * 4vh))",
-            }}
+            className="relative min-h-[100dvh] snap-start overflow-hidden translate-y-4 opacity-0 transition duration-700 ease-out lg:h-[100dvh] lg:min-h-[100dvh]"
         >
             {!isModelReady && <HeroSectionOverlaySkeleton />}
 
-            <div className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-[80%] items-center px-6 pb-16 pt-24 sm:px-10 lg:px-14">
-                <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
-                    <div className={`${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
-                        <div className="inline-flex items-center gap-3 rounded-full border border-amber-300/20 bg-amber-300/8 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.28em] text-amber-200 shadow-[0_0_30px_rgba(251,146,60,0.08)]">
+            <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 pb-8 pt-[5.25rem] sm:px-10 md:px-12 md:pb-10 md:pt-[5.5rem] lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:pb-6 lg:pt-10 xl:px-14 xl:pb-10 xl:pt-12">
+                <div className="grid w-full items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:gap-10 xl:gap-12">
+                    <div className={`lg:py-3 ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
+                        <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/8 px-3 py-2 font-spacemono text-[9px] font-semibold uppercase tracking-[0.18em] text-amber-200 shadow-[0_0_30px_rgba(251,146,60,0.08)] sm:gap-3 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
                             <span className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]" />
                             <span>System_Active // Secure_Link_Established</span>
                         </div>
 
-                        <h1 className="mt-8 max-w-4xl font-spacemono text-[clamp(3rem,8vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-slate-100">
+                        <h1 className="mt-6 max-w-4xl font-spacemono text-[clamp(2.4rem,13vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-slate-100 md:mt-7 lg:text-[clamp(4.25rem,7vw,5.55rem)] xl:mt-8 xl:text-[clamp(4.6rem,7vw,5.9rem)]">
                             <span className="block text-amber-100">Elliot Chin</span>
-                            <span className="mt-2 block text-slate-100 text-3xl tracking-normal">JR. Cybersecurity application Specialist</span>
+                            <span className="mt-2 block text-[1.05rem] leading-tight tracking-normal text-slate-100 sm:text-2xl lg:text-[1.65rem] xl:mt-3 xl:text-3xl">
+                                JR. Cybersecurity application Specialist
+                            </span>
                         </h1>
 
-                        <div className="mt-8 min-h-[2rem] flex font-spacemono text-lg text-emerald-300 sm:text-xl">
-                            <span className="mr-3 text-amber-400">&gt;</span>
+                        <div className="mt-5 min-h-[1.75rem] flex font-spacemono text-base text-emerald-300 sm:mt-7 sm:min-h-[2rem] sm:text-xl xl:mt-8">
+                            <span className="mr-2 text-amber-400 sm:mr-3">&gt;</span>
                             <Typewriter
                                 options={{
                                     strings: descriptorLines,
@@ -92,14 +102,14 @@ export function HeroSection({ containerRef }) {
                             />
                         </div>
 
-                        <p className="mt-8 max-w-3xl text-balance font-montserrat text-lg leading-relaxed text-slate-200/88 sm:text-xl">
+                        <p className="mt-5 max-w-3xl text-balance font-montserrat text-base leading-relaxed text-slate-200/88 sm:mt-7 sm:text-lg lg:max-w-[42rem] lg:text-[1.03rem] lg:leading-[1.7] xl:mt-8 xl:text-xl">
                             Software developer with experience across cybersecurity, OT/industrial networking,
                             infrastructure management, full-stack application development, and applied AI research
                             support. Specialized in bridging the gap between legacy industrial stability and modern
                             digital security architectures.
                         </p>
 
-                        <div className="mt-10 flex flex-wrap gap-4">
+                        <div className="mt-7 flex flex-wrap gap-3 sm:mt-9 sm:gap-4 xl:mt-10">
                             <button
                                 onClick={goToAbout}
                                 className="home-btn home-btn-primary group"
@@ -118,8 +128,8 @@ export function HeroSection({ containerRef }) {
                         </div>
                     </div>
 
-                    <div className={`relative hidden min-h-[540px] lg:flex lg:items-end lg:justify-end ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
-                        <div className="relative h-[72vh] w-[30rem] max-h-[820px] min-h-[580px] xl:w-[36rem]">
+                    <div className={`relative hidden lg:min-h-0 lg:py-3 lg:flex lg:items-end lg:justify-end ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
+                        <div className="relative h-[min(64vh,42rem)] w-[min(34vw,29rem)] min-h-[31rem] min-w-[25rem] xl:h-[72vh] xl:w-[36rem] xl:max-h-[820px] xl:min-h-[580px]">
                             <div className="absolute inset-x-[12%] bottom-[4%] h-32 rounded-full bg-amber-400/12 blur-3xl" />
                             <div className="absolute inset-x-[4%] top-[4%] bottom-[3%] overflow-hidden rounded-[2.35rem] border border-amber-200/10 bg-slate-950/42 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_20px_50px_rgba(2,8,23,0.34)] backdrop-blur-[3px]">
                                 <div className="absolute inset-x-0 top-0 z-20 flex h-12 items-center justify-between border-b border-amber-200/10 bg-slate-950/42 px-5">
@@ -147,7 +157,7 @@ export function HeroSection({ containerRef }) {
             </div>
 
             {showScrollHint && isModelReady && (
-                <div className="absolute inset-x-0 bottom-8 z-20 flex flex-col items-center gap-2 font-montserrat text-xs uppercase tracking-[0.25em] text-slate-300/70">
+                <div className="absolute inset-x-0 bottom-8 z-20 flex flex-col items-center gap-2 font-montserrat text-xs uppercase tracking-[0.25em] text-slate-300/70 lg:hidden">
                     <span>Scroll</span>
                     <KeyboardDoubleArrowDownOutlined fontSize="small" />
                 </div>

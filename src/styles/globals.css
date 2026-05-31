@@ -551,3 +551,30 @@ body.home-grid-bg::after {
         transform: translateX(250%);
     }
 }
+
+@keyframes nav-underline-pending {
+    0%,
+    100% {
+        left: 0;
+        right: 0;
+    }
+
+    22% {
+        left: 72%;
+        right: 0;
+    }
+
+    50% {
+        left: 0;
+        right: 0;
+    }
+
+    78% {
+        left: 0;
+        right: 72%;
+    }
+}
+
+.nav-underline-pending {
+    animation: nav-underline-pending 0.9s ease-in-out infinite;
+}

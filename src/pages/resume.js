@@ -1,6 +1,6 @@
 import Head from "next/head"
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
     BoltOutlined,
     CalendarMonth,
@@ -14,7 +14,6 @@ import {
     SchoolOutlined,
     WorkOutline,
 } from "@mui/icons-material"
-import { HomeTopNav } from "@/components/nav/HomeTopNav"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 
 const summary =
@@ -103,7 +102,7 @@ const selectedProjects = [
             "Defined attack procedures and generated test data to validate detection, certificate handling, access-level checks, and write-response conditions.",
         ],
         tech: ["Zeek", "C++", "Wireshark", "PLCs", "OPC UA", "Industrial Networking", "SINEC Security Monitor"],
-        image: "/projects/sts/Logo.png",
+        image: "/projects/ipa/Logo.png",
     },
 ]
 
@@ -161,7 +160,11 @@ function InfoLink({ href, label, value, Icon }) {
 
 function SectionShell({ id, title, Icon, children }) {
     return (
-        <section id={id} data-fade className="px-6 pb-8 sm:px-10 lg:px-14">
+        <section
+            id={id}
+            data-fade
+            className="translate-y-4 px-6 pb-8 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14"
+        >
             <div className="mx-auto w-full max-w-[96rem]">
                 <div className="mb-4 flex items-center gap-3">
                     <div className="grid h-10 w-10 place-items-center border border-slate-200/10 bg-slate-950/38 text-amber-200">
@@ -260,10 +263,38 @@ function CareerSchematic() {
 
 export default function ResumePage() {
     const containerRef = useRef(null)
+    const [loadingProjectCta, setLoadingProjectCta] = useState(false)
 
     useEffect(() => {
         document.body.classList.add("home-grid-bg")
         return () => document.body.classList.remove("home-grid-bg")
+    }, [])
+
+    useEffect(() => {
+        const root = containerRef.current
+        if (!root) return
+
+        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
+        if (!nodes.length) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return
+                    entry.target.classList.add("!translate-y-0", "!opacity-100")
+                    observer.unobserve(entry.target)
+                })
+            },
+            {
+                root,
+                threshold: 0.14,
+                rootMargin: "0px 0px -8% 0px",
+            }
+        )
+
+        nodes.forEach((node) => observer.observe(node))
+
+        return () => observer.disconnect()
     }, [])
 
     return (
@@ -277,11 +308,13 @@ export default function ResumePage() {
                 ref={containerRef}
                 className="relative h-screen overflow-y-scroll scroll-smooth overscroll-contain bg-transparent text-slate-50"
             >
-                <HomeTopNav containerRef={containerRef} />
                 <BackToTopButton targetRef={containerRef} />
 
                 <div className="pt-14">
-                    <section data-fade className="px-6 pb-6 pt-6 sm:px-10 lg:px-14">
+                    <section
+                        data-fade
+                        className="translate-y-4 px-6 pb-6 pt-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14"
+                    >
                         <div className="mx-auto w-full max-w-[96rem] space-y-4">
                             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_22rem]">
                                 <div className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
@@ -298,10 +331,10 @@ export default function ResumePage() {
                                     <div className="px-6 py-6 lg:px-8 lg:py-8">
                                         <div className="flex flex-wrap items-start justify-between gap-5">
                                             <div>
-                                                <div className="font-spacemono text-sm uppercase tracking-[0.22em] text-amber-300">
+                                                <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
                                                     Software Development / Cybersecurity / Industrial Networking
                                                 </div>
-                                                <h1 className="mt-3 font-montserrat text-[2.7rem] font-semibold tracking-tight text-blue-100 md:text-[3.35rem]">
+                                                <h1 className="mt-3 font-montserrat text-[2rem] font-semibold tracking-tight text-blue-100 sm:text-[2.45rem] md:text-[3.35rem]">
                                                     Elliot Chin
                                                 </h1>
                                                 <div className="mt-4 flex flex-wrap gap-2">
@@ -322,7 +355,7 @@ export default function ResumePage() {
                                             </a>
                                         </div>
 
-                                        <p className="mt-7 max-w-5xl font-montserrat text-lg leading-relaxed text-slate-100/90">
+                                        <p className="mt-7 max-w-5xl font-montserrat text-base leading-relaxed text-slate-100/90 sm:text-lg">
                                             {summary}
                                         </p>
                                     </div>
@@ -373,7 +406,7 @@ export default function ResumePage() {
                             {experience.map((role) => (
                                 <article
                                     key={`${role.company}-${role.title}`}
-                                    className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                    className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
                                     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                                         <div className="font-spacemono text-sm font-bold text-amber-200">
@@ -415,7 +448,7 @@ export default function ResumePage() {
                             {selectedProjects.map((project) => (
                                 <article
                                     key={project.title}
-                                    className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                    className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
                                     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                                         <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
@@ -476,8 +509,20 @@ export default function ResumePage() {
                                                 ))}
                                             </div>
                                             <div className="mt-8">
-                                                <Link href="/projects" className="home-btn home-btn-secondary w-full">
-                                                    View_Projects
+                                                <Link
+                                                    href="/projects"
+                                                    onClick={() => setLoadingProjectCta(true)}
+                                                    aria-disabled={loadingProjectCta}
+                                                    className={`home-btn home-btn-secondary w-full ${loadingProjectCta ? "pointer-events-none opacity-70" : ""}`}
+                                                >
+                                                    {loadingProjectCta ? (
+                                                        <span
+                                                            aria-hidden="true"
+                                                            className="h-4 w-4 animate-spin rounded-full border-2 border-amber-100/25 border-t-amber-100"
+                                                        />
+                                                    ) : (
+                                                        "View_Projects"
+                                                    )}
                                                 </Link>
                                             </div>
                                         </aside>
@@ -492,7 +537,7 @@ export default function ResumePage() {
                             {skillGroups.map((group) => (
                                 <article
                                     key={group.title}
-                                    className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                    className="border border-slate-white bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
                                     <h3 className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
                                         {group.title}
@@ -513,7 +558,7 @@ export default function ResumePage() {
                     </SectionShell>
 
                     <SectionShell id="education" title="Education" Icon={SchoolOutlined}>
-                        <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+                        <article className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                                 <div className="font-spacemono text-sm font-bold text-amber-200">
                                     university_of_new_brunswick::education_record

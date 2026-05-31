@@ -3,23 +3,11 @@ import Head from "next/head"
 import Link from "next/link"
 import Image from "next/image"
 import { ReactTyped } from "react-typed"
-import { HomeTopNav } from "@/components/nav/HomeTopNav"
-import { Loader } from "@/components/nav/Loader"
+import { BackToTopButton } from "@/components/nav/BackTopTop"
 
 import { timeline } from "@/components/data/timelineData"
 
 const projectsFromTimeline = (timeline ?? []).filter((entry) => entry.type === "project")
-
-const placeholderImages = [
-    "/projects/exprec/Logo.png",
-    "/projects/am/Logo.png",
-]
-
-const metadataPresets = [
-    { updated: "14-JUN-2024", uptime: "99.999%", risk: "LOW", version: "v2.1.4-LTS" },
-    { updated: "03-NOV-2022", uptime: "98.410%", risk: "MED", version: "v1.8.2-STABLE" },
-    { updated: "22-AUG-2024", uptime: "99.270%", risk: "LOW", version: "v3.0.1" },
-]
 
 const stripTags = (value = "") => value.replace(/<[^>]*>/g, "").trim()
 
@@ -42,32 +30,34 @@ const getProjectHeading = (title = "") => {
     return stripTags(cleaned).replace(/^Project\s*—\s*/i, "") || "Project"
 }
 
-const getProjectImage = (project, index) => {
+const getProjectImage = (project) => {
     if (project?.logo && typeof project.logo === "string" && project.logo.startsWith("/")) {
         return project.logo
     }
-    return placeholderImages[index % placeholderImages.length]
 }
 
-const getProjectMetadata = (project, index) => {
-    const preset = metadataPresets[index % metadataPresets.length]
+const getProjectMetadata = (project) => {
+    const metadata = project?.metadata ?? {}
     return {
-        updated: preset.updated,
-        uptime: preset.uptime,
-        risk: preset.risk,
-        version: preset.version,
-        branch: project?.year >= 2024 ? "MAIN" : "LEGACY",
+        updated: metadata.updated ?? "N/A",
+        uptime: metadata.uptime ?? null,
+        risk: metadata.risk ?? "N/A",
+        version: metadata.version ?? "UNVERSIONED",
+        branch: metadata.branch ?? (project?.year >= 2024 ? "MAIN" : "LEGACY"),
     }
 }
 
-function ProjectPanel({ project, index, onOpen }) {
+function ProjectPanel({ project, isLoading, onOpen }) {
     const label = getProjectLabel(project.title)
     const heading = getProjectHeading(project.title)
-    const imageSrc = getProjectImage(project, index)
-    const metadata = getProjectMetadata(project, index)
+    const imageSrc = getProjectImage(project)
+    const metadata = getProjectMetadata(project)
 
     return (
-        <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
+        <article
+            data-fade
+            className="translate-y-4 overflow-hidden border border-slate-200/10 bg-slate-950/38 opacity-0 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] transition duration-700 ease-out"
+        >
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                 <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
                     <span className="text-amber-100/85">&gt;_</span>
@@ -109,13 +99,13 @@ function ProjectPanel({ project, index, onOpen }) {
                                     ))}
                                 </div>
                             </div>
-                            <div className="relative min-h-[240px] bg-slate-950/50">
+                            <div className="relative min-h-[240px] bg-slate-950/50 p-4">
                                 <Image
                                     src={imageSrc}
                                     alt={`${heading} preview`}
                                     fill
                                     sizes="(max-width: 1024px) 100vw, 28rem"
-                                    className="object-cover"
+                                    className="object-contain"
                                 />
                                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.14)_45%,rgba(7,16,31,0.48)_100%)]" />
                             </div>
@@ -133,6 +123,12 @@ function ProjectPanel({ project, index, onOpen }) {
                             <dt>Updated:</dt>
                             <dd className="text-right text-slate-100">{metadata.updated}</dd>
                         </div>
+                        {metadata.uptime && (
+                            <div className="flex items-center justify-between gap-6">
+                                <dt>Uptime:</dt>
+                                <dd className="text-right text-slate-100">{metadata.uptime}</dd>
+                            </div>
+                        )}
                         <div className="flex items-center justify-between gap-6">
                             <dt>Risk Profile:</dt>
                             <dd className="text-right text-amber-100">{metadata.risk}</dd>
@@ -157,9 +153,17 @@ function ProjectPanel({ project, index, onOpen }) {
                             <Link
                                 href={project.link}
                                 onClick={() => onOpen(label)}
-                                className="home-btn home-btn-secondary w-full"
+                                aria-disabled={isLoading}
+                                className={`home-btn home-btn-secondary w-full ${isLoading ? "pointer-events-none opacity-70" : ""}`}
                             >
-                                View_Source
+                                {isLoading ? (
+                                    <span
+                                        aria-hidden="true"
+                                        className="h-4 w-4 animate-spin rounded-full border-2 border-amber-100/25 border-t-amber-100"
+                                    />
+                                ) : (
+                                    "View_Source"
+                                )}
                             </Link>
                         </div>
                     )}
@@ -171,7 +175,7 @@ function ProjectPanel({ project, index, onOpen }) {
 
 export default function ProjectsPage() {
     const containerRef = useRef(null)
-    const [loading, setLoading] = useState({ state: false, name: "" })
+    const [loadingProjectId, setLoadingProjectId] = useState(null)
 
     const projects = useMemo(() => {
         if (projectsFromTimeline.length >= 1) return projectsFromTimeline
@@ -183,6 +187,33 @@ export default function ProjectsPage() {
         return () => document.body.classList.remove("home-grid-bg")
     }, [])
 
+    useEffect(() => {
+        const root = containerRef.current
+        if (!root) return
+
+        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
+        if (!nodes.length) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return
+                    entry.target.classList.add("!translate-y-0", "!opacity-100")
+                    observer.unobserve(entry.target)
+                })
+            },
+            {
+                root,
+                threshold: 0.14,
+                rootMargin: "0px 0px -8% 0px",
+            }
+        )
+
+        nodes.forEach((node) => observer.observe(node))
+
+        return () => observer.disconnect()
+    }, [])
+
     return (
         <>
             <Head>
@@ -190,13 +221,11 @@ export default function ProjectsPage() {
                 <meta name="description" content="Selected projects by Elliot Chin." />
             </Head>
 
-            {loading.state && <Loader pageName={loading.name} />}
-
             <main
                 ref={containerRef}
                 className="relative h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth overscroll-contain bg-transparent text-amber-50"
             >
-                <HomeTopNav containerRef={containerRef} />
+                <BackToTopButton targetRef={containerRef} />
 
                 <div className="pt-14">
                     <section data-fade data-projects-header className="px-6 pb-6 pt-6 sm:px-10 lg:px-14">
@@ -228,12 +257,12 @@ export default function ProjectsPage() {
 
                     <section data-fade data-projects-browser className="px-6 pb-14 sm:px-10 lg:px-14">
                         <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-8">
-                            {projects.map((project, index) => (
+                            {projects.map((project) => (
                                 <ProjectPanel
                                     key={project.id}
                                     project={project}
-                                    index={index}
-                                    onOpen={(name) => setLoading({ state: true, name })}
+                                    isLoading={loadingProjectId === project.id}
+                                    onOpen={() => setLoadingProjectId(project.id)}
                                 />
                             ))}
                         </div>
