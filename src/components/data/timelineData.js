@@ -205,6 +205,30 @@ export const timeline = [
     },
 
     {
+        id: "2024-ai4security",
+        year: 2024,
+        title: '<span class="!text-amber-950">Project</span> â€” <span class="!text-red-800">AI4Security Research</span>',
+        desc: "Research into how open-source and hosted LLMs can support cybersecurity workflows such as alert enrichment, synthetic data generation, retrieval-augmented context building, and anomaly detection over industrial network data.",
+        type: "project",
+        link: "/projects/AI4Security",
+        logo: "/projects/ai4security/cover-shield.png",
+        metadata: {
+            updated: "Q4-2024",
+            risk: "MED",
+            version: "v1.0.0-RESEARCH",
+            branch: "RND",
+        },
+        details: [
+            "Evaluated Hugging Face open-source LLMs for security data interpretation, risk-oriented reasoning, and practical analyst-facing workflows.",
+            "Built an alert-enrichment concept around synthetic alerts, assets, and CVE records so the model could generate summaries, remediation steps, and likely contributing factors.",
+            "Tested local deployment constraints using quantized 4-bit models and compared cybersecurity-tuned models against a general-purpose baseline.",
+            "Explored anomaly detection on NetFlow representations of industrial traffic using in-context learning, fine-tuning, and reasoning-first prompting with Azure OpenAI."
+        ],
+        tech: ["LLMs", "Hugging Face", "RAG", "Azure OpenAI", "Python", "Cybersecurity"],
+        deploy: "ai4security-research"
+    },
+
+    {
         id: "2022-automated-musicians",
         year: 2022,
         title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Automated Musicians</span>',
