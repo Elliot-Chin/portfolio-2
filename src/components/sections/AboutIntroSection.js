@@ -1,144 +1,145 @@
-import { useState } from "react"
-import { Model } from "@/components/avatar/Model"
-import { items, skills } from "@/components/data/aboutIntroData"
-import { SkillInfoCard } from "@/components/cards/SkillInfoCard"
+import Link from "next/link"
+import {
+    ArrowOutward,
+    ContactSupportOutlined,
+    MemoryOutlined,
+    TerminalOutlined,
+} from "@mui/icons-material"
 
-export function AboutIntroSection({ getJobDuration }) {
+const cards = [
+    {
+        id: "01/03",
+        title: "View Projects",
+        body: "Exploring hardened architectures, OT protocol parsers, and custom security tooling.",
+        cta: "Access_Repository",
+        href: "/projects",
+        Icon: TerminalOutlined,
+        accent: "text-amber-200",
+    },
+    {
+        id: "02/03",
+        title: "Technical Skills",
+        body: "Systematic mastery of C++, Python, Modbus/TCP, and secure cloud infrastructure.",
+        cta: "Load_Capabilities",
+        href: "/resume",
+        Icon: MemoryOutlined,
+        accent: "text-emerald-300",
+    },
+    {
+        id: "03/03",
+        title: "Contact",
+        body: "Reach out for collaboration, security engineering work, or thoughtful technical conversations.",
+        cta: "Open_Channel",
+        href: "/contact",
+        Icon: ContactSupportOutlined,
+        accent: "text-amber-100",
+    },
+]
 
-    const [selectedSkill, setSelectedSkill] = useState(null)
+function CardLink({ href, children, className }) {
+    const shared = `${className} group inline-flex items-center gap-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.22em]`
 
+    if (href.startsWith("/")) {
+        return (
+            <Link href={href} className={shared}>
+                {children}
+            </Link>
+        )
+    }
+
+    return (
+        <a href={href} className={shared}>
+            {children}
+        </a>
+    )
+}
+
+export function AboutIntroSection() {
     return (
         <section
             data-fade
-            className="relative min-h-[100svh] sm:min-h-screen snap-start overflow-hidden
-         transition-[opacity,transform] duration-200 ease-linear
-         will-change-[opacity,transform]"
-            style={{
-                opacity: "var(--vis, 0)",
-                transform: "translateY(calc((1 - var(--vis, 0)) * 8vh))",
-            }}
+            className="relative min-h-[100dvh] snap-start overflow-hidden translate-y-4 opacity-0 transition duration-700 ease-out lg:h-[100dvh] lg:min-h-[100dvh]"
         >
-            <div className="
-  relative w-full min-h-[100svh] supports-[height:100dvh]:min-h-[100dvh] mx-auto overflow-hidden text-black
-  lg:w-[65rem] xl:w-full
-  lg:max-w-6xl lg:mx-auto lg:grid lg:grid-cols-2 lg:items-center lg:gap-10
-">
+            <div className="mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 py-12 sm:px-10 md:px-12 md:py-10 lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:py-8 xl:px-14 xl:py-10">
+                <div className="w-full md:hidden">
+                    <div className="mb-4 flex items-center justify-between font-spacemono text-[10px] uppercase tracking-[0.2em] text-slate-400/70">
+                        <span>System Modules</span>
+                        <span>Swipe to browse</span>
+                    </div>
 
-                {/* MODEL BLOCK */}
-                <div
-                    className="
-    absolute inset-x-0 top-0 h-[56svh] supports-[height:100dvh]:h-[56dvh] overflow-hidden
-    flex items-end justify-center pb-2
-    lg:static lg:h-auto lg:pb-0 lg:order-2
-  "
-                >
-                    <div className="relative shrink-0 w-[30rem]
-                h-[50svh] md:h-[50svh]
-                supports-[height:100dvh]:h-[50dvh]
-                lg:h-[80vh] lg:w-[22rem]
-                xl:h-[100vh] xl:w-[35rem]
-                lg:aspect-[4/5] lg:overflow-visible">
-                        <div className="w-full h-full flex items-center justify-center">
-                            <Model />
-                        </div>
+                    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
+                        {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
+                            <article
+                                key={id}
+                                className="relative min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42"
+                            >
+                                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
+                                <div className="relative z-10 flex h-full flex-col">
+                                    <div className="flex items-start justify-between">
+                                        <Icon className={`${accent} text-[3rem]`} />
+                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                                            {id}
+                                        </span>
+                                    </div>
+
+                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50">
+                                        {title}
+                                    </h3>
+
+                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82">
+                                        {body}
+                                    </p>
+
+                                    <div className="mt-6">
+                                        <CardLink
+                                            href={href}
+                                            className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
+                                        >
+                                            <span>{cta}</span>
+                                            <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
+                                        </CardLink>
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
                     </div>
                 </div>
 
-                {/* TEXT + MARQUEE + CTAs */}
-                <div
-                    className="
-        absolute inset-x-0 bottom-0 z-10 px-4 pb-6 pt-8
-        backdrop-blur-[2px]
-        lg:static lg:px-0 lg:pt-0 lg:pb-0
-        lg:bg-none lg:backdrop-blur-0
-        lg:order-1
-      "
-                >
-                    <h2 className="text-3xl lg:text-3xl leading-tight font-semibold text-white">
-                        Hi, nice to meet ya! <span className="animate-bounce absolute hidden ml-3 md:inline">👋</span>
-                        <br />
-                        <span className="opacity-80 text-xl lg:text-3xl text-amber-950">
-                            Malaysian-born,
-                            <span className="block sm:inline text-red-700"> Canadian-built.</span>
-                        </span>
-                    </h2>
+                <div className="hidden w-full items-stretch gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
+                    {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
+                        <article
+                            key={id}
+                            className="relative h-full overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
+                        >
+                            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
+                            <div className="relative z-10 flex h-full flex-col">
+                                <div className="flex items-start justify-between">
+                                    <Icon className={`${accent} text-[3rem] lg:text-[2.75rem] xl:text-[4rem]`} />
+                                    <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                                        {id}
+                                    </span>
+                                </div>
 
-                    {/* —— “Intro text” wrapper is relative so the box can be absolute below it —— */}
-                    <div className="relative">
-                        <p className="mt-3 font-montserrat lg:mt-4 font-bold sm:font-normal lg:text-lg opacity-90 lg:opacity-100 text-white">
-                            <span className="font-bold">{getJobDuration("2023-06-05")}</span> as a{" "}
-                            <span className="font-bold">JR. Application Cybersecurity Specialist</span> at Siemens. I design quiet UIs,
-                            create things that work, and tinker after hours because I actually enjoy it&nbsp;✨
-                        </p>
-                    </div>
+                                <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50 lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]">
+                                    {title}
+                                </h3>
 
-                    {/* Marquee: mobile fades + desktop mask */}
-                    <div
-                        className="
-        relative mt-4 lg:mt-6 w-full overflow-hidden p-0
-        [--fade:12%]
-        md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
-        md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
-      "
-                    >
-                        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:hidden bg-gradient-to-r from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-                        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:hidden bg-gradient-to-l from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-                        <div className="flex min-w-max whitespace-nowrap gap-3 will-change-transform transform-gpu animate-slide-left">
-                            {[...items, ...items].map((t, i) => (
-                                <span
-                                    key={i}
-                                    className="mx-0 px-3 lg:px-4 py-1.5 lg:py-2 font-monts rounded-full backdrop-blur-md bg-white/20 inline-block text-sm lg:text-base glass font-montserrat !text-amber-950
-                                    !shadow-none font-semibold"
-                                >
-                                    {t}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
+                                <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82 lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]">
+                                    {body}
+                                </p>
 
-                    {/* Skills marquee — clickable on md+ only */}
-                    <div
-                        className="
-        relative mt-4 lg:mt-6 w-full overflow-hidden p-0
-        [--fade:12%]
-        md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
-        md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]
-      "
-                    >
-                        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 md:hidden bg-gradient-to-r from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-                        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 md:hidden bg-gradient-to-l from-transparent via-transparent to-transparent mix-blend-soft-light z-10" />
-
-                        <div className="flex min-w-max whitespace-nowrap gap-3 will-change-transform transform-gpu animate-slide-left-skills">
-                            {[...skills, ...skills].map((t, i) => (
-                                <button
-                                    type="button"
-                                    key={i}
-                                    onMouseEnter={() => setSelectedSkill(t)}
-                                    title={t.name}
-                                    className="
-                mx-0 gap-2 px-3 lg:px-4 py-1.5 lg:py-2 rounded-full
-                backdrop-blur-md bg-white/20 flex items-center
-                text-sm lg:text-base
-                font-semibold
-                pointer-events-none md:pointer-events-auto
-                md:hover:bg-white/30 md:cursor-pointer
-                focus:outline-none
-                glass
-                !shadow-none font-montserrat !text-amber-950
-              "
-                                    aria-label={`Show details for ${t.name}`}
-                                >
-                                    <img src={t.src} height={20} width={20} alt={t.name} />
-                                    {t.name}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Skill explanation area (md+). h-[96px] reserves space so nothing shifts. */}
-                    <div className="hidden md:block relative mt-3 h-[96px]">
-                        {selectedSkill && <SkillInfoCard skill={selectedSkill} onClosed={() => setSelectedSkill(null)} />}
-                    </div>
+                                <div className="mt-6 xl:mt-10">
+                                    <CardLink
+                                        href={href}
+                                        className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
+                                    >
+                                        <span>{cta}</span>
+                                        <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
+                                    </CardLink>
+                                </div>
+                            </div>
+                        </article>
+                    ))}
                 </div>
             </div>
         </section>

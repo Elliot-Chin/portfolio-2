@@ -282,6 +282,42 @@ body::after {
     animation: wave var(--bg-speed-3) ease-in-out infinite alternate-reverse;
 }
 
+body.home-grid-bg {
+    background-color: #081628;
+    background-image:
+        linear-gradient(rgba(151, 190, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(151, 190, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 34, 58, 0) 0%, rgba(5, 15, 28, 0.2) 100%);
+    background-size: 24px 24px, 24px 24px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0;
+    animation: none;
+    will-change: auto;
+}
+
+body.home-grid-bg::before,
+body.home-grid-bg::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    animation: none;
+}
+
+body.home-grid-bg::before {
+    background:
+        linear-gradient(178deg, transparent 0 calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 41px), transparent calc(100% - 41px)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+    opacity: 1;
+}
+
+body.home-grid-bg::after {
+    background:
+        radial-gradient(circle at 50% -20%, rgba(72, 128, 206, 0.1), transparent 52%),
+        radial-gradient(circle at 78% 8%, rgba(251, 146, 60, 0.09), transparent 22%);
+    opacity: 1;
+}
+
 /* ---------------------------
    REDUCED MOTION SAFETY
 ---------------------------- */
@@ -371,4 +407,197 @@ body::after {
 
 .animate-skill-out {
     animation: skillOut 0.18s ease-in both;
+}
+
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(191, 219, 254, 0.2);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.home-btn:hover {
+    transform: translateY(-1px);
+}
+
+.home-btn-primary {
+    border-color: rgba(253, 186, 116, 0.6);
+    background: rgb(251, 146, 60);
+    color: rgb(15, 23, 42);
+}
+
+.home-btn-primary:hover {
+    background: rgb(253, 186, 116);
+}
+
+.home-btn-secondary {
+    border-color: rgba(148, 163, 184, 0.25);
+    background: rgba(2, 6, 23, 0.2);
+    color: rgba(241, 245, 249, 0.95);
+}
+
+.home-btn-secondary:hover {
+    border-color: rgba(251, 146, 60, 0.45);
+    background: rgba(251, 146, 60, 0.08);
+    color: rgba(255, 237, 213, 0.98);
+}
+
+.home-btn-icon {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    padding: 0.5rem;
+    letter-spacing: normal;
+}
+
+.career-flow-line,
+.career-flow-line-v {
+    position: absolute;
+    overflow: hidden;
+}
+
+.career-flow-line {
+    height: 1px;
+    background: rgba(251, 191, 36, 0.22);
+}
+
+.career-flow-line-v {
+    width: 1px;
+    background: rgba(251, 191, 36, 0.22);
+}
+
+.career-flow-line::after,
+.career-flow-line-v::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(253, 224, 71, 0.95) 45%, transparent 100%);
+    background-size: 140px 100%;
+    animation: career-flow-x 2.6s linear infinite;
+}
+
+.career-flow-line-v::after {
+    background: linear-gradient(180deg, transparent 0%, rgba(253, 224, 71, 0.95) 45%, transparent 100%);
+    background-size: 100% 140px;
+    animation: career-flow-y 2.6s linear infinite;
+}
+
+.career-flow-seg-1::after,
+.career-flow-seg-2::after {
+    width: 48px;
+    inset: 0 auto 0 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(253, 224, 71, 0.15) 8%, rgba(253, 224, 71, 0.98) 52%, transparent 100%);
+    background-size: 100% 100%;
+    animation: career-flow-single 5.2s linear infinite;
+}
+
+.career-flow-seg-2::after {
+    animation-delay: 2.6s;
+}
+
+.career-flow-node {
+    position: absolute;
+    height: 8px;
+    width: 8px;
+    border-radius: 9999px;
+    background: rgb(251, 191, 36);
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.08), 0 0 16px rgba(251, 191, 36, 0.45);
+}
+
+@keyframes career-flow-x {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes career-flow-y {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes career-flow-single {
+    0% {
+        opacity: 0;
+        transform: translateX(-130%);
+    }
+
+    8% {
+        opacity: 1;
+    }
+
+    78% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(250%);
+    }
+}
+
+@keyframes nav-underline-pending {
+    0%,
+    100% {
+        left: 0;
+        right: 0;
+    }
+
+    22% {
+        left: 72%;
+        right: 0;
+    }
+
+    50% {
+        left: 0;
+        right: 0;
+    }
+
+    78% {
+        left: 0;
+        right: 72%;
+    }
+}
+
+.nav-underline-pending {
+    animation: nav-underline-pending 0.9s ease-in-out infinite;
+}
+
+.experience-title-marquee {
+    will-change: transform;
+    animation: experience-title-marquee var(--experience-title-scroll-duration, 10s) ease-in-out infinite;
+    animation-delay: var(--experience-title-scroll-delay, 1.2s);
+}
+
+@keyframes experience-title-marquee {
+    0%,
+    12% {
+        transform: translateX(0);
+    }
+
+    45%,
+    55% {
+        transform: translateX(var(--experience-title-scroll-distance, 0px));
+    }
+
+    88%,
+    100% {
+        transform: translateX(0);
+    }
 }

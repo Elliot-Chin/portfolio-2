@@ -1,27 +1,56 @@
 import Head from "next/head"
-import { useRef, useState } from "react"
-import { useRouter } from "next/router"
-import { Loader } from "@/components/nav/Loader"
+import { useEffect, useRef } from "react"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 
 import { useScrollProgress } from "@/components/hooks/useScrollProgress"
-import { getJobDuration } from "@/components/utils/getJobDuration"
+import { useScreenSnap } from "@/components/hooks/useScreenSnap"
+import { useDesktop } from "@/components/hooks/useDesktop"
 import { HeroSection } from "@/components/sections/HeroSection"
 import { AboutIntroSection } from "@/components/sections/AboutIntroSection"
-import { AboutDetailsSection } from "@/components/sections/AboutDetailsSection"
 
 export default function Home() {
-    const [pageLoading, setPageLoading] = useState(false)
-    const [selectedPage, setSelectedPage] = useState("")
-    const router = useRouter()
     const containerRef = useRef(null)
+    const isDesktop = useDesktop()
 
     useScrollProgress(containerRef)
+    useScreenSnap(containerRef, { enabled: isDesktop })
+
+    useEffect(() => {
+        document.body.classList.add("home-grid-bg")
+        return () => document.body.classList.remove("home-grid-bg")
+    }, [])
+
+    useEffect(() => {
+        const root = containerRef.current
+        if (!root) return
+
+        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
+        if (!nodes.length) return
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (!entry.isIntersecting) return
+                    entry.target.classList.add("!translate-y-0", "!opacity-100")
+                    observer.unobserve(entry.target)
+                })
+            },
+            {
+                root,
+                threshold: 0.14,
+                rootMargin: "0px 0px -8% 0px",
+            }
+        )
+
+        nodes.forEach((node) => observer.observe(node))
+
+        return () => observer.disconnect()
+    }, [])
 
     return (
         <main
             ref={containerRef}
-            className="h-screen overflow-y-scroll snap-y snap-proximity scroll-smooth overscroll-contain"
+            className={`h-[100dvh] overflow-y-scroll scroll-smooth overscroll-contain ${isDesktop ? "snap-y snap-proximity" : ""}`}
         >
             <BackToTopButton targetRef={containerRef} />
             <Head>
@@ -29,18 +58,9 @@ export default function Home() {
                 <meta name="description" content="Hey — I’m Elliot. I like making things that feel good to use." />
             </Head>
 
-            {pageLoading && <Loader pageName={selectedPage} />}
+            <HeroSection containerRef={containerRef} />
 
-            <HeroSection
-                setSelectedPage={setSelectedPage}
-                setPageLoading={setPageLoading}
-                router={router}
-                containerRef={containerRef}
-            />
-
-            <AboutIntroSection getJobDuration={getJobDuration} />
-
-            <AboutDetailsSection />
+            <AboutIntroSection />
         </main>
     )
 }

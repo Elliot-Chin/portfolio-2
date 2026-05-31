@@ -1,10 +1,10 @@
 import { AvatarMissingAnimation } from "./Avatar_MissingAnimation";
 
 
-export const ExperienceMissingAnimation = () => {
+export const ExperienceMissingAnimation = ({ modelY = -1, modelScale = 1 }) => {
     return (
         <>
-            <group position-y={-1}>
+            <group position-y={modelY} scale={modelScale}>
                 <AvatarMissingAnimation />
             </group>
             <ambientLight intensity={2} />
