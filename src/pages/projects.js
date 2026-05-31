@@ -80,7 +80,7 @@ function ProjectPanel({ project, isLoading, onOpen }) {
                         {stripTags(project.desc)}
                     </p>
 
-                    <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
+                    <div className="mt-7 font-spacemono md:text-base font-bold text-sm text-amber-300">
                         {">> "}
                         {project.deploy
                             ? `deploy ${project.deploy.toLowerCase().replace(/\s+/g, "-")} --inspect`

@@ -578,3 +578,26 @@ body.home-grid-bg::after {
 .nav-underline-pending {
     animation: nav-underline-pending 0.9s ease-in-out infinite;
 }
+
+.experience-title-marquee {
+    will-change: transform;
+    animation: experience-title-marquee var(--experience-title-scroll-duration, 10s) ease-in-out infinite;
+    animation-delay: var(--experience-title-scroll-delay, 1.2s);
+}
+
+@keyframes experience-title-marquee {
+    0%,
+    12% {
+        transform: translateX(0);
+    }
+
+    45%,
+    55% {
+        transform: translateX(var(--experience-title-scroll-distance, 0px));
+    }
+
+    88%,
+    100% {
+        transform: translateX(0);
+    }
+}

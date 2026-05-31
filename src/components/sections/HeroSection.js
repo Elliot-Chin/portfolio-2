@@ -72,6 +72,29 @@ export function HeroSection({ containerRef }) {
 
             <div className="relative z-10 mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 pb-8 pt-[5.25rem] sm:px-10 md:px-12 md:pb-10 md:pt-[5.5rem] lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:pb-6 lg:pt-10 xl:px-14 xl:pb-10 xl:pt-12">
                 <div className="grid w-full items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:gap-10 xl:gap-12">
+                    <div className={`relative mx-auto flex w-full max-w-[22rem] items-end justify-center lg:hidden ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
+                        <div className="relative h-[19rem] w-full overflow-hidden rounded-[2rem] border border-amber-200/10 bg-slate-950/38 shadow-[0_0_0_1px_rgba(255,255,255,0.03),0_16px_40px_rgba(2,8,23,0.28)] backdrop-blur-[3px]">
+                            <div className="absolute inset-x-0 top-0 z-20 flex h-10 items-center justify-between border-b border-amber-200/10 bg-slate-950/42 px-4">
+                                <div className="flex items-center gap-2">
+                                    <span className="h-2 w-2 rounded-full bg-rose-400/90" />
+                                    <span className="h-2 w-2 rounded-full bg-amber-300/90" />
+                                    <span className="h-2 w-2 rounded-full bg-emerald-400/90" />
+                                </div>
+                                <span className="font-spacemono text-[9px] uppercase tracking-[0.28em] text-amber-200/75">
+                                    mobile_session.exe
+                                </span>
+                            </div>
+
+                            <div className="absolute inset-x-0 bottom-0 top-10 overflow-hidden">
+                                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,22,40,0.02),rgba(8,22,40,0.24))] z-10 pointer-events-none" />
+                                <div className="absolute inset-x-[16%] bottom-[7%] h-16 rounded-full bg-amber-400/12 blur-3xl" />
+                                <div className="absolute inset-0">
+                                    <Model2 modelScale={0.9} modelY={-1.05} cameraZ={1.72} fov={34} dprMax={3} onReady={() => setIsModelReady(true)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={`lg:py-3 ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
                         <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/8 px-3 py-2 font-spacemono text-[9px] font-semibold uppercase tracking-[0.18em] text-amber-200 shadow-[0_0_30px_rgba(251,146,60,0.08)] sm:gap-3 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
                             <span className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]" />
@@ -96,7 +119,7 @@ export function HeroSection({ containerRef }) {
                                     deleteSpeed: 18,
                                     pauseFor: 1500,
                                     cursor: "_",
-                                    wrapperClassName: "inline",
+                                    wrapperClassName: "inline md:text-2xl text-sm",
                                     cursorClassName: "typewriter-cursor inline-block text-amber-300",
                                 }}
                             />

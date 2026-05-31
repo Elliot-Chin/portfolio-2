@@ -33,6 +33,66 @@ const highlights = [
     "Virtualized Lab Infrastructure",
 ]
 
+function AutoPanLabel({ text, className = "" }) {
+    const viewportRef = useRef(null)
+    const trackRef = useRef(null)
+    const [style, setStyle] = useState({})
+    const [shouldPan, setShouldPan] = useState(false)
+
+    useEffect(() => {
+        const viewport = viewportRef.current
+        const track = trackRef.current
+        if (!viewport || !track) return
+
+        const update = () => {
+            const mobile = window.innerWidth < 640
+            if (!mobile) {
+                setShouldPan(false)
+                setStyle({})
+                return
+            }
+
+            const overflow = Math.ceil(track.scrollWidth - viewport.clientWidth)
+            if (overflow <= 8) {
+                setShouldPan(false)
+                setStyle({})
+                return
+            }
+
+            setShouldPan(true)
+            setStyle({
+                "--experience-title-scroll-distance": `-${overflow}px`,
+                "--experience-title-scroll-duration": `${Math.max(7, overflow / 26 + 5)}s`,
+                "--experience-title-scroll-delay": "1s",
+            })
+        }
+
+        const requestUpdate = () => requestAnimationFrame(update)
+        const resizeObserver = new ResizeObserver(requestUpdate)
+        resizeObserver.observe(viewport)
+        resizeObserver.observe(track)
+        window.addEventListener("resize", requestUpdate)
+        update()
+
+        return () => {
+            resizeObserver.disconnect()
+            window.removeEventListener("resize", requestUpdate)
+        }
+    }, [text])
+
+    return (
+        <div ref={viewportRef} className={`max-w-full overflow-hidden ${className}`}>
+            <div
+                ref={trackRef}
+                style={style}
+                className={`inline-flex min-w-max whitespace-nowrap ${shouldPan ? "experience-title-marquee" : ""}`}
+            >
+                {text}
+            </div>
+        </div>
+    )
+}
+
 const experience = [
     {
         title: "Jr Application Cybersecurity Specialist",
@@ -409,8 +469,8 @@ export default function ResumePage() {
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
                                     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                        <div className="font-spacemono text-sm font-bold text-amber-200">
-                                            {role.company.toLowerCase().replace(/\s+/g, "_")}::{role.title.toLowerCase().replace(/\s+/g, "_")}
+                                        <div className="min-w-0 flex-1 font-spacemono text-sm font-bold text-amber-200 sm:flex-none">
+                                            <AutoPanLabel text={`${role.company.toLowerCase().replace(/\s+/g, "_")}::${role.title.toLowerCase().replace(/\s+/g, "_")}`} />
                                         </div>
                                         <div className="flex flex-wrap items-center gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
                                             <span className="inline-flex items-center gap-1.5">
@@ -560,8 +620,8 @@ export default function ResumePage() {
                     <SectionShell id="education" title="Education" Icon={SchoolOutlined}>
                         <article className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                <div className="font-spacemono text-sm font-bold text-amber-200">
-                                    university_of_new_brunswick::education_record
+                                <div className="min-w-0 flex-1 font-spacemono text-sm font-bold text-amber-200 sm:flex-none">
+                                    <AutoPanLabel text="university_of_new_brunswick::education_record" />
                                 </div>
                                 <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
                                     {education.year}

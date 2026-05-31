@@ -22,22 +22,22 @@ export default function Custom404() {
 
             <main
                 ref={containerRef}
-                className="relative h-[100svh] overflow-hidden bg-transparent text-slate-50"
+                className="relative min-h-[100svh] bg-transparent text-slate-50 pb-10"
             >
 
-                <section className="h-[100svh] px-6 pb-10 pt-24 sm:px-10 lg:px-14">
-                    <div className="mx-auto grid h-full w-full max-w-[96rem] items-center gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
+                <section className="px-6 pb-10 pt-20 sm:px-10 sm:pt-24 lg:px-14">
+                    <div className="mx-auto grid w-full max-w-[96rem] items-start gap-8 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-center lg:gap-10">
                         <div className="min-w-0">
                             <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-4 py-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-amber-100">
                                 <span className="h-2 w-2 rounded-full bg-amber-300" />
                                 <span>Route_Failure_Detected</span>
                             </div>
 
-                            <h1 className="mt-6 font-montserrat text-[3rem] font-semibold tracking-tight text-blue-100 md:text-[4.8rem]">
+                            <h1 className="mt-6 break-words font-montserrat text-[1.5rem] font-semibold tracking-tight text-blue-100 md:text-[4.8rem]">
                                 404_SIGNAL_LOST
                             </h1>
 
-                            <div className="mt-5 font-spacemono text-sm uppercase tracking-[0.16em] text-slate-400">
+                            <div className="mt-5 text-xs uppercase tracking-[0.16em] text-slate-400 sm:text-sm">
                                 <span>SYSLOG: </span>
                                 <ReactTyped
                                     strings={["Requested endpoint could not be resolved"]}
@@ -49,7 +49,7 @@ export default function Custom404() {
                                 <span className="typewriter-cursor">_</span>
                             </div>
 
-                            <p className="mt-6 max-w-3xl font-montserrat text-lg leading-relaxed text-slate-100/88">
+                            <p className="mt-6 max-w-3xl font-montserrat text-base leading-relaxed text-slate-100/88 sm:text-lg">
                                 The requested page is not present in this network map. The destination may have been
                                 moved, renamed, or never deployed at this route.
                             </p>
@@ -77,21 +77,21 @@ export default function Custom404() {
                                 </div>
                             </div>
 
-                            <div className="mt-8 flex flex-wrap gap-3">
-                                <Link href="/" className="home-btn home-btn-primary">
+                            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                                <Link href="/" className="home-btn home-btn-primary w-full sm:w-auto">
                                     <span>Return_Home</span>
                                     <ArrowOutwardOutlined sx={{ fontSize: 17 }} />
                                 </Link>
-                                <Link href="/projects" className="home-btn home-btn-secondary">
+                                <Link href="/projects" className="home-btn home-btn-secondary w-full sm:w-auto">
                                     <span>Open_Projects</span>
                                 </Link>
-                                <Link href="/contact" className="home-btn home-btn-secondary">
+                                <Link href="/contact" className="home-btn home-btn-secondary w-full sm:w-auto">
                                     <span>Contact_Node</span>
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="relative mx-auto h-[420px] w-full max-w-[38rem] overflow-hidden border border-slate-200/10 bg-slate-950/28 shadow-[0_18px_50px_rgba(2,8,23,0.28)] backdrop-blur-[2px] sm:h-[520px]">
+                        <div className="relative mx-auto h-[320px] w-full max-w-[38rem] overflow-hidden border border-slate-200/10 bg-slate-950/28 shadow-[0_18px_50px_rgba(2,8,23,0.28)] backdrop-blur-[2px] sm:h-[420px] lg:h-[520px]">
                             <div className="flex items-center justify-between border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                                 <div className="flex items-center gap-2">
                                     <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
@@ -104,7 +104,7 @@ export default function Custom404() {
                             </div>
 
                             <div className="absolute inset-x-0 bottom-0 top-[49px]">
-                                <ModelMissingAnimation cameraZ={3.35} fov={19} modelY={-1.55} modelScale={1.18} />
+                                <ModelMissingAnimation cameraZ={4.1} fov={24} modelY={-1.35} modelScale={0.92} />
                             </div>
                         </div>
                     </div>

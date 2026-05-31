@@ -61,7 +61,51 @@ export function AboutIntroSection() {
             className="relative min-h-[100dvh] snap-start overflow-hidden translate-y-4 opacity-0 transition duration-700 ease-out lg:h-[100dvh] lg:min-h-[100dvh]"
         >
             <div className="mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 py-12 sm:px-10 md:px-12 md:py-10 lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:py-8 xl:px-14 xl:py-10">
-                <div className="grid w-full items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
+                <div className="w-full md:hidden">
+                    <div className="mb-4 flex items-center justify-between font-spacemono text-[10px] uppercase tracking-[0.2em] text-slate-400/70">
+                        <span>System Modules</span>
+                        <span>Swipe to browse</span>
+                    </div>
+
+                    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
+                        {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
+                            <article
+                                key={id}
+                                className="relative min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42"
+                            >
+                                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
+                                <div className="relative z-10 flex h-full flex-col">
+                                    <div className="flex items-start justify-between">
+                                        <Icon className={`${accent} text-[3rem]`} />
+                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                                            {id}
+                                        </span>
+                                    </div>
+
+                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50">
+                                        {title}
+                                    </h3>
+
+                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82">
+                                        {body}
+                                    </p>
+
+                                    <div className="mt-6">
+                                        <CardLink
+                                            href={href}
+                                            className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
+                                        >
+                                            <span>{cta}</span>
+                                            <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
+                                        </CardLink>
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="hidden w-full items-stretch gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
                     {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
                         <article
                             key={id}

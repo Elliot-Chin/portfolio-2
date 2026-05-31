@@ -176,7 +176,7 @@ export default function AutomatedMusiciansPage() {
                                         <div className="border-b border-slate-200/10 bg-slate-950/60 px-4 py-3">
                                             <div className="flex items-center justify-between gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
                                                 <span>composition_signal</span>
-                                                <span className="text-amber-200">musicians.runtime</span>
+                                                <span className="text-amber-200 md:block hidden">musicians.runtime</span>
                                             </div>
                                         </div>
 
