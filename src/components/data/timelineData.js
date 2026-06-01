@@ -164,11 +164,11 @@ export const timeline = [
         link: "/projects/Industrial_Protocol_Analysis",
         logo: "/projects/ipa/Logo.png",
         metadata: {
-            updated: "22-AUG-2024",
+            updated: "2026",
             uptime: "99.270%",
-            risk: "LOW",
+            risk: "MED",
             version: "v3.0.1",
-            branch: "MAIN",
+            branch: "DEVELOPMENT",
         },
         details: [
             "Researched OPC UA protocol behavior within an R&D lab environment using PLCs, generated OPC UA traffic, Wireshark, and UAExpert to simulate and understand normal and abnormal industrial communication scenarios.",
@@ -180,15 +180,15 @@ export const timeline = [
         deploy: "industrial_protocol_analysis"
     },
     {
-        id: "2024-expenses-recorder",
-        year: 2024,
+        id: "2025-expenses-recorder",
+        year: 2025,
         title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Expenses Recorder</span>',
         desc: "Where budgets meet common sense — simple, predictable, and actually nice to use.",
         type: "project",
         link: "/projects/Expenses_Recorder",
         logo: "/projects/exprec/Logo.png",
         metadata: {
-            updated: "14-JUN-2024",
+            updated: "2025",
             uptime: "99.999%",
             risk: "LOW",
             version: "v2.1.4-LTS",
@@ -205,7 +205,7 @@ export const timeline = [
     },
 
     {
-        id: "2024-ai4security",
+        id: "2024-AI4Security",
         year: 2024,
         title: '<span class="!text-amber-950">Project</span> â€” <span class="!text-red-800">AI4Security Research</span>',
         desc: "Research into how open-source and hosted LLMs can support cybersecurity workflows such as alert enrichment, synthetic data generation, retrieval-augmented context building, and anomaly detection over industrial network data.",
@@ -213,7 +213,7 @@ export const timeline = [
         link: "/projects/AI4Security",
         logo: "/projects/ai4security/cover-shield.png",
         metadata: {
-            updated: "Q4-2024",
+            updated: "2024",
             risk: "MED",
             version: "v1.0.0-RESEARCH",
             branch: "RND",
@@ -237,8 +237,8 @@ export const timeline = [
         link: "/projects/Resource_Allocation_Tool",
         logo: "/projects/rat-proposal/logo.png",
         metadata: {
-            updated: "Q4-2024",
-            risk: "LOW",
+            updated: "2024",
+            risk: "MED",
             version: "v1.0.0-PROPOSAL",
             branch: "PLANNING",
         },
@@ -253,19 +253,42 @@ export const timeline = [
         deploy: "resource-allocation-tool"
 
     },
+    {
+        id: "2024-northbound-api",
+        year: 2024,
+        title: '<span class="!text-amber-950">Project</span> â€” <span class="!text-red-800">Northbound API</span>',
+        desc: "A proof-of-concept Northbound API interface for Siemens SINEC Security Monitor so processed security data and asset information could be extracted, displayed in an external dashboard, or forwarded into other downstream workflows.",
+        type: "project",
+        link: "/projects/Northbound_API",
+        logo: "/projects/northbound-api/logo.png",
+        metadata: {
+            updated: "2024",
+            risk: "LOW",
+            version: "v1.3.0-POC",
+            branch: "RND",
+        },
+        details: [
+            "Defined and developed API interfaces inside SINEC Security Monitor to expose processed data for external consumption.",
+            "Built a stakeholder-facing proof of concept showing how extracted information could be surfaced outside the core product.",
+            "Developed a companion dashboard using Next.js and Flask to demonstrate data retrieval, visualization, and workflow integration.",
+            "Used the interfaces to retrieve processed data and interact with the SSM database for asset information, security events, and alerts."
+        ],
+        tech: ["Next.js", "Flask", "API Design", "Dashboard Development", "Cybersecurity", "Internal Tooling"],
+        deploy: "northbound-api"
+    },
 
     {
-        id: "2022-automated-musicians",
-        year: 2022,
+        id: "2023-automated-musicians",
+        year: 2023,
         title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Automated Musicians</span>',
         desc: "Where music meets algorithms — a creative blend of theory, pattern recognition, and composition automation.",
         type: "project",
         link: "/projects/Automated_Musicians",
         logo: "/projects/am/Logo.png",
         metadata: {
-            updated: "03-NOV-2022",
+            updated: "2023",
             uptime: "98.410%",
-            risk: "MED",
+            risk: "LOW",
             version: "v1.8.2-STABLE",
             branch: "LEGACY",
         },
@@ -279,7 +302,6 @@ export const timeline = [
         tech: ["Python", "NumPy", "Pandas", "Full-Stack Development"],
         deploy: "automated_musicians"
     },
-   
     // {
     //     id: "2025-scorehub",
     //     year: 2025,
