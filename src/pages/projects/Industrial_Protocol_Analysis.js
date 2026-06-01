@@ -14,6 +14,7 @@ import {
     TerminalOutlined,
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 
 const opcuaPlugin = {
     title: "SINEC Security Monitor OPC UA Plugin",
@@ -301,22 +302,7 @@ export default function ZeekOpcuaPluginPage() {
                     </section>
 
                     <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
-                        <div className="mx-auto grid w-full max-w-[96rem] gap-5 lg:grid-cols-3">
-                            {researchCards.map(({ title, body, Icon }) => (
-                                <article
-                                    key={title}
-                                    className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
-                                >
-                                    <Icon className="text-amber-300" sx={{ fontSize: 24 }} />
-                                    <h2 className="mt-4 font-montserrat text-[1.45rem] font-semibold tracking-tight text-slate-100">
-                                        {title}
-                                    </h2>
-                                    <p className="mt-3 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {body}
-                                    </p>
-                                </article>
-                            ))}
-                        </div>
+                        <ProjectOverviewCardsRow cards={researchCards} columnsClass="lg:grid-cols-3" />
                     </section>
 
                     <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
