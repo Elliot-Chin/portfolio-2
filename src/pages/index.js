@@ -61,6 +61,8 @@ export default function Home() {
             <HeroSection containerRef={containerRef} />
 
             <AboutIntroSection />
+            
+
         </main>
     )
 }
