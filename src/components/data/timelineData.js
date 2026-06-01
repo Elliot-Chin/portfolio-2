@@ -229,6 +229,31 @@ export const timeline = [
     },
 
     {
+        id: "2024-rat-project-proposal",
+        year: 2024,
+        title: '<span class="!text-amber-950">Project</span> â€” <span class="!text-red-800">Resource Allocation Tool</span>',
+        desc: "A proposal to turn an Excel-based employee time-allocation tracker into a web application so managers could see team capacity more clearly and judge whether additional projects could be taken on. The effort ended after phase one when a management change removed the need for continued development.",
+        type: "project",
+        link: "/projects/Resource_Allocation_Tool",
+        logo: "/projects/rat-proposal/logo.png",
+        metadata: {
+            updated: "Q4-2024",
+            risk: "LOW",
+            version: "v1.0.0-PROPOSAL",
+            branch: "PLANNING",
+        },
+        details: [
+            "Defined a phased roadmap for replacing a spreadsheet-based employee time-allocation process with a dedicated internal web application.",
+            "Proposed a stack built on Next.js, Flask, PostgreSQL, and Docker to support dashboards, uploads, and maintainable service boundaries.",
+            "Included authentication, dashboard, and upload workflow planning to clarify how users, system logic, and the database would interact.",
+            "Centered the value proposition on transparency, collaboration, access control, integration potential, and better version governance than Excel.",
+            "The project was cancelled after phase one delivery because a change in management meant the organization no longer needed to continue the tool."
+        ],
+        tech: ["Next.js", "Flask", "PostgreSQL", "Docker", "RBAC", "Internal Tooling"],
+        deploy: "resource-allocation-tool"
+    },
+
+    {
         id: "2022-automated-musicians",
         year: 2022,
         title: '<span class="!text-amber-950">Project</span> — <span class="!text-red-800">Automated Musicians</span>',

@@ -3,161 +3,114 @@ import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
 import {
-    AccountTreeOutlined,
-    BugReportOutlined,
-    DataObjectOutlined,
+    AssignmentTurnedInOutlined,
     FolderCopyOutlined,
-    MemoryOutlined,
-    OpenInNewOutlined,
+    GridViewOutlined,
+    InsightsOutlined,
+    LockOutlined,
     SchemaOutlined,
-    SecurityOutlined,
-    TerminalOutlined,
+    StorageOutlined,
+    ViewTimelineOutlined,
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 
-const opcuaPlugin = {
-    title: "SINEC Security Monitor OPC UA Plugin",
-    slug: "~/projects/sinec-security-monitor/opcua-plugin",
-    eyebrow: "Siemens / SINEC Security Monitor / Zeek / OPC UA",
-    duration: "Research & development",
-    year: "2024-2026",
+const ratProject = {
+    title: "Resource Allocation Tool",
+    slug: "~/projects/resource-allocation-tool",
+    eyebrow: "planning dashboard / internal tooling / resource allocation / role-based access",
+    duration: "Project proposal / internal web-app concept",
+    year: "2024",
     TLDR:
-        "Development of a Zeek-based plugin for Siemens SINEC Security Monitor to inspect OPC UA traffic, generate event-specific logs, and support OT-focused detection logic for industrial network monitoring.",
-    command: "build zeek-plugin --target sinec_security_monitor --protocol opcua",
+        "A proposal to replace an Excel-based employee time-allocation tracker with a multi-user web application so managers could clearly see team capacity, allocation levels, and whether there was room to take on additional project work.",
+    command: "migrate allocation-planning --from excel --to nextjs-flask-postgres",
     contextOne:
-        "SINEC Security Monitor is Siemens' platform for passive, continuous OT security monitoring during production, giving visibility into industrial assets, communication topologies, potential threats, and network intrusions without disrupting operations.",
+        "The original tool was an Excel-based tracker used to manage employee time allocation so managers could visually understand who had available capacity and whether the team could absorb more projects. As the workflow grew, the spreadsheet approach became harder to manage reliably.",
     contextTwo:
-        "Within that environment, the work focused on researching OPC UA behavior in an R&D lab using PLCs, generated traffic, Wireshark, and UAExpert, then translating those findings into a Zeek-based plugin that could parse protocol activity and emit logs useful for OT monitoring and detection engineering.",
+        "The proposed solution was to turn that spreadsheet workflow into a web-based Resource Allocation Tool with management dashboards, upload workflows, employee and project planning views, and role-based access controls while leaving room for phased expansion.",
+    outcome:
+        "The project was cancelled after phase one delivery when management changed and the organization no longer saw a need to continue tool development.",
     conclusion:
-        "The result is a protocol-aware monitoring component that connects low-level OPC UA traffic with higher-level OT security visibility inside Siemens' SINEC Security Monitor workflow.",
+        "The proposal framed the migration as a usability, governance, and scalability improvement rather than just a technology refresh, with each rollout phase tied to a concrete planning workflow. In practice, the work stopped after phase one because a management change removed the business need to continue the tool.",
     finalThoughts:
-        "This work deepened protocol analysis, Zeek plugin development, OT lab validation, and detection engineering skills while producing a practical foundation for custom OPC UA monitoring in industrial environments.",
+        "Even though the project did not continue beyond phase one, it still reflects a solid internal-tooling approach: identify the workflow pain, scope the rollout in manageable phases, and align the stack and access model with how the team actually operates.",
 }
 
-const researchCards = [
+const overviewCards = [
     {
-        title: "Protocol Decoding",
+        title: "Why Replace Excel",
         body:
-            "Break down OPC UA traffic into structured protocol fields such as secure channel setup, service requests, service responses, access behavior, node targets, and status conditions.",
-        Icon: DataObjectOutlined,
+            "The proposal focused on the limits of using Excel for employee time-allocation tracking once multiple stakeholders needed reliable visibility into team capacity and future project load.",
+        Icon: InsightsOutlined,
     },
     {
-        title: "Plugin Integration",
+        title: "Phased Delivery",
         body:
-            "Develop the Zeek-based plugin so decoded OPC UA behavior can be surfaced inside Siemens SINEC Security Monitor as event-specific telemetry for industrial security monitoring.",
-        Icon: SchemaOutlined,
+            "The rollout was split into three implementation phases so the manager dashboard, operational features, and project-specific planning views could be introduced in a controlled way.",
+        Icon: ViewTimelineOutlined,
     },
     {
-        title: "Detection Logic",
+        title: "Governed Access",
         body:
-            "Implement custom checks around service behavior, certificate handling, access-level validation, and write-response conditions so the plugin can support targeted OT detection use cases.",
-        Icon: SecurityOutlined,
-    },
-]
-
-const developmentSteps = [
-    {
-        title: "Packet Capture Review",
-        body:
-            "Review generated OPC UA traffic in Wireshark and UAExpert sessions to identify message boundaries, secure-channel behavior, service types, and protocol fields worth elevating into monitoring telemetry.",
-        command: "wireshark + uaexpert + plc traffic generation",
-        Icon: TerminalOutlined,
-    },
-    {
-        title: "Plugin Buildout",
-        body:
-            "Build the Zeek-based plugin structure in C++, define the parser flow, and prepare the analyzer to inspect OPC UA traffic inside the SINEC Security Monitor pipeline.",
-        command: "plugin registration -> parsing -> event hooks",
-        Icon: MemoryOutlined,
-    },
-    {
-        title: "Behavior Mapping",
-        body:
-            "Track protocol state so requests, responses, service mappings, status conditions, and communication behavior can be associated correctly and turned into meaningful events.",
-        command: "request -> service -> validation -> response",
-        Icon: AccountTreeOutlined,
-    },
-    {
-        title: "Detection Validation",
-        body:
-            "Define attack procedures and generate test-data scenarios to validate how the plugin logs protocol events, certificate handling, access-level checks, and suspicious write behavior.",
-        command: "test scenarios -> log review -> detection tuning",
-        Icon: BugReportOutlined,
+            "Role-based access control and user management were treated as first-class requirements so the tool could support both stakeholders and broader team usage safely.",
+        Icon: LockOutlined,
     },
 ]
 
 const metadataItems = [
+    { label: "Type:", value: "Internal Web Application Proposal" },
+    { label: "Primary Goal:", value: "Replace Excel-based planning workflow" },
+    { label: "Frontend:", value: "Next.js" },
+    { label: "Backend:", value: "Flask" },
+    { label: "Database:", value: "PostgreSQL" },
+    { label: "Hosting:", value: "Docker" },
+]
+
+const phaseCards = [
     {
-        label: "Domain:",
-        value: "OT / Industrial Cybersecurity",
+        title: "Phase 1",
+        body:
+            "Establish the initial system foundation: login, database design, dataset uploads, and a management dashboard for employee utilization, project planning, and hours allocation overview.",
+        command: "bootstrap auth + uploads + management dashboard",
     },
     {
-        label: "Protocol:",
-        value: "OPC UA",
+        title: "Phase 2",
+        body:
+            "Expand the operational surface with employee pages, project and employee creation, user management, RBAC, and profile editing so the tool supports broader team usage.",
+        command: "add planning workflows + user management + RBAC",
     },
     {
-        label: "Platform:",
-        value: "SINEC Security Monitor / Zeek",
-    },
-    {
-        label: "Language:",
-        value: "C++",
-    },
-    {
-        label: "Focus:",
-        value: "Parsing / Logging / Detection Logic",
+        title: "Phase 3",
+        body:
+            "Introduce a project-specific planning dashboard so planning can be explored from the project perspective, not only through management or employee views.",
+        command: "add project-specific dashboard and planning views",
     },
 ]
 
-const technicalFocus = [
+const stackCards = [
     {
-        title: "OPC UA Message Structure",
+        title: "Next.js Frontend",
         body:
-            "The plugin work starts with understanding OPC UA transport framing, secure channel negotiation, service identifiers, request handles, response status codes, and how these appear in actual PLC communication.",
+            "Selected for faster page loads and a cleaner dashboard experience through server-side rendering and modern app structure.",
+        Icon: GridViewOutlined,
     },
     {
-        title: "SINEC Monitoring Integration",
+        title: "Flask Backend",
         body:
-            "The analyzer is built so decoded protocol behavior can be surfaced in Siemens SINEC Security Monitor as structured, OT-relevant telemetry rather than raw packet data alone.",
+            "Used as a lightweight Python backend to keep implementation fast while still supporting authentication, upload flows, and dashboard APIs.",
+        Icon: SchemaOutlined,
     },
     {
-        title: "Behavior-Aware Analysis",
+        title: "PostgreSQL + Docker",
         body:
-            "Because OPC UA relies on request and response flows, the plugin needs enough state to associate responses with earlier actions and distinguish ordinary industrial behavior from unusual or security-relevant activity.",
-    },
-    {
-        title: "Detection-Oriented Output",
-        body:
-            "Rather than only dumping decoded fields, the output is shaped around monitoring questions: what service was used, what node was targeted, what validation condition was triggered, whether the write or access behavior succeeded, and whether the sequence looks suspicious.",
+            "PostgreSQL handled structured planning data, while Docker isolated each service for a cleaner deployment and operations story.",
+        Icon: StorageOutlined,
     },
 ]
 
-const externalLinks = [
-    {
-        label: "Zeek_Docs",
-        href: "https://docs.zeek.org/",
-    },
-    {
-        label: "OPC_UA_Spec",
-        href: "https://reference.opcfoundation.org/",
-    },
-]
+const externalLinks = []
 
-function FlowNode({ label, active = false }) {
-    return (
-        <div
-            className={`border px-4 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.16em] ${active
-                    ? "border-amber-300/50 bg-amber-300/10 text-amber-200"
-                    : "border-slate-200/10 bg-slate-950/42 text-slate-200"
-                }`}
-        >
-            {label}
-        </div>
-    )
-}
-
-export default function ZeekOpcuaPluginPage() {
+export default function ResourceAllocationToolPage() {
     const containerRef = useRef(null)
 
     useEffect(() => {
@@ -195,11 +148,8 @@ export default function ZeekOpcuaPluginPage() {
     return (
         <>
             <Head>
-                <title>EC - Zeek OPC UA Plugin</title>
-                <meta
-                    name="description"
-                    content="Elliot Chin - SINEC Security Monitor OPC UA plugin project"
-                />
+                <title>EC - Resource Allocation Tool</title>
+                <meta name="description" content="Elliot Chin - Resource Allocation Tool project proposal" />
             </Head>
 
             <main
@@ -215,31 +165,31 @@ export default function ZeekOpcuaPluginPage() {
                                 <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
                                     <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
                                         <span className="text-slate-300">&gt;_</span>
-                                        <span>{opcuaPlugin.slug}</span>
+                                        <span>{ratProject.slug}</span>
                                     </div>
                                     <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
-                                        Industrial protocol analysis / {opcuaPlugin.year}
+                                        internal tooling / proposal / {ratProject.year}
                                     </div>
                                 </div>
 
                                 <div className="grid gap-8 px-6 py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:px-8 lg:py-8">
                                     <div className="min-w-0">
                                         <div className="font-spacemono text-sm uppercase tracking-[0.22em] text-amber-300">
-                                            {opcuaPlugin.eyebrow}
+                                            {ratProject.eyebrow}
                                         </div>
 
                                         <h1 className="mt-3 font-montserrat text-[2.55rem] font-semibold tracking-tight text-blue-100 md:text-[3.15rem]">
-                                            {opcuaPlugin.title}
+                                            {ratProject.title}
                                         </h1>
 
                                         <p className="mt-6 max-w-4xl font-montserrat text-lg leading-relaxed text-slate-100/90">
-                                            {opcuaPlugin.TLDR}
+                                            {ratProject.TLDR}
                                         </p>
 
                                         <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
                                             <span>{">> "}</span>
                                             <ReactTyped
-                                                strings={[opcuaPlugin.command]}
+                                                strings={[ratProject.command]}
                                                 typeSpeed={22}
                                                 showCursor={false}
                                                 startWhenVisible
@@ -254,45 +204,56 @@ export default function ZeekOpcuaPluginPage() {
                                                 <span>All_Projects</span>
                                             </Link>
 
-                                            {externalLinks.map((item) => (
-                                                <a
-                                                    key={item.label}
-                                                    href={item.href}
-                                                    target="_blank"
-                                                    rel="noreferrer"
-                                                    className="home-btn home-btn-secondary"
-                                                >
-                                                    <OpenInNewOutlined sx={{ fontSize: 17 }} />
-                                                    <span>{item.label}</span>
-                                                </a>
-                                            ))}
                                         </div>
                                     </div>
 
                                     <aside className="overflow-hidden border border-slate-200/10 bg-[#07101f]">
                                         <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                            Analyzer Pipeline
+                                            Manager View
                                         </div>
 
                                         <div className="space-y-4 px-5 py-5">
-                                            <FlowNode label="PCAP / Live Traffic" />
-                                            <div className="pl-4 font-spacemono text-slate-500">↓</div>
-                                            <FlowNode label="TCP Stream" />
-                                            <div className="pl-4 font-spacemono text-slate-500">↓</div>
-                                            <FlowNode label="OPC UA Parser" active />
-                                            <div className="pl-4 font-spacemono text-slate-500">↓</div>
-                                            <FlowNode label="Zeek Events" />
-                                            <div className="pl-4 font-spacemono text-slate-500">↓</div>
-                                            <FlowNode label="Structured Logs" />
-
-                                            <div className="mt-5 border-t border-slate-200/8 pt-5">
-                                                <div className="font-spacemono text-xs uppercase tracking-[0.22em] text-slate-400">
-                                                    Output Goal
+                                            <div className="border border-slate-200/10 bg-slate-950/46 p-4">
+                                                <div className="flex items-start gap-3">
+                                                    <AssignmentTurnedInOutlined sx={{ fontSize: 22 }} className="mt-0.5 text-amber-300" />
+                                                    <div>
+                                                        <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                                                            Core Question
+                                                        </div>
+                                                        <p className="mt-2 font-montserrat text-sm leading-relaxed text-slate-200/88">
+                                                            Can the team take on more project work without overloading current employees?
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <p className="mt-3 font-montserrat text-sm leading-relaxed text-slate-300/88">
-                                                    Convert raw OPC UA traffic into SINEC-facing security telemetry for
-                                                    protocol analysis, OT monitoring, and custom detection logic.
-                                                </p>
+                                            </div>
+
+                                            <div className="grid gap-3">
+                                                <div className="border border-slate-200/10 bg-slate-950/36 px-4 py-3">
+                                                    <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                                                        What Managers Needed
+                                                    </div>
+                                                    <p className="mt-2 font-montserrat text-sm leading-relaxed text-slate-200/86">
+                                                        A fast way to see employee allocation, forecast upcoming load, and judge remaining delivery capacity.
+                                                    </p>
+                                                </div>
+
+                                                <div className="border border-slate-200/10 bg-slate-950/36 px-4 py-3">
+                                                    <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                                                        Why Excel Broke Down
+                                                    </div>
+                                                    <p className="mt-2 font-montserrat text-sm leading-relaxed text-slate-200/86">
+                                                        Version drift, limited change visibility, weak collaboration, and no reliable path for structured scaling.
+                                                    </p>
+                                                </div>
+
+                                                <div className="border border-slate-200/10 bg-slate-950/36 px-4 py-3">
+                                                    <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                                                        Proposed Shift
+                                                    </div>
+                                                    <p className="mt-2 font-montserrat text-sm leading-relaxed text-slate-200/86">
+                                                        Move planning into a shared web tool with dashboard visibility, uploads, access control, and clearer operational ownership.
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </aside>
@@ -302,7 +263,7 @@ export default function ZeekOpcuaPluginPage() {
                     </section>
 
                     <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
-                        <ProjectOverviewCardsRow cards={researchCards} columnsClass="lg:grid-cols-3" />
+                        <ProjectOverviewCardsRow cards={overviewCards} columnsClass="lg:grid-cols-3" />
                     </section>
 
                     <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
@@ -313,10 +274,13 @@ export default function ZeekOpcuaPluginPage() {
                                 </div>
                                 <div className="px-5 py-5">
                                     <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {opcuaPlugin.contextOne}
+                                        {ratProject.contextOne}
                                     </p>
                                     <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {opcuaPlugin.contextTwo}
+                                        {ratProject.contextTwo}
+                                    </p>
+                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-amber-100/88">
+                                        {ratProject.outcome}
                                     </p>
                                 </div>
                             </article>
@@ -327,10 +291,7 @@ export default function ZeekOpcuaPluginPage() {
                                 </div>
                                 <dl className="space-y-5 px-5 py-5 font-spacemono text-sm text-slate-300/85">
                                     {metadataItems.map((item) => (
-                                        <div
-                                            key={item.label}
-                                            className="flex items-center justify-between gap-6"
-                                        >
+                                        <div key={item.label} className="flex items-center justify-between gap-6">
                                             <dt>{item.label}</dt>
                                             <dd className="text-right text-slate-100">{item.value}</dd>
                                         </div>
@@ -344,28 +305,20 @@ export default function ZeekOpcuaPluginPage() {
                         <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6">
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                                 <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                    Development Workflow
+                                    Rollout Phases
                                 </div>
 
-                                <div className="grid gap-5 px-5 py-5 lg:grid-cols-2">
-                                    {developmentSteps.map(({ title, body, command, Icon }) => (
-                                        <article
-                                            key={title}
-                                            className="border border-slate-200/10 bg-[#07101f] p-5"
-                                        >
-                                            <div className="flex items-center gap-3">
-                                                <Icon className="text-amber-300" sx={{ fontSize: 23 }} />
-                                                <h2 className="font-montserrat text-[1.25rem] font-semibold tracking-tight text-slate-100">
-                                                    {title}
-                                                </h2>
-                                            </div>
-
-                                            <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                                {body}
+                                <div className="grid gap-5 px-5 py-5 lg:grid-cols-3">
+                                    {phaseCards.map((item) => (
+                                        <article key={item.title} className="border border-slate-200/10 bg-[#07101f] p-5">
+                                            <h3 className="font-montserrat text-[1.25rem] font-semibold tracking-tight text-slate-100">
+                                                {item.title}
+                                            </h3>
+                                            <p className="mt-3 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                                {item.body}
                                             </p>
-
                                             <div className="mt-5 border border-slate-200/10 bg-slate-950/52 px-4 py-3 font-spacemono text-sm text-amber-200">
-                                                {command}
+                                                {item.command}
                                             </div>
                                         </article>
                                     ))}
@@ -374,25 +327,27 @@ export default function ZeekOpcuaPluginPage() {
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                                 <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                    Technical Focus Areas
+                                    Proposed Stack
                                 </div>
 
-                                <div className="grid gap-5 px-5 py-5 md:grid-cols-2">
-                                    {technicalFocus.map((item) => (
+                                <div className="grid gap-5 px-5 py-5 lg:grid-cols-3">
+                                    {stackCards.map(({ title, body, Icon }) => (
                                         <article
-                                            key={item.title}
+                                            key={title}
                                             className="border border-slate-200/10 bg-[#07101f] p-5"
                                         >
-                                            <h2 className="font-montserrat text-[1.25rem] font-semibold tracking-tight text-slate-100">
-                                                {item.title}
-                                            </h2>
+                                            <Icon className="text-amber-300" sx={{ fontSize: 24 }} />
+                                            <h3 className="mt-4 font-montserrat text-[1.25rem] font-semibold tracking-tight text-slate-100">
+                                                {title}
+                                            </h3>
                                             <p className="mt-3 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                                {item.body}
+                                                {body}
                                             </p>
                                         </article>
                                     ))}
                                 </div>
                             </article>
+
                         </div>
                     </section>
 
@@ -404,7 +359,7 @@ export default function ZeekOpcuaPluginPage() {
                                 </div>
                                 <div className="px-5 py-5">
                                     <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {opcuaPlugin.conclusion}
+                                        {ratProject.conclusion}
                                     </p>
                                 </div>
                             </article>
@@ -415,7 +370,7 @@ export default function ZeekOpcuaPluginPage() {
                                 </div>
                                 <div className="px-5 py-5">
                                     <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {opcuaPlugin.finalThoughts}
+                                        {ratProject.finalThoughts}
                                     </p>
                                 </div>
                             </article>

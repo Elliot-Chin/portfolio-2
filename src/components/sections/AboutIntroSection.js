@@ -59,6 +59,45 @@ const floatingSkills = [
     { name: "Tailwind", src: "https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" },
 ]
 
+function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false }) {
+    return (
+        <article
+            className={`relative overflow-hidden border border-slate-200/8 bg-slate-950/34 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 ${mobile
+                ? "min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center px-5 py-5"
+                : "h-full px-5 py-5 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
+                }`}
+        >
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
+            <div className="relative z-10 flex h-full flex-col">
+                <div className="flex items-start justify-between">
+                    <Icon className={`${accent} ${mobile ? "text-[3rem]" : "text-[3rem] lg:text-[2.75rem] xl:text-[4rem]"}`} />
+                    <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                        {id}
+                    </span>
+                </div>
+
+                <h3 className={`font-montserrat font-semibold tracking-tight text-slate-50 ${mobile ? "mt-8 text-[1.65rem]" : "mt-8 text-[1.65rem] lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]"}`}>
+                    {title}
+                </h3>
+
+                <p className={`max-w-[24rem] flex-1 font-montserrat leading-relaxed text-slate-200/82 ${mobile ? "mt-4 text-[0.98rem]" : "mt-4 text-[0.98rem] lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]"}`}>
+                    {body}
+                </p>
+
+                <div className={mobile ? "mt-6" : "mt-6 xl:mt-10"}>
+                    <CardLink
+                        href={href}
+                        className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
+                    >
+                        <span>{cta}</span>
+                        <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
+                    </CardLink>
+                </div>
+            </div>
+        </article>
+    )
+}
+
 function CardLink({ href, children, className }) {
     const shared = `${className} group inline-flex items-center gap-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.22em]`
 
@@ -93,76 +132,33 @@ export function AboutIntroSection() {
 
                     <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
                         {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
-                            <article
+                            <ProjectCard
                                 key={id}
-                                className="relative min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42"
-                            >
-                                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
-                                <div className="relative z-10 flex h-full flex-col">
-                                    <div className="flex items-start justify-between">
-                                        <Icon className={`${accent} text-[3rem]`} />
-                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
-                                            {id}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50">
-                                        {title}
-                                    </h3>
-
-                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82">
-                                        {body}
-                                    </p>
-
-                                    <div className="mt-6">
-                                        <CardLink
-                                            href={href}
-                                            className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
-                                        >
-                                            <span>{cta}</span>
-                                            <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
-                                        </CardLink>
-                                    </div>
-                                </div>
-                            </article>
+                                id={id}
+                                title={title}
+                                body={body}
+                                cta={cta}
+                                href={href}
+                                Icon={Icon}
+                                accent={accent}
+                                mobile
+                            />
                         ))}
                     </div>
                     </div>
 
                     <div className="hidden w-full items-stretch gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
                         {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
-                            <article
+                            <ProjectCard
                                 key={id}
-                                className="relative h-full overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
-                            >
-                                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
-                                <div className="relative z-10 flex h-full flex-col">
-                                    <div className="flex items-start justify-between">
-                                        <Icon className={`${accent} text-[3rem] lg:text-[2.75rem] xl:text-[4rem]`} />
-                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
-                                            {id}
-                                        </span>
-                                    </div>
-
-                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50 lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]">
-                                        {title}
-                                    </h3>
-
-                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82 lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]">
-                                        {body}
-                                    </p>
-
-                                    <div className="mt-6 xl:mt-10">
-                                        <CardLink
-                                            href={href}
-                                            className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
-                                        >
-                                            <span>{cta}</span>
-                                            <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
-                                        </CardLink>
-                                    </div>
-                                </div>
-                            </article>
+                                id={id}
+                                title={title}
+                                body={body}
+                                cta={cta}
+                                href={href}
+                                Icon={Icon}
+                                accent={accent}
+                            />
                         ))}
                     </div>
 
