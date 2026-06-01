@@ -12,6 +12,7 @@ import {
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectImage } from "@/components/projects/ProjectImage"
+import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 
 const featureCards = [
     {

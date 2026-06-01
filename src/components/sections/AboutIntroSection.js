@@ -47,6 +47,19 @@ function CardLink({ href, children, className }) {
         )
     }
 
+const floatingSkills = [
+    { name: "Python", src: "https://cdn.worldvectorlogo.com/logos/python-5.svg" },
+    { name: "Pandas", src: "https://cdn.worldvectorlogo.com/logos/pandas.svg" },
+    { name: "Flask", src: "https://cdn.worldvectorlogo.com/logos/flask.svg" },
+    { name: "Next.js", src: "https://cdn.worldvectorlogo.com/logos/next-js.svg" },
+    { name: "Docker", src: "https://cdn.worldvectorlogo.com/logos/docker-4.svg" },
+    { name: "Linux", src: "https://cdn.worldvectorlogo.com/logos/linux-tux.svg" },
+    { name: "React", src: "https://cdn.worldvectorlogo.com/logos/react-2.svg" },
+    { name: "Postgres", src: "https://cdn.worldvectorlogo.com/logos/postgresql.svg" },
+    { name: "Tailwind", src: "https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" },
+]
+
+function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false }) {
     return (
         <a href={href} className={shared}>
             {children}
