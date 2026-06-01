@@ -59,30 +59,54 @@ const floatingSkills = [
     { name: "Tailwind", src: "https://cdn.worldvectorlogo.com/logos/tailwind-css-2.svg" },
 ]
 
-function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false }) {
+function CardLink({ href, children, className }) {
+    const sharedClassName = `${className} group inline-flex items-center gap-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.22em]`
+
+    if (href.startsWith("/")) {
+        return (
+            <Link href={href} className={sharedClassName}>
+                {children}
+            </Link>
+        )
+    }
+
     return (
-        <article
-            className={`relative overflow-hidden border border-slate-200/8 bg-slate-950/34 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 ${mobile
-                ? "min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center px-5 py-5"
-                : "h-full px-5 py-5 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
-                }`}
-        >
+        <a href={href} className={sharedClassName}>
+            {children}
+        </a>
+    )
+}
+
+function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false }) {
+    const articleClassName = mobile
+        ? "relative min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42"
+        : "relative h-full overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
+
+    const titleClassName = mobile
+        ? "mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50"
+        : "mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50 lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]"
+
+    const bodyClassName = mobile
+        ? "mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82"
+        : "mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82 lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]"
+
+    const iconClassName = mobile
+        ? `${accent} text-[3rem]`
+        : `${accent} text-[3rem] lg:text-[2.75rem] xl:text-[4rem]`
+
+    return (
+        <article className={articleClassName}>
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.015),rgba(255,255,255,0))]" />
             <div className="relative z-10 flex h-full flex-col">
                 <div className="flex items-start justify-between">
-                    <Icon className={`${accent} ${mobile ? "text-[3rem]" : "text-[3rem] lg:text-[2.75rem] xl:text-[4rem]"}`} />
+                    <Icon className={iconClassName} />
                     <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
                         {id}
                     </span>
                 </div>
 
-                <h3 className={`font-montserrat font-semibold tracking-tight text-slate-50 ${mobile ? "mt-8 text-[1.65rem]" : "mt-8 text-[1.65rem] lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]"}`}>
-                    {title}
-                </h3>
-
-                <p className={`max-w-[24rem] flex-1 font-montserrat leading-relaxed text-slate-200/82 ${mobile ? "mt-4 text-[0.98rem]" : "mt-4 text-[0.98rem] lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]"}`}>
-                    {body}
-                </p>
+                <h3 className={titleClassName}>{title}</h3>
+                <p className={bodyClassName}>{body}</p>
 
                 <div className={mobile ? "mt-6" : "mt-6 xl:mt-10"}>
                     <CardLink
@@ -90,7 +114,10 @@ function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false 
                         className={title === "Technical Skills" ? "text-emerald-300" : "text-amber-200"}
                     >
                         <span>{cta}</span>
-                        <ArrowOutward className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" fontSize="inherit" />
+                        <ArrowOutward
+                            className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                            fontSize="inherit"
+                        />
                     </CardLink>
                 </div>
             </div>
@@ -98,21 +125,48 @@ function ProjectCard({ id, title, body, cta, href, Icon, accent, mobile = false 
     )
 }
 
-function CardLink({ href, children, className }) {
-    const shared = `${className} group inline-flex items-center gap-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.22em]`
-
-    if (href.startsWith("/")) {
-        return (
-            <Link href={href} className={shared}>
-                {children}
-            </Link>
-        )
-    }
-
+function MarqueeSignals() {
     return (
-        <a href={href} className={shared}>
-            {children}
-        </a>
+        <div className="relative overflow-hidden [--fade:10%] md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#081628] to-transparent md:hidden" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#081628] to-transparent md:hidden" />
+            <div className="animate-slide-left flex min-w-max gap-3 whitespace-nowrap will-change-transform">
+                {[...floatingSignals, ...floatingSignals].map((item, index) => (
+                    <span
+                        key={`${item}-${index}`}
+                        className="inline-flex border border-amber-200/10 bg-slate-950 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[0_8px_22px_rgba(2,8,23,0.22)]"
+                    >
+                        {item}
+                    </span>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function MarqueeSkills() {
+    return (
+        <div className="relative overflow-hidden [--fade:10%] md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#081628] to-transparent md:hidden" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#081628] to-transparent md:hidden" />
+            <div className="animate-slide-left-skills flex min-w-max gap-3 whitespace-nowrap will-change-transform">
+                {[...floatingSkills, ...floatingSkills].map(({ name, src }, index) => (
+                    <div
+                        key={`${name}-${index}`}
+                        className="inline-flex items-center gap-2 border border-slate-200/10 bg-[#0b1626] px-4 py-2 font-montserrat text-sm font-semibold text-amber-50 shadow-[0_8px_22px_rgba(2,8,23,0.24)]"
+                    >
+                        <img
+                            src={src}
+                            alt={name}
+                            width="18"
+                            height="18"
+                            className="h-[18px] w-[18px] object-contain"
+                        />
+                        <span className="tracking-[0.01em]">{name}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }
 
@@ -125,74 +179,27 @@ export function AboutIntroSection() {
             <div className="mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 py-12 sm:px-10 md:px-12 md:py-10 lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:py-8 xl:px-14 xl:py-10">
                 <div className="w-full">
                     <div className="w-full md:hidden">
-                    <div className="mb-4 flex items-center justify-between font-spacemono text-[10px] uppercase tracking-[0.2em] text-slate-400/70">
-                        <span>System Modules</span>
-                        <span>Swipe to browse</span>
-                    </div>
+                        <div className="mb-4 flex items-center justify-between font-spacemono text-[10px] uppercase tracking-[0.2em] text-slate-400/70">
+                            <span>System Modules</span>
+                            <span>Swipe to browse</span>
+                        </div>
 
-                    <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
-                        {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
-                            <ProjectCard
-                                key={id}
-                                id={id}
-                                title={title}
-                                body={body}
-                                cta={cta}
-                                href={href}
-                                Icon={Icon}
-                                accent={accent}
-                                mobile
-                            />
-                        ))}
-                    </div>
+                        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
+                            {cards.map((card) => (
+                                <ProjectCard key={card.id} {...card} mobile />
+                            ))}
+                        </div>
                     </div>
 
                     <div className="hidden w-full items-stretch gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
-                        {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
-                            <ProjectCard
-                                key={id}
-                                id={id}
-                                title={title}
-                                body={body}
-                                cta={cta}
-                                href={href}
-                                Icon={Icon}
-                                accent={accent}
-                            />
+                        {cards.map((card) => (
+                            <ProjectCard key={card.id} {...card} />
                         ))}
                     </div>
 
                     <div className="mt-6 space-y-4 md:mt-8">
-                        <div className="relative overflow-hidden [--fade:10%] md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]">
-                            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#081628] to-transparent md:hidden" />
-                            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#081628] to-transparent md:hidden" />
-                            <div className="animate-slide-left flex min-w-max gap-3 whitespace-nowrap will-change-transform">
-                                {[...floatingSignals, ...floatingSignals].map((item, index) => (
-                                    <span
-                                        key={`${item}-${index}`}
-                                        className="inline-flex border border-amber-200/10 bg-slate-950 px-4 py-2 font-spacemono text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-200 shadow-[0_8px_22px_rgba(2,8,23,0.22)]"
-                                    >
-                                        {item}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="relative overflow-hidden [--fade:10%] md:[mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)] md:[-webkit-mask-image:linear-gradient(to_right,transparent_0,black_var(--fade),black_calc(100%-var(--fade)),transparent_100%)]">
-                            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-[#081628] to-transparent md:hidden" />
-                            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-[#081628] to-transparent md:hidden" />
-                            <div className="animate-slide-left-skills flex min-w-max gap-3 whitespace-nowrap will-change-transform">
-                                {[...floatingSkills, ...floatingSkills].map(({ name, src }, index) => (
-                                    <div
-                                        key={`${name}-${index}`}
-                                        className="inline-flex items-center gap-2 border border-slate-200/10 bg-[#0b1626] px-4 py-2 font-montserrat text-sm font-semibold text-amber-50 shadow-[0_8px_22px_rgba(2,8,23,0.24)]"
-                                    >
-                                        <img src={src} alt={name} width="18" height="18" className="h-[18px] w-[18px] object-contain" />
-                                        <span className="tracking-[0.01em]">{name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                        <MarqueeSignals />
+                        <MarqueeSkills />
                     </div>
                 </div>
             </div>
