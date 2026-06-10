@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import Head from "next/head"
 import Link from "next/link"
 import Image from "next/image"
 import { ReactTyped } from "react-typed"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 import { timeline } from "@/components/data/timelineData"
 
@@ -13,21 +13,21 @@ const stripTags = (value = "") => value.replace(/<[^>]*>/g, "").trim()
 
 const decodeProjectTitle = (title = "") => (
     title
-        .replace(/Ã¢â‚¬â€/g, "—")
-        .replace(/â€”/g, "—")
-        .replace(/&mdash;/gi, "—")
+        .replace(/ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â/g, "â€”")
+        .replace(/Ã¢â‚¬â€/g, "â€”")
+        .replace(/&mdash;/gi, "â€”")
         .replace(/<br\s*\/?>/gi, " ")
 )
 
 const getProjectLabel = (title = "") => {
     const cleaned = decodeProjectTitle(title)
-    const parts = cleaned.split("—")
+    const parts = cleaned.split("â€”")
     return stripTags(parts.length > 1 ? parts[parts.length - 1] : cleaned) || "Project"
 }
 
 const getProjectHeading = (title = "") => {
     const cleaned = decodeProjectTitle(title)
-    return stripTags(cleaned).replace(/^Project\s*—\s*/i, "") || "Project"
+    return stripTags(cleaned).replace(/^Project\s*â€”\s*/i, "") || "Project"
 }
 
 const getProjectImage = (project) => {
@@ -216,10 +216,11 @@ export default function ProjectsPage() {
 
     return (
         <>
-            <Head>
-                <title>Elliot Chin — Projects</title>
-                <meta name="description" content="Selected projects by Elliot Chin." />
-            </Head>
+            <SeoHead
+                title="Projects | Elliot Chin"
+                description="Selected projects by Elliot Chin across OT cybersecurity, industrial protocol analysis, internal tooling, APIs, and applied AI research."
+                path="/projects"
+            />
 
             <main
                 ref={containerRef}

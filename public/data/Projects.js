@@ -1,6 +1,3 @@
-import { duration } from "@mui/material"
-
-
 export const projects = [
     {
         title: "Expenses Recorder",

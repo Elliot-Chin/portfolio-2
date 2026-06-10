@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import Head from "next/head"
 import emailjs from "@emailjs/browser"
 import { ReactTyped } from "react-typed"
 import { ArrowOutwardOutlined, ContentCopyOutlined, EmailOutlined } from "@mui/icons-material"
@@ -11,6 +10,7 @@ import { useDraft } from "@/components/hooks/useDraft"
 import { useCopyToClipboard } from "@/components/hooks/useCopyToClipboard"
 import { MAX_MESSAGE, MIN_NAME } from "@/utils/contactConstants"
 import { githubLink, linkedInLink } from "../../public/data/Links"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test((value || "").trim())
 
@@ -21,6 +21,7 @@ function ContactField({
     value,
     onChange,
     error,
+    maxLength,
     multiline = false,
     rows = 5,
 }) {
@@ -38,6 +39,7 @@ function ContactField({
                     rows={rows}
                     value={value}
                     onChange={onChange}
+                    maxLength={maxLength}
                     placeholder={placeholder}
                     className={`${sharedClassName} resize-none`}
                 />
@@ -46,6 +48,7 @@ function ContactField({
                     name={name}
                     value={value}
                     onChange={onChange}
+                    maxLength={maxLength}
                     placeholder={placeholder}
                     className={sharedClassName}
                     autoComplete="off"
@@ -219,10 +222,11 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
 
     return (
         <>
-            <Head>
-                <title>Elliot Chin - Contact</title>
-                <meta name="description" content="Secure contact channel for Elliot Chin." />
-            </Head>
+            <SeoHead
+                title="Contact | Elliot Chin"
+                description="Contact Elliot Chin for OT cybersecurity, software development, industrial networking, and applied AI opportunities."
+                path="/contact"
+            />
 
             <main
                 ref={containerRef}
@@ -286,8 +290,12 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                                         name="message"
                                         placeholder="ENTER_MESSAGE_STRING..."
                                         value={draft.message || ""}
-                                        onChange={(event) => setDraft((current) => ({ ...current, message: event.target.value }))}
+                                        onChange={(event) => setDraft((current) => ({
+                                            ...current,
+                                            message: event.target.value.slice(0, MAX_MESSAGE),
+                                        }))}
                                         error={messageError}
+                                        maxLength={MAX_MESSAGE}
                                         multiline
                                         rows={5}
                                     />

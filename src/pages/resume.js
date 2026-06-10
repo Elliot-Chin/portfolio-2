@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import {
@@ -15,6 +14,7 @@ import {
     WorkOutline,
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const summary =
     "Software developer with experience across cybersecurity, OT and industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows and Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network and security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
@@ -359,10 +359,11 @@ export default function ResumePage() {
 
     return (
         <>
-            <Head>
-                <title>Elliot Chin - Resume</title>
-                <meta name="description" content="Resume overview for Elliot Chin." />
-            </Head>
+            <SeoHead
+                title="Resume | Elliot Chin"
+                description="Resume and experience overview for Elliot Chin, covering OT cybersecurity, software development, industrial networking, and infrastructure work."
+                path="/resume"
+            />
 
             <main
                 ref={containerRef}

@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
@@ -14,6 +13,7 @@ import {
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const ratProject = {
     title: "Resource Allocation Tool",
@@ -147,10 +147,12 @@ export default function ResourceAllocationToolPage() {
 
     return (
         <>
-            <Head>
-                <title>EC - Resource Allocation Tool</title>
-                <meta name="description" content="Elliot Chin - Resource Allocation Tool project proposal" />
-            </Head>
+            <SeoHead
+                title="Resource Allocation Tool | Elliot Chin"
+                description="Internal planning dashboard proposal by Elliot Chin to replace an Excel-based resource allocation workflow with a multi-user web application."
+                path="/projects/Resource_Allocation_Tool"
+                image="https://elliotc.dev/projects/rat-proposal/logo.png"
+            />
 
             <main
                 ref={containerRef}

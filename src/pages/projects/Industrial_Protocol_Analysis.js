@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
@@ -15,6 +14,7 @@ import {
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const opcuaPlugin = {
     title: "SINEC Security Monitor OPC UA Plugin",
@@ -194,13 +194,12 @@ export default function ZeekOpcuaPluginPage() {
 
     return (
         <>
-            <Head>
-                <title>EC - Zeek OPC UA Plugin</title>
-                <meta
-                    name="description"
-                    content="Elliot Chin - SINEC Security Monitor OPC UA plugin project"
-                />
-            </Head>
+            <SeoHead
+                title="SINEC Security Monitor OPC UA Plugin | Elliot Chin"
+                description="Project overview for Elliot Chin's Zeek-based OPC UA plugin work for Siemens SINEC Security Monitor and OT protocol analysis."
+                path="/projects/Industrial_Protocol_Analysis"
+                image="https://elliotc.dev/projects/ipa/Logo.png"
+            />
 
             <main
                 ref={containerRef}

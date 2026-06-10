@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
@@ -16,6 +15,7 @@ import {
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const ai4security = {
     title: "AI4Security Research",
@@ -205,10 +205,12 @@ export default function AI4SecurityPage() {
 
     return (
         <>
-            <Head>
-                <title>EC - AI4Security Research</title>
-                <meta name="description" content="Elliot Chin - AI4Security research project" />
-            </Head>
+            <SeoHead
+                title="AI4Security Research | Elliot Chin"
+                description="AI4Security research project by Elliot Chin covering alert enrichment, PCAP analysis, Modbus traffic workflows, and AI-assisted cybersecurity analysis."
+                path="/projects/AI4Security"
+                image="https://elliotc.dev/projects/ai4security/cover-shield.png"
+            />
 
             <main
                 ref={containerRef}

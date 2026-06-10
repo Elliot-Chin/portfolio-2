@@ -96,14 +96,14 @@ export function HeroSection({ containerRef }) {
                     </div>
 
                     <div className={`lg:py-3 ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
-                        <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/8 px-3 py-2 font-spacemono text-[9px] font-semibold uppercase tracking-[0.18em] text-amber-200 shadow-[0_0_30px_rgba(251,146,60,0.08)] sm:gap-3 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
+                        <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/8 px-3 py-2 font-spacemono text-[9px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_0_30px_rgba(251,146,60,0.08)] sm:gap-3 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
                             <span className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]" />
                             <span>System_Active // Secure_Link_Established</span>
                         </div>
 
-                        <h1 className="mt-6 max-w-4xl font-spacemono text-[clamp(2.4rem,13vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-slate-100 md:mt-7 lg:text-[clamp(4.25rem,7vw,5.55rem)] xl:mt-8 xl:text-[clamp(4.6rem,7vw,5.9rem)]">
-                            <span className="block text-amber-100">Elliot Chin</span>
-                            <span className="mt-2 block text-[1.05rem] leading-tight tracking-normal text-slate-100 sm:text-2xl lg:text-[1.65rem] xl:mt-3 xl:text-3xl">
+                        <h1 className="mt-6 max-w-4xl font-spacemono text-[clamp(2.4rem,13vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-white md:mt-7 lg:text-[clamp(4.25rem,7vw,5.55rem)] xl:mt-8 xl:text-[clamp(4.6rem,7vw,5.9rem)]">
+                            <span className="block text-white">Elliot Chin</span>
+                            <span className="mt-2 block text-[1.05rem] leading-tight tracking-normal text-white sm:text-2xl lg:text-[1.65rem] xl:mt-3 xl:text-3xl">
                                 JR. Cybersecurity application Specialist
                             </span>
                         </h1>
@@ -125,7 +125,7 @@ export function HeroSection({ containerRef }) {
                             />
                         </div>
 
-                        <p className="mt-5 max-w-3xl text-balance font-montserrat text-base leading-relaxed text-slate-200/88 sm:mt-7 sm:text-lg lg:max-w-[42rem] lg:text-[1.03rem] lg:leading-[1.7] xl:mt-8 xl:text-xl">
+                        <p className="mt-5 max-w-3xl text-balance font-montserrat text-base leading-relaxed text-white sm:mt-7 sm:text-lg lg:max-w-[42rem] lg:text-[1.03rem] lg:leading-[1.7] xl:mt-8 xl:text-xl">
                             Software developer with experience across cybersecurity, OT/industrial networking,
                             infrastructure management, full-stack application development, and applied AI research
                             support. Specialized in bridging the gap between legacy industrial stability and modern
@@ -142,7 +142,7 @@ export function HeroSection({ containerRef }) {
                             </button>
 
                             <Link
-                                href="/wtr/EC_Resume.pdf"
+                                href="/wtr/Elliot_Chin_Resume.pdf"
                                 target="_blank"
                                 className="home-btn home-btn-secondary"
                             >

@@ -1,9 +1,14 @@
-import Head from "next/head"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
 import { ArrowOutwardOutlined, ErrorOutlineOutlined } from "@mui/icons-material"
-import { ModelMissingAnimation } from "@/components/avatar/Model_MissingAnimation"
+import { SeoHead } from "@/components/seo/SeoHead"
+
+const ModelMissingAnimation = dynamic(
+    () => import("@/components/avatar/Model_MissingAnimation").then((mod) => mod.ModelMissingAnimation),
+    { ssr: false }
+)
 
 export default function Custom404() {
     const containerRef = useRef(null)
@@ -15,10 +20,12 @@ export default function Custom404() {
 
     return (
         <>
-            <Head>
-                <title>404 - Contact Lost</title>
-                <meta name="description" content="Page not found." />
-            </Head>
+            <SeoHead
+                title="404 | Elliot Chin"
+                description="Page not found on elliotc.dev."
+                path="/404"
+                noindex
+            />
 
             <main
                 ref={containerRef}

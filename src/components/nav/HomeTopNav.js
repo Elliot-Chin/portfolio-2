@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 
 function NavItem({ item, isActive, onHoverStart, onHoverEnd, onNavigateStart, itemRef }) {
     const className = `relative inline-flex h-14 items-center font-spacemono text-[12px] font-bold transition ${
-        isActive ? "cursor-default text-amber-100" : "text-slate-200/86 hover:text-amber-200"
+        isActive ? "cursor-default !text-white" : "!text-white hover:!text-white"
     }`
 
     if (item.href) {
@@ -16,6 +16,7 @@ function NavItem({ item, isActive, onHoverStart, onHoverEnd, onNavigateStart, it
                     ref={itemRef}
                     aria-current="page"
                     className={className}
+                    style={{ color: "#ffffff" }}
                 >
                     {item.label}
                 </span>
@@ -27,6 +28,7 @@ function NavItem({ item, isActive, onHoverStart, onHoverEnd, onNavigateStart, it
                 ref={itemRef}
                 href={item.href}
                 className={className}
+                style={{ color: "#ffffff" }}
                 onClick={(event) => onNavigateStart?.(event, item)}
                 onMouseEnter={onHoverStart}
                 onFocus={onHoverStart}
@@ -48,6 +50,7 @@ function NavItem({ item, isActive, onHoverStart, onHoverEnd, onNavigateStart, it
             onMouseLeave={onHoverEnd}
             onBlur={onHoverEnd}
             className={className}
+            style={{ color: "#ffffff" }}
         >
             {item.label}
         </button>
@@ -184,14 +187,16 @@ export function HomeTopNav({
                     <button
                         type="button"
                         onClick={brandOnClick}
-                        className="font-spacemono text-[0.92rem] font-bold uppercase tracking-[-0.04em] text-amber-100 sm:text-[1.15rem]"
+                        className="font-spacemono text-[0.92rem] font-bold uppercase tracking-[-0.04em] !text-white sm:text-[1.15rem]"
+                        style={{ color: "#ffffff" }}
                     >
                         {brandLabel}
                     </button>
                 ) : (
                     <Link
                         href={brandHref}
-                        className="font-spacemono text-[0.92rem] font-bold uppercase tracking-[-0.04em] text-amber-100 sm:text-[1.15rem]"
+                        className="font-spacemono text-[0.92rem] font-bold uppercase tracking-[-0.04em] !text-white sm:text-[1.15rem]"
+                        style={{ color: "#ffffff" }}
                     >
                         {brandLabel}
                     </Link>
@@ -251,7 +256,8 @@ export function HomeTopNav({
                 <div className="flex items-center">
                     <Link
                         href={resumeHref}
-                        className="home-btn home-btn-primary min-w-0 px-3 sm:w-[144px] sm:px-6"
+                        className="home-btn home-btn-primary min-w-0 px-3 !text-white sm:w-[144px] sm:px-6"
+                        style={{ color: "#ffffff" }}
                         onClick={(event) => {
                             if (resumeHref === currentPath) {
                                 event.preventDefault()

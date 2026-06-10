@@ -162,16 +162,16 @@ export function AboutIntroSection() {
                                     <div className="relative z-10 flex h-full flex-col">
                                         <div className="flex items-start justify-between">
                                             <Icon className={`${accent} text-[3rem]`} />
-                                            <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                                            <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-white/70">
                                                 {id}
                                             </span>
                                         </div>
 
-                                        <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50">
+                                        <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-white">
                                             {title}
                                         </h3>
 
-                                        <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82">
+                                        <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-white">
                                             {body}
                                         </p>
 
@@ -182,7 +182,7 @@ export function AboutIntroSection() {
                                             >
                                                 <span>{cta}</span>
                                                 <ArrowOutward
-                                                    className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                                                    className="transition-transform group-hover:[animation:cta-arrow-diagonal_0.9s_ease-in-out_infinite]"
                                                     fontSize="inherit"
                                                 />
                                             </CardLink>
@@ -203,16 +203,16 @@ export function AboutIntroSection() {
                                 <div className="relative z-10 flex h-full flex-col">
                                     <div className="flex items-start justify-between">
                                         <Icon className={`${accent} text-[3rem] lg:text-[2.75rem] xl:text-[4rem]`} />
-                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/60">
+                                        <span className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-white/70">
                                             {id}
                                         </span>
                                     </div>
 
-                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-slate-50 lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]">
+                                    <h3 className="mt-8 font-montserrat text-[1.65rem] font-semibold tracking-tight text-white lg:mt-8 lg:text-[1.55rem] xl:mt-14 xl:text-[2rem]">
                                         {title}
                                     </h3>
 
-                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-slate-200/82 lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]">
+                                    <p className="mt-4 max-w-[24rem] flex-1 font-montserrat text-[0.98rem] leading-relaxed text-white lg:text-[0.95rem] lg:leading-[1.65] xl:mt-5 xl:text-[1.06rem]">
                                         {body}
                                     </p>
 
@@ -223,7 +223,7 @@ export function AboutIntroSection() {
                                         >
                                             <span>{cta}</span>
                                             <ArrowOutward
-                                                className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                                                className="transition-transform group-hover:[animation:cta-arrow-diagonal_0.9s_ease-in-out_infinite]"
                                                 fontSize="inherit"
                                             />
                                         </CardLink>

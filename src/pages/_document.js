@@ -1,5 +1,4 @@
 import { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
 
 export default function Document() {
     return (
@@ -9,14 +8,7 @@ export default function Document() {
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
                 <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Montserrat:ital,wght@0,321;1,321&family=Oswald:wght@300&family=Raleway:ital,wght@0,200;1,200&family=Space+Mono&display=swap" rel="stylesheet" />
 
-                <Script
-                    type="text/javascript"
-                    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
-                    strategy="beforeInteractive" />
-
-                <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-0MH67YDFQN"
-                    strategy="afterInteractive" />
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-0MH67YDFQN" />
 
                 <script
                     dangerouslySetInnerHTML={{

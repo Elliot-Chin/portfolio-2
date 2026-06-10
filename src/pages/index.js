@@ -1,4 +1,3 @@
-import Head from "next/head"
 import { useEffect, useRef } from "react"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 
@@ -7,6 +6,7 @@ import { useScreenSnap } from "@/components/hooks/useScreenSnap"
 import { useDesktop } from "@/components/hooks/useDesktop"
 import { HeroSection } from "@/components/sections/HeroSection"
 import { AboutIntroSection } from "@/components/sections/AboutIntroSection"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 export default function Home() {
     const containerRef = useRef(null)
@@ -53,16 +53,15 @@ export default function Home() {
             className={`h-[100dvh] overflow-y-scroll scroll-smooth overscroll-contain ${isDesktop ? "snap-y snap-proximity" : ""}`}
         >
             <BackToTopButton targetRef={containerRef} />
-            <Head>
-                <title>Elliot Chin — Portfolio</title>
-                <meta name="description" content="Hey — I’m Elliot. I like making things that feel good to use." />
-            </Head>
+            <SeoHead
+                title="Elliot Chin | OT Cybersecurity and Software Portfolio"
+                description="Portfolio of Elliot Chin, featuring OT cybersecurity work, industrial protocol analysis, full-stack development, and applied AI research projects."
+                path="/"
+            />
 
             <HeroSection containerRef={containerRef} />
 
             <AboutIntroSection />
-            
-
         </main>
     )
 }

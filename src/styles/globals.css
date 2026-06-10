@@ -491,7 +491,7 @@ body.home-grid-bg::after {
 .home-btn-primary {
     border-color: rgba(253, 186, 116, 0.6);
     background: rgb(251, 146, 60);
-    color: rgb(15, 23, 42);
+    color: rgb(255, 255, 255);
 }
 
 .home-btn-primary:hover {
@@ -644,6 +644,10 @@ body.home-grid-bg::after {
     animation-delay: var(--experience-title-scroll-delay, 1.2s);
 }
 
+.cta-arrow-diagonal {
+    animation: cta-arrow-diagonal 0.9s ease-in-out infinite;
+}
+
 @keyframes experience-title-marquee {
     0%,
     12% {
@@ -658,5 +662,16 @@ body.home-grid-bg::after {
     88%,
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes cta-arrow-diagonal {
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(0.25rem, -0.25rem);
     }
 }

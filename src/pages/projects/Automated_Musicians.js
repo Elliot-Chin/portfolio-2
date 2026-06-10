@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
@@ -12,6 +11,7 @@ import {
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 import { am } from "../../../public/data/Projects"
 
@@ -104,10 +104,12 @@ export default function AutomatedMusiciansPage() {
 
     return (
         <>
-            <Head>
-                <title>EC - Automated Musicians</title>
-                <meta name="description" content="Elliot Chin - Automated Musicians project" />
-            </Head>
+            <SeoHead
+                title="Automated Musicians | Elliot Chin"
+                description="Engineering capstone project on algorithmic music generation, pattern extraction, and composition workflows."
+                path="/projects/Automated_Musicians"
+                image="https://elliotc.dev/projects/am/Logo.png"
+            />
 
             <main
                 ref={containerRef}

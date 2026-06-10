@@ -1,4 +1,3 @@
-import Head from "next/head"
 import Link from "next/link"
 import { useEffect, useRef } from "react"
 import { ReactTyped } from "react-typed"
@@ -14,6 +13,7 @@ import {
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { SeoHead } from "@/components/seo/SeoHead"
 
 const northboundApiProject = {
     title: "Northbound API",
@@ -148,10 +148,12 @@ export default function NorthboundApiPage() {
 
     return (
         <>
-            <Head>
-                <title>EC - Northbound API</title>
-                <meta name="description" content="Elliot Chin - Northbound API project" />
-            </Head>
+            <SeoHead
+                title="Northbound API | Elliot Chin"
+                description="Proof-of-concept Northbound API project for Siemens SINEC Security Monitor, including external dashboard and data extraction workflows."
+                path="/projects/Northbound_API"
+                image="https://elliotc.dev/projects/northbound-api/logo.png"
+            />
 
             <main
                 ref={containerRef}
