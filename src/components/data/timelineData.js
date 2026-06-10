@@ -208,7 +208,7 @@ export const timeline = [
         id: "2024-AI4Security",
         year: 2024,
         title: '<span class="!text-amber-950">Project</span> â€” <span class="!text-red-800">AI4Security Research</span>',
-        desc: "Research into how open-source and hosted LLMs can support cybersecurity workflows such as alert enrichment, synthetic data generation, retrieval-augmented context building, and anomaly detection over industrial network data.",
+        desc: "Internal Siemens research into whether AI could analyze industrial PCAP data using both open-source cybersecurity-tuned models and Azure fine-tuning to help distinguish benign versus potentially malicious network behavior.",
         type: "project",
         link: "/projects/AI4Security",
         logo: "/projects/ai4security/cover-shield.png",
@@ -219,12 +219,12 @@ export const timeline = [
             branch: "RND",
         },
         details: [
-            "Evaluated Hugging Face open-source LLMs for security data interpretation, risk-oriented reasoning, and practical analyst-facing workflows.",
-            "Built an alert-enrichment concept around synthetic alerts, assets, and CVE records so the model could generate summaries, remediation steps, and likely contributing factors.",
-            "Tested local deployment constraints using quantized 4-bit models and compared cybersecurity-tuned models against a general-purpose baseline.",
-            "Explored anomaly detection on NetFlow representations of industrial traffic using in-context learning, fine-tuning, and reasoning-first prompting with Azure OpenAI."
+            "Analyzed industrial packet captures with a co-op student to see whether AI could reduce manual PCAP review effort in OT environments.",
+            "Evaluated open-source models that had already been fine-tuned for cybersecurity tasks, alongside Azure-hosted models trained on structured JSON examples derived from packet analysis.",
+            "Compared fine-tuning against one-shot, multi-shot, and chain-of-thought prompting, finding that prompt-based methods handled variation better but still lacked detection-grade accuracy.",
+            "Shifted toward NetFlow-style context and an agentic validation loop where one model generated expected traffic structure and another checked it before accepting the analysis."
         ],
-        tech: ["LLMs", "Hugging Face", "RAG", "Azure OpenAI", "Python", "Cybersecurity"],
+        tech: ["LLMs", "Azure OpenAI", "PCAP Analysis", "DNP3", "Modbus", "OT Security"],
         deploy: "ai4security-research"
     },
 
@@ -325,3 +325,4 @@ export const timeline = [
         type: "lore",
     },
 ]
+

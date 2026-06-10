@@ -20,93 +20,94 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 const ai4security = {
     title: "AI4Security Research",
     slug: "~/projects/ai4security-research",
-    eyebrow: "LLM assessment / cybersecurity workflows / alert enrichment / anomaly detection",
-    duration: "Research presentation / internship workstream",
+    eyebrow: "AI security research / alert enrichment / CIC Modbus PCAP analysis / agentic AI",
+    duration: "Internal Siemens research project",
     year: "2024",
     TLDR:
-        "A research project exploring how open-source and hosted LLMs can support cybersecurity workflows, including alert enrichment, synthetic data generation, retrieval-augmented context building, and anomaly detection over industrial network data.",
-    command: "evaluate llm-stack --domain cybersecurity --tasks enrichment,rag,anomaly-detection",
+        "An internal Siemens research project with two main tracks: an LLM-based alert-enrichment workflow backed by asset and CVE context, and AI-assisted traffic analysis using PCAPs from the 2023 UNB CIC Modbus dataset.",
+    command: "evaluate ai-security-workflows --tracks alert-enrichment,cic-modbus-analysis",
     contextOne:
-        "The work surveyed practical AI use cases for cybersecurity teams, focusing on model accessibility, local deployment constraints, domain specialization, and how LLM-assisted reasoning might improve analysis of alerts, assets, and vulnerabilities.",
+        "I worked on this project with a co-op student to investigate where AI could actually help security analysis rather than just generate convincing text. One track focused on alert enrichment, where we combined dummy asset records stored in PostgreSQL with current CVE information so an LLM could explain why a system might be vulnerable and relate that risk back to the asset under investigation.",
     contextTwo:
-        "Two tracks were explored in parallel: Hugging Face open-source model assessment for alert enrichment and security-data interpretation, and anomaly detection experiments using Azure OpenAI workflows on network-flow data derived from industrial traffic captures.",
+        "The second track focused on packet analysis using PCAPs from the 2023 UNB CIC Modbus dataset. We evaluated open-source models already fine-tuned for cybersecurity, prepared structured JSON training data for Azure fine-tuning, and reformatted the dataset traffic into higher-level flow and prompt representations to test whether the models could distinguish benign from anomalous behavior more reliably.",
     conclusion:
-        "The strongest results came from domain-tuned cybersecurity models and from prompt structures that force reasoning before prediction, especially when the task depends on structured evidence and contextual security knowledge.",
+        "The main takeaway was that LLMs were not reliable enough for exact byte counting or raw hex interpretation on their own, but they became more useful when the input was transformed into structured protocol or flow context and placed inside a validated analysis loop.",
     finalThoughts:
-        "This project sharpened practical thinking around model selection, quantization, prompt design, synthetic data safety, and how to evaluate whether an AI workflow is actually useful for analysts instead of only sounding impressive in a demo.",
+        "The project was put on hold after the co-op term ended, but it clarified where AI fits best in security analysis: narrow fine-tuned workflows can work on consistent traffic structures, while prompt-based and agentic approaches are better for variation when paired with preprocessing, structure, and validation rather than treated as a standalone detection engine.",
 }
 
 const researchCards = [
     {
-        title: "Model Assessment",
+        title: "PCAP + Protocol Research",
         body:
-            "Compared general-purpose and cybersecurity-specific open-source models on tasks such as security interpretation, alert enrichment, and context-aware response generation.",
+            "Analyzed packet captures from the 2023 UNB CIC Modbus dataset to understand which fields, byte patterns, and protocol structures mattered for AI-assisted threat analysis.",
         Icon: InsightsOutlined,
     },
     {
-        title: "Alert Enrichment",
+        title: "LLM Fine-Tuning + Prompting",
         body:
-            "Built an enrichment flow around alerts, assets, vulnerabilities, and synthetic records so a model could generate summaries, remediation guidance, and contributing factors.",
+            "Evaluated open-source models that were already fine-tuned for cybersecurity, prepared structured JSON training data for Azure fine-tuning, and compared those paths against one-shot, multi-shot, and chain-of-thought prompting for packet reasoning.",
         Icon: SecurityOutlined,
     },
     {
-        title: "Anomaly Detection",
+        title: "Agentic Validation Loop",
         body:
-            "Tested LLM-assisted anomaly classification on industrial network-derived NetFlows, comparing in-context learning, fine-tuning, and reasoning-first prompting.",
+            "Designed a workflow where AI agents could generate expected traffic frames or behavioral baselines, compare them against observed traffic, and pass invalid outputs back through a correction step instead of relying on a single-pass classifier.",
         Icon: PsychologyOutlined,
     },
 ]
 
 const metadataItems = [
-    { label: "Domain:", value: "Cybersecurity / AI Research" },
-    { label: "Primary Themes:", value: "Alert Enrichment / RAG / Anomaly Detection" },
-    { label: "Model Families:", value: "Mistral / Lily Cybersecurity / SecurityLLM / GPT-4o" },
-    { label: "Deployment Focus:", value: "Quantized local inference + hosted API evaluation" },
-    { label: "Data Context:", value: "Alerts / Assets / CVEs / Industrial NetFlows" },
+    { label: "Domain:", value: "OT Cybersecurity / AI Research" },
+    { label: "Primary Themes:", value: "PCAP Analysis / Industrial Protocols / Threat Detection" },
+    { label: "Model Sources:", value: "Open-Source Cybersecurity-Tuned Models + Azure Fine-Tuned Models" },
+    { label: "Methods:", value: "Fine-Tuning / One-Shot / Multi-Shot / Chain-of-Thought / Agentic Loops" },
+    { label: "Dataset:", value: "2023 UNB CIC Modbus" },
+    { label: "Data Context:", value: "Dataset PCAPs / Structured JSON / NetFlow-Style Traffic Views" },
 ]
 
 const openSourceWorkflow = [
     {
-        title: "Hugging Face Discovery",
+        title: "Hex-Level Parsing",
         body:
-            "Filtered cybersecurity-domain models and narrowed the field to candidates that were realistic to run, compare, and evaluate in a security-research workflow.",
-        command: "filter models -> cybersecurity -> quantized candidates",
+            "Started with raw packet bytes from PCAPs and mapped out which byte sequences, packet fields, and protocol segments should be inspected, skipped, or preserved as context for the model.",
+        command: "pcap -> hex -> packet structure -> labeled fields",
         Icon: HubOutlined,
     },
     {
-        title: "Local Deployment",
+        title: "Structured Training Data",
         body:
-            "Focused on quantized 4-bit models that could be deployed locally with GPU support, reducing hardware cost while keeping experiments practical.",
-        command: "quantized gguf -> llama.cpp -> local inference",
+            "Converted packet-analysis findings into structured JSON for Azure fine-tuning while also benchmarking open-source cybersecurity-tuned models against the same packet-analysis problem.",
+        command: "pcap review -> json examples + cyber models -> compare outputs",
         Icon: StorageOutlined,
     },
     {
-        title: "Prompted Security Analysis",
+        title: "Higher-Level Traffic Context",
         body:
-            "Tested whether models could read alert context, asset data, and vulnerability records and turn that information into useful analyst-facing summaries.",
-        command: "alert + asset + cve context -> summary + remediation",
+            "Shifted from direct hex reasoning toward NetFlow-style and protocol-aware summaries so the model could reason over communication patterns, metadata, and expected behavior rather than only raw bytes.",
+        command: "pcap -> flow context -> behavioral reasoning",
         Icon: AutoAwesomeOutlined,
     },
 ]
 
 const anomalyApproaches = [
     {
-        title: "Approach 1: In-Context Learning",
-        metric: "Accuracy 0.7300 / Recall 0.9700",
+        title: "Approach 1: Fine-Tuning on Structured PCAP Data",
+        metric: "Best on narrow, repeatable traffic",
         body:
-            "Provided labeled examples of normal and anomalous NetFlows directly in the prompt to guide classification. It performed well on recall but remained constrained by token limits.",
+            "Fine-tuned models performed efficiently when the incoming PCAP closely matched the traffic structure seen in the training examples, but the approach degraded when the packet patterns varied from the baseline.",
     },
     {
-        title: "Approach 2: Fine-Tuning",
-        metric: "Accuracy 0.7240 / F1 0.1882",
+        title: "Approach 2: Prompt-Based Reasoning",
+        metric: "More flexible, still not detection-grade",
         body:
-            "Fine-tuned a hosted model on labeled NetFlow data to avoid prompt-size limits. It scaled example volume better, but the measured classification quality was weaker than the best prompt-driven runs.",
+            "One-shot, multi-shot, and chain-of-thought prompting handled variation better than fine-tuning alone, but the outputs were still not accurate enough to be trusted as a reliable threat-detection workflow.",
     },
     {
-        title: "Approach 3: Reasoning First",
-        metric: "Accuracy 0.7300 / Recall 1.0000",
+        title: "Approach 3: Agentic Baseline + Validation",
+        metric: "Most promising direction for control",
         body:
-            "Asked the model to explain its reasoning before producing a prediction, reducing post-hoc hallucinated justifications and yielding the strongest overall balance in the deck’s reported results.",
+            "A more agentic pipeline showed better potential by having models generate expected frames or baselines, compare them with observed traffic, and use a feedback loop to reject and regenerate invalid analyses.",
     },
 ]
 
@@ -135,14 +136,19 @@ const enrichmentShots = [
 
 const dataShots = [
     {
-        src: "/projects/ai4security/synthetic-cve-record.png",
-        alt: "Synthetic vulnerability data sample",
-        description: "Structured vulnerability data used as part of the alert-enrichment context layer.",
+        src: "/projects/ai4security/modbus-netflow-json.png",
+        alt: "UNB CIC Modbus flow record",
+        description: "Example flow record derived from a PCAP in the 2023 UNB CIC Modbus dataset, preserving protocol, byte, timing, and endpoint fields for downstream analysis.",
     },
     {
         src: "/projects/ai4security/netflow-prompt-format.png",
         alt: "NetFlow prompt format",
-        description: "Structured message format used for anomaly-detection prompting with network-flow data.",
+        description: "Structured prompt format built from the 2023 UNB CIC Modbus flow data so the model could reason over traffic context instead of raw packet bytes alone.",
+    },
+    {
+        src: "/projects/ai4security/raw-netflow-record.png",
+        alt: "Raw Modbus NetFlow record",
+        description: "Another prompt-ready flow example from the 2023 UNB CIC Modbus dataset showing the higher-level traffic representation we used for anomaly classification experiments.",
     },
 ]
 
@@ -339,7 +345,7 @@ export default function AI4SecurityPage() {
                         <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6">
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                                 <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                    Open-Source Model Workflow
+                                    PCAP Analysis And Data Preparation
                                 </div>
 
                                 <div className="grid gap-5 px-5 py-5 lg:grid-cols-3">
@@ -361,15 +367,16 @@ export default function AI4SecurityPage() {
                                 <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
                                     <div>
                                         <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                            The first major use case combined alerts, assets, and vulnerability context
-                                            into a security-enrichment pipeline. Synthetic datasets were created to avoid
-                                            confidentiality and integrity risks while still giving the models realistic
-                                            security data to reason over.
+                                            One track focused on alert enrichment. We set up a PostgreSQL database with
+                                            dummy asset records so an LLM could query internal asset context, match it
+                                            against current CVE information, and generate vulnerability explanations and
+                                            supporting analysis for the alert being investigated.
                                         </p>
                                         <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                            Domain-tuned models such as Lily Cybersecurity and SecurityLLM outperformed
-                                            the baseline Mistral run in the presentation’s qualitative results, even
-                                            though all tested models still carried heavy inference costs.
+                                            The goal was to give the model more than just the alert text. By combining
+                                            asset details, vulnerability records, and current CVE context, the workflow
+                                            could explain why a system might be exposed, what the likely risk meant, and
+                                            how the vulnerability related back to the asset under investigation.
                                         </p>
                                     </div>
                                     <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -390,49 +397,40 @@ export default function AI4SecurityPage() {
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
                                 <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                    Anomaly Detection Track
+                                    CIC Modbus Detection Results
                                 </div>
-                                <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                                    <div>
-                                        <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                            The second track used the UNB CIC Modbus 2023 dataset, converting PCAPs to
-                                            NetFlows and then reformatting those flows into structured LLM prompts. The
-                                            goal was to determine whether LLMs could classify benign versus anomalous
-                                            industrial traffic under different prompting and fine-tuning strategies.
-                                        </p>
-                                        <div className="mt-5 grid gap-4">
-                                            {anomalyApproaches.map((item) => (
-                                                <article key={item.title} className="border border-slate-200/10 bg-[#07101f] p-4">
-                                                    <div className="flex items-start gap-3">
-                                                        <BugReportOutlined className="mt-0.5 text-amber-300" sx={{ fontSize: 19 }} />
-                                                        <div>
-                                                            <h3 className="font-montserrat text-[1.08rem] font-semibold tracking-tight text-slate-100">
-                                                                {item.title}
-                                                            </h3>
-                                                            <div className="mt-1 font-spacemono text-xs uppercase tracking-[0.18em] text-emerald-300">
-                                                                {item.metric}
-                                                            </div>
+                                <div className="px-5 py-5">
+                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        With PCAPs from the 2023 UNB CIC Modbus dataset represented as structured flows and prompts, we
+                                        then compared different ways of classifying benign versus anomalous industrial
+                                        traffic. The main question was which workflow still held up once the traffic
+                                        started to vary from the examples we had prepared.
+                                    </p>
+                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        These results pushed the project away from treating the model as a standalone
+                                        detector. Fine-tuning worked best when traffic stayed close to the training
+                                        structure, prompt-based approaches were more flexible but still not accurate
+                                        enough on their own, and the agentic validation idea looked more promising
+                                        because it added control and feedback around the model output.
+                                    </p>
+                                    <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                                        {anomalyApproaches.map((item) => (
+                                            <article key={item.title} className="border border-slate-200/10 bg-[#07101f] p-4">
+                                                <div className="flex items-start gap-3">
+                                                    <BugReportOutlined className="mt-0.5 text-amber-300" sx={{ fontSize: 19 }} />
+                                                    <div>
+                                                        <h3 className="font-montserrat text-[1.08rem] font-semibold tracking-tight text-slate-100">
+                                                            {item.title}
+                                                        </h3>
+                                                        <div className="mt-1 font-spacemono text-xs uppercase tracking-[0.18em] text-emerald-300">
+                                                            {item.metric}
                                                         </div>
                                                     </div>
-                                                    <p className="mt-3 font-montserrat text-[0.98rem] leading-relaxed text-slate-300/88">
-                                                        {item.body}
-                                                    </p>
-                                                </article>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="grid gap-4 md:grid-cols-2">
-                                        {dataShots.map((item) => (
-                                            <div key={item.alt} className="overflow-hidden border border-slate-200/10 bg-[#07101f] px-3 py-2">
-                                                <ProjectImage
-                                                    src={item.src}
-                                                    alt={item.alt}
-                                                    description={item.description}
-                                                    lg_size="w-full"
-                                                    maxH="max-h-[42vh]"
-                                                />
-                                            </div>
+                                                </div>
+                                                <p className="mt-3 font-montserrat text-[0.98rem] leading-relaxed text-slate-300/88">
+                                                    {item.body}
+                                                </p>
+                                            </article>
                                         ))}
                                     </div>
                                 </div>
@@ -470,3 +468,5 @@ export default function AI4SecurityPage() {
         </>
     )
 }
+
+

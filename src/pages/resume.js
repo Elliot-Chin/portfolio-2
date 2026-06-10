@@ -409,7 +409,7 @@ export default function ResumePage() {
                                                 </div>
                                             </div>
 
-                                            <a href="/wtr/Elliot_Chin_Resume.docx" className="home-btn home-btn-primary">
+                                            <a href="/wtr/Elliot_Chin_Resume.pdf" className="home-btn home-btn-primary">
                                                 <DownloadOutlined sx={{ fontSize: 18 }} />
                                                 <span>Download_Resume</span>
                                             </a>
