@@ -20,7 +20,7 @@ const summary =
     "Software developer with experience across cybersecurity, OT and industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows and Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network and security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
 
 const contactLinks = [
-    { label: "Email", value: "e.chincys@gmail.com", href: "mailto:e.chincys@gmail.com", Icon: Email },
+    { label: "Email", value: "contact@elliotc.dev", href: "mailto:contact@elliotc.dev", Icon: Email },
     { label: "GitHub", value: "Elliot-Chin", href: "https://github.com/Elliot-Chin", Icon: GitHub },
     { label: "LinkedIn", value: "elliot-chin", href: "https://www.linkedin.com/in/elliot-chin-90b4311a6", Icon: LinkedIn },
     { label: "Portfolio", value: "elliotc.dev", href: "https://elliotc.dev", Icon: PublicOutlined },

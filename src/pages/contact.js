@@ -72,7 +72,7 @@ function ContactMetaCard({ onCopyEmail }) {
                 </div>
                 <div className="flex items-center justify-between gap-6">
                     <span>Direct:</span>
-                    <span className="text-right text-slate-100">e.chincys@gmail.com</span>
+                    <span className="text-right text-slate-100">contact@elliotc.dev</span>
                 </div>
                 <div className="flex items-center justify-between gap-6">
                     <span>Status:</span>
@@ -93,7 +93,7 @@ function ContactMetaCard({ onCopyEmail }) {
                     <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
                 </button>
                 <a
-                    href="mailto:e.chincys@gmail.com"
+                    href="mailto:contact@elliotc.dev"
                     className="home-btn home-btn-secondary w-full justify-between"
                 >
                     <span className="inline-flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
 
     const copyToClipboard = useCopyToClipboard()
     const handleCopyEmail = useCallback(async () => {
-        const ok = await copyToClipboard("e.chincys@gmail.com")
+        const ok = await copyToClipboard("contact@elliotc.dev")
         setToast(
             ok
                 ? { kind: "success", text: "Email copied to clipboard." }
