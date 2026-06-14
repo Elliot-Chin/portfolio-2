@@ -39,8 +39,8 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                         className="w-full max-w-5xl overflow-hidden rounded-[20px] border border-white/10 bg-[rgba(30,41,59,0.34)] shadow-[0_24px_80px_rgba(2,8,23,0.5)] backdrop-blur-2xl"
                         onClick={(event) => event.stopPropagation()}
                     >
-                        <div className="flex items-center justify-between border-b border-white/8 px-6 py-4">
-                            <span className="font-raleway text-white lg:text-3xl">{alt}</span>
+                        <div className="flex items-center justify-between gap-4 border-b border-white/8 px-4 py-3 sm:px-6 sm:py-4">
+                            <span className="font-raleway text-lg text-white sm:text-2xl lg:text-3xl">{alt}</span>
                             <button
                                 type="button"
                                 onClick={() => setIsOpen(false)}
@@ -49,11 +49,11 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                                 Close
                             </button>
                         </div>
-                        <div className="flex items-center justify-center px-6 py-6">
+                        <div className="flex items-center justify-center px-4 py-4 sm:px-6 sm:py-6">
                             <img alt={alt} src={src} className={`max-w-full h-auto object-contain rounded-md ${maxHClasses}`} />
                         </div>
-                        <div className="px-6 pb-5">
-                            <span className="block text-center font-montserrat text-sm italic text-white lg:text-xl">
+                        <div className="px-4 pb-4 sm:px-6 sm:pb-5">
+                            <span className="block text-center font-montserrat text-[13px] italic text-white sm:text-sm lg:text-xl">
                                 {description}
                             </span>
                         </div>
@@ -61,7 +61,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                 </div>
             , document.body)}
 
-            <div className={`rounded-md flex flex-col gap-2 mx-auto mt-5 w-full ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
+            <div className={`mx-auto mt-4 flex w-full flex-col gap-2 rounded-md sm:mt-5 ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
                 <div className="w-full rounded-md flex items-center justify-center">
                     <img
                         alt={alt}
@@ -70,7 +70,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                         className={`w-full h-auto object-contain bg-transparent hover:cursor-zoom-in ${maxHClasses}`}
                     />
                 </div>
-                <span className="font-montserrat text-sm dark:text-white text-slate-950 text-center w-full italic">
+                <span className="w-full text-center font-montserrat text-[13px] italic text-slate-950 dark:text-white sm:text-sm">
                     {description}
                 </span>
             </div>

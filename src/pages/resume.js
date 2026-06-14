@@ -207,12 +207,14 @@ function InfoLink({ href, label, value, Icon }) {
             href={href}
             target={href.startsWith("mailto:") ? undefined : "_blank"}
             rel={href.startsWith("mailto:") ? undefined : "noreferrer"}
-            className="flex items-center gap-3 border border-slate-200/10 bg-slate-950/38 px-4 py-3 transition hover:border-amber-200/20 hover:bg-slate-950/48"
+            className="flex items-center gap-3 border border-slate-200/16 bg-slate-950/38 px-3 py-2.5 transition hover:border-amber-200/20 hover:bg-slate-950/48 sm:px-4 sm:py-3"
         >
             <Icon className="text-amber-200" sx={{ fontSize: 18 }} />
             <div className="min-w-0">
-                <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/70">{label}</div>
-                <div className="truncate font-montserrat text-sm font-medium text-slate-100">{value}</div>
+                <div className="font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/70 sm:text-[11px] sm:tracking-[0.22em]">
+                    {label}
+                </div>
+                <div className="truncate font-montserrat text-[13px] font-medium text-slate-100 sm:text-sm">{value}</div>
             </div>
         </a>
     )
@@ -223,14 +225,14 @@ function SectionShell({ id, title, Icon, children }) {
         <section
             id={id}
             data-fade
-            className="translate-y-4 px-6 pb-8 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14"
+            className="translate-y-4 px-4 pb-8 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14"
         >
             <div className="mx-auto w-full max-w-[96rem]">
-                <div className="mb-4 flex items-center gap-3">
-                    <div className="grid h-10 w-10 place-items-center border border-slate-200/10 bg-slate-950/38 text-amber-200">
-                        <Icon sx={{ fontSize: 20 }} />
+                <div className="mb-4 flex items-center gap-2.5 sm:gap-3">
+                    <div className="grid h-9 w-9 place-items-center border border-slate-200/10 bg-slate-950/38 text-amber-200 sm:h-10 sm:w-10">
+                        <Icon sx={{ fontSize: 18 }} />
                     </div>
-                    <h2 className="font-spacemono text-lg font-bold uppercase tracking-[0.22em] text-slate-100">
+                    <h2 className="font-spacemono text-[0.95rem] font-bold uppercase tracking-[0.16em] text-slate-100 sm:text-lg sm:tracking-[0.22em]">
                         {title}
                     </h2>
                 </div>
@@ -243,11 +245,11 @@ function SectionShell({ id, title, Icon, children }) {
 function CareerSchematic() {
     return (
         <div className="overflow-hidden border border-slate-200/10 bg-[#06101d]/92 px-4 py-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:px-5 sm:py-5">
-            <div className="mb-5 flex items-center gap-3 font-spacemono text-sm font-bold uppercase tracking-[0.2em] text-amber-100">
+            <div className="mb-5 flex items-center gap-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.2em]">
                 <span>Career_Schematic</span>
             </div>
 
-            <div className="relative border border-slate-200/6 bg-[#050d18] px-4 py-5 sm:px-6 sm:py-6 items-center">
+            <div className="relative items-center border border-slate-200/6 bg-[#050d18] px-4 py-5 sm:px-6 sm:py-6">
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(151,190,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(151,190,255,0.03)_1px,transparent_1px)] bg-[size:22px_22px]" />
                 <div className="relative grid gap-6 lg:hidden">
                     {careerNodes.map((node, index) => (
@@ -259,7 +261,7 @@ function CareerSchematic() {
                                 <span>{node.years}</span>
                                 <span className={node.accent === "primary" ? "text-amber-300" : "text-amber-200"}>{node.code}</span>
                             </div>
-                            <h3 className={`mt-4 font-montserrat text-[1.85rem] font-semibold leading-none tracking-tight ${node.accent === "primary" ? "text-amber-300" : "text-slate-100"}`}>
+                            <h3 className={`mt-4 font-montserrat text-[clamp(1.4rem,7vw,1.85rem)] font-semibold leading-none tracking-tight ${node.accent === "primary" ? "text-amber-300" : "text-slate-100"}`}>
                                 {node.title}
                             </h3>
                             <p className="mt-3 max-w-[18rem] font-spacemono text-[12px] leading-5 text-slate-300/84">
@@ -374,35 +376,35 @@ export default function ResumePage() {
                 <div className="pt-14">
                     <section
                         data-fade
-                        className="translate-y-4 px-6 pb-6 pt-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14"
+                        className="translate-y-4 px-4 pb-6 pt-4 opacity-0 transition duration-700 ease-out sm:px-10 sm:pt-6 lg:px-14"
                     >
                         <div className="mx-auto w-full max-w-[96rem] space-y-4">
                             <div className="grid gap-6 lg:grid-cols-[minmax(0,1.45fr)_22rem]">
                                 <div className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                        <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
+                                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:px-5">
+                                        <div className="min-w-0 flex items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:text-sm">
                                             <span className="text-slate-300">&gt;_</span>
-                                            <span>~/resume/elliot-chin.profile</span>
+                                            <span className="truncate">~/resume/elliot-chin.profile</span>
                                         </div>
-                                        <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                        <div className="font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:text-[11px] sm:tracking-[0.22em]">
                                             Secure candidate profile
                                         </div>
                                     </div>
 
-                                    <div className="px-6 py-6 lg:px-8 lg:py-8">
-                                        <div className="flex flex-wrap items-start justify-between gap-5">
-                                            <div>
-                                                <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
+                                    <div className="px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+                                        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-5">
+                                            <div className="min-w-0">
+                                                <div className="font-spacemono text-[10px] uppercase tracking-[0.12em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
                                                     Software Development / Cybersecurity / Industrial Networking
                                                 </div>
-                                                <h1 className="mt-3 font-montserrat text-[2rem] font-semibold tracking-tight text-blue-100 sm:text-[2.45rem] md:text-[3.35rem]">
+                                                <h1 className="mt-3 font-montserrat text-[clamp(1.9rem,8vw,3.35rem)] font-semibold tracking-tight text-blue-100">
                                                     Elliot Chin
                                                 </h1>
                                                 <div className="mt-4 flex flex-wrap gap-2">
                                                     {highlights.map((item) => (
                                                         <span
                                                             key={item}
-                                                            className="border border-amber-200/10 bg-amber-300/10 px-3 py-1 font-spacemono text-[11px] font-bold uppercase tracking-[0.16em] text-amber-100"
+                                                            className="border border-amber-200/10 bg-amber-300/10 px-2.5 py-1 font-spacemono text-[10px] font-bold uppercase tracking-[0.12em] text-amber-100 sm:px-3 sm:text-[11px] sm:tracking-[0.16em]"
                                                         >
                                                             {item}
                                                         </span>
@@ -410,35 +412,38 @@ export default function ResumePage() {
                                                 </div>
                                             </div>
 
-                                            <a href="/wtr/Elliot_Chin_Resume.pdf" className="home-btn home-btn-primary">
+                                            <a
+                                                href="/wtr/Elliot_Chin_Resume.pdf"
+                                                className="home-btn home-btn-primary w-full justify-center !px-4 !py-2.5 sm:w-auto sm:justify-start"
+                                            >
                                                 <DownloadOutlined sx={{ fontSize: 18 }} />
                                                 <span>Download_Resume</span>
                                             </a>
                                         </div>
 
-                                        <p className="mt-7 max-w-5xl font-montserrat text-base leading-relaxed text-slate-100/90 sm:text-lg">
+                                        <p className="mt-6 max-w-5xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-7 sm:text-lg">
                                             {summary}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-4">
-                                    <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                            <div className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    <div className="border border-white bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5">
+                                            <div className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
                                             Contact / Links
                                         </div>
-                                        <div className="mt-4 grid gap-3">
+                                        <div className="mt-4 grid gap-2.5 sm:gap-3">
                                             {contactLinks.map((item) => (
                                                 <InfoLink key={item.label} {...item} />
                                             ))}
                                         </div>
                                     </div>
 
-                                    <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                            <div className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    <div className="border border-slate-200/10 bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5">
+                                            <div className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
                                             Header Data
                                         </div>
-                                        <dl className="mt-4 space-y-4 font-spacemono text-sm text-slate-300/85">
+                                        <dl className="mt-4 space-y-3 font-spacemono text-[12px] text-slate-300/85 sm:space-y-4 sm:text-sm">
                                             <div className="flex items-center justify-between gap-6">
                                                 <dt>Base:</dt>
                                                 <dd className="text-right text-slate-100">Canada</dd>
@@ -469,11 +474,11 @@ export default function ResumePage() {
                                     key={`${role.company}-${role.title}`}
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
-                                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                        <div className="min-w-0 flex-1 font-spacemono text-sm font-bold text-amber-200 sm:flex-none">
+                                    <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
+                                        <div className="min-w-0 w-full font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
                                             <AutoPanLabel text={`${role.company.toLowerCase().replace(/\s+/g, "_")}::${role.title.toLowerCase().replace(/\s+/g, "_")}`} />
                                         </div>
-                                        <div className="flex flex-wrap items-center gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                        <div className="flex w-full flex-wrap items-center gap-3 font-spacemono text-[10px] uppercase tracking-[0.14em] text-slate-400/80 sm:w-auto sm:gap-4 sm:text-[11px] sm:tracking-[0.22em]">
                                             <span className="inline-flex items-center gap-1.5">
                                                 <CalendarMonth sx={{ fontSize: 15 }} />
                                                 {role.duration}
@@ -485,14 +490,14 @@ export default function ResumePage() {
                                         </div>
                                     </div>
 
-                                    <div className="px-6 py-6 lg:px-8">
-                                        <h3 className="font-montserrat text-[1.9rem] font-semibold tracking-tight text-amber-100">
+                                    <div className="px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                                        <h3 className="font-montserrat text-[clamp(1.35rem,6vw,1.9rem)] font-semibold tracking-tight text-amber-100">
                                             {role.title}
                                         </h3>
-                                        <p className="mt-1 font-montserrat text-base text-slate-300/86">{role.company}</p>
-                                        <div className="mt-5 grid gap-3">
+                                        <p className="mt-1 font-montserrat text-[0.95rem] text-slate-300/86 sm:text-base">{role.company}</p>
+                                        <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
                                             {role.bullets.map((bullet) => (
-                                                <div key={bullet} className="flex gap-3 font-montserrat text-[1rem] leading-relaxed text-slate-100/90">
+                                                <div key={bullet} className="flex gap-3 font-montserrat text-[0.96rem] leading-relaxed text-slate-100/90 sm:text-[1rem]">
                                                     <span className="pt-1 font-spacemono text-amber-200">+</span>
                                                     <span>{bullet}</span>
                                                 </div>
@@ -511,26 +516,26 @@ export default function ResumePage() {
                                     key={project.title}
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
-                                    <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                        <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
+                                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:px-5">
+                                        <div className="min-w-0 flex items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:text-sm">
                                             <span className="text-slate-300">&gt;_</span>
-                                            <span>~/projects/industrial-protocol-analysis</span>
+                                            <span className="truncate">~/projects/industrial-protocol-analysis</span>
                                         </div>
-                                        <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                        <div className="font-spacemono text-[10px] uppercase tracking-[0.14em] text-slate-400/80 sm:text-[11px] sm:tracking-[0.22em]">
                                             {project.context}
                                         </div>
                                     </div>
 
-                                    <div className="grid gap-8 px-6 py-6 lg:grid-cols-[minmax(0,1.55fr)_20rem] lg:px-8">
+                                    <div className="grid gap-5 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1.55fr)_20rem] lg:gap-8 lg:px-8">
                                         <div className="min-w-0">
-                                            <h3 className="font-montserrat text-[2rem] font-semibold tracking-tight text-amber-100">
+                                            <h3 className="font-montserrat text-[clamp(1.4rem,6vw,2rem)] font-semibold tracking-tight text-amber-100">
                                                 {project.title}
                                             </h3>
-                                            <p className="mt-4 max-w-4xl font-montserrat text-lg leading-relaxed text-slate-100/90">
+                                            <p className="mt-3 max-w-4xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-4 sm:text-lg">
                                                 {project.summary}
                                             </p>
 
-                                            <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
+                                            <div className="mt-5 break-all font-spacemono text-[12px] font-bold text-amber-300 sm:mt-7 sm:text-sm md:text-base">
                                                 {">> "}
                                                 {project.command}
                                             </div>
@@ -538,7 +543,7 @@ export default function ResumePage() {
                                             <div className="mt-4 overflow-hidden border border-slate-200/10 bg-[#07101f]">
                                                 <div className="grid gap-0 lg:grid-cols-[minmax(0,1.16fr)_minmax(240px,0.84fr)]">
                                                     <div className="border-b border-slate-200/10 p-4 lg:border-b-0 lg:border-r">
-                                                        <div className="space-y-2 font-spacemono text-[13px] leading-6 text-slate-300/88">
+                                                        <div className="space-y-2 font-spacemono text-[12px] leading-5 text-slate-300/88 sm:text-[13px] sm:leading-6">
                                                             {project.bullets.map((bullet) => (
                                                                 <div key={bullet} className="flex gap-3">
                                                                     <span className="text-amber-200">+</span>
@@ -547,7 +552,7 @@ export default function ResumePage() {
                                                             ))}
                                                         </div>
                                                     </div>
-                                                    <div className="relative flex min-h-[240px] items-end overflow-hidden bg-slate-950/50 p-5">
+                                                    <div className="relative flex min-h-[200px] items-end overflow-hidden bg-slate-950/50 p-4 sm:min-h-[240px] sm:p-5">
                                                         <img src={project.image} alt={project.title} className="h-full w-full object-contain opacity-90" />
                                                         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(7,16,31,0)_0%,rgba(7,16,31,0.16)_48%,rgba(7,16,31,0.52)_100%)]" />
                                                     </div>
@@ -556,7 +561,7 @@ export default function ResumePage() {
                                         </div>
 
                                         <aside className="border-l-0 border-slate-200/8 pl-0 lg:border-l lg:pl-8">
-                                            <div className="font-spacemono text-sm font-bold uppercase tracking-[0.24em] text-amber-100">
+                                            <div className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.24em]">
                                                 Stack
                                             </div>
                                             <div className="mt-4 flex flex-wrap gap-2">
@@ -574,7 +579,7 @@ export default function ResumePage() {
                                                     href="/projects"
                                                     onClick={() => setLoadingProjectCta(true)}
                                                     aria-disabled={loadingProjectCta}
-                                                    className={`home-btn home-btn-secondary w-full ${loadingProjectCta ? "pointer-events-none opacity-70" : ""}`}
+                                                    className={`home-btn home-btn-secondary w-full justify-center !px-4 !py-2.5 sm:justify-start ${loadingProjectCta ? "pointer-events-none opacity-70" : ""}`}
                                                 >
                                                     {loadingProjectCta ? (
                                                         <span
@@ -598,16 +603,16 @@ export default function ResumePage() {
                             {skillGroups.map((group) => (
                                 <article
                                     key={group.title}
-                                    className="border border-slate-white bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                    className="border border-slate-white bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5"
                                 >
-                                    <h3 className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                    <h3 className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
                                         {group.title}
                                     </h3>
                                     <div className="mt-4 flex flex-wrap gap-2">
                                         {group.items.map((item) => (
                                             <span
                                                 key={item}
-                                                className="border border-slate-200/10 bg-slate-900/76 px-3 py-1.5 font-montserrat text-sm text-slate-100/92"
+                                                className="border border-slate-200/10 bg-slate-900/76 px-2.5 py-1.5 font-montserrat text-[13px] text-slate-100/92 sm:px-3 sm:text-sm"
                                             >
                                                 {item}
                                             </span>
@@ -620,26 +625,26 @@ export default function ResumePage() {
 
                     <SectionShell id="education" title="Education" Icon={SchoolOutlined}>
                         <article className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                <div className="min-w-0 flex-1 font-spacemono text-sm font-bold text-amber-200 sm:flex-none">
+                            <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
+                                <div className="min-w-0 w-full font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
                                     <AutoPanLabel text="university_of_new_brunswick::education_record" />
                                 </div>
-                                <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                <div className="w-full font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:w-auto sm:text-[11px] sm:tracking-[0.22em]">
                                     {education.year}
                                 </div>
                             </div>
-                            <div className="px-6 py-6 lg:px-8">
-                                <h3 className="font-montserrat text-[2rem] font-semibold tracking-tight text-amber-100">
+                            <div className="px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                                <h3 className="font-montserrat text-[clamp(1.4rem,6vw,2rem)] font-semibold tracking-tight text-amber-100">
                                     {education.school}
                                 </h3>
-                                <div className="mt-3 flex flex-wrap items-center gap-4 font-montserrat text-base text-slate-300/86">
+                                <div className="mt-3 flex flex-wrap items-center gap-3 font-montserrat text-[0.96rem] text-slate-300/86 sm:gap-4 sm:text-base">
                                     <span>{education.degree}</span>
                                     <span className="font-spacemono text-slate-500">/</span>
                                     <span>{education.location}</span>
                                 </div>
-                                <div className="mt-5 grid gap-3">
+                                <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
                                     {education.notes.map((note) => (
-                                        <div key={note} className="flex gap-3 font-montserrat text-[1rem] leading-relaxed text-slate-100/90">
+                                        <div key={note} className="flex gap-3 font-montserrat text-[0.96rem] leading-relaxed text-slate-100/90 sm:text-[1rem]">
                                             <span className="pt-1 font-spacemono text-amber-200">+</span>
                                             <span>{note}</span>
                                         </div>

@@ -638,6 +638,12 @@ body.home-grid-bg::after {
     animation: nav-underline-pending 0.9s ease-in-out infinite;
 }
 
+@media (max-width: 1023px) {
+    main {
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6.5rem);
+    }
+}
+
 .experience-title-marquee {
     will-change: transform;
     animation: experience-title-marquee var(--experience-title-scroll-duration, 10s) ease-in-out infinite;

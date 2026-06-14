@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { useEffect, useRef } from "react"
-import { ReactTyped } from "react-typed"
 import {
     AutoAwesomeOutlined,
     BugReportOutlined,
@@ -15,6 +14,7 @@ import {
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
+import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 
 const ai4security = {
@@ -219,47 +219,37 @@ export default function AI4SecurityPage() {
                 <BackToTopButton targetRef={containerRef} />
 
                 <div className="pt-14">
-                    <section data-fade className="translate-y-4 px-6 pb-6 pt-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                    <section data-fade className="translate-y-4 px-4 pb-6 pt-4 opacity-0 transition duration-700 ease-out sm:px-10 sm:pt-6 lg:px-14">
                         <div className="mx-auto w-full max-w-[96rem]">
                             <div className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                    <div className="flex items-center gap-3 font-spacemono text-sm font-bold text-amber-200">
+                                <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
+                                    <div className="flex min-w-0 w-full items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
                                         <span className="text-slate-300">&gt;_</span>
-                                        <span>{ai4security.slug}</span>
+                                        <ProjectTerminalLabel text={ai4security.slug} className="flex-1" />
                                     </div>
-                                    <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80">
+                                    <div className="w-full font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:w-auto sm:text-[11px] sm:tracking-[0.22em]">
                                         AI research / cybersecurity / {ai4security.year}
                                     </div>
                                 </div>
 
-                                <div className="grid gap-8 px-6 py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:px-8 lg:py-8">
+                                <div className="grid gap-5 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:gap-8 lg:px-8 lg:py-8">
                                     <div className="min-w-0">
-                                        <div className="font-spacemono text-sm uppercase tracking-[0.22em] text-amber-300">
+                                        <div className="font-spacemono text-[12px] uppercase tracking-[0.16em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
                                             {ai4security.eyebrow}
                                         </div>
 
-                                        <h1 className="mt-3 font-montserrat text-[2.55rem] font-semibold tracking-tight text-blue-100 md:text-[3.15rem]">
+                                        <h1 className="mt-3 font-montserrat text-[clamp(1.75rem,8vw,3.15rem)] font-semibold tracking-tight text-blue-100">
                                             {ai4security.title}
                                         </h1>
 
-                                        <p className="mt-6 max-w-4xl font-montserrat text-lg leading-relaxed text-slate-100/90">
+                                        <p className="mt-4 max-w-4xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-6 sm:text-lg">
                                             {ai4security.TLDR}
                                         </p>
 
-                                        <div className="mt-7 font-spacemono text-base font-bold text-amber-300">
-                                            <span>{">> "}</span>
-                                            <ReactTyped
-                                                strings={[ai4security.command]}
-                                                typeSpeed={22}
-                                                showCursor={false}
-                                                startWhenVisible
-                                                className="inline"
-                                            />
-                                            <span className="typewriter-cursor">_</span>
-                                        </div>
+                                        <ProjectTerminalCommand text={ai4security.command} className="mt-5 sm:mt-7" />
 
                                         <div className="mt-7 flex flex-wrap gap-3">
-                                            <Link href="/projects" className="home-btn home-btn-primary">
+                                            <Link href="/projects" className="home-btn home-btn-primary w-full justify-center sm:w-auto">
                                                 <FolderCopyOutlined sx={{ fontSize: 18 }} />
                                                 <span>All_Projects</span>
                                             </Link>
@@ -270,7 +260,7 @@ export default function AI4SecurityPage() {
                                                     href={item.href}
                                                     target="_blank"
                                                     rel="noreferrer"
-                                                    className="home-btn home-btn-secondary"
+                                                    className="home-btn home-btn-secondary w-full justify-center sm:w-auto"
                                                 >
                                                     <OpenInNewOutlined sx={{ fontSize: 17 }} />
                                                     <span>{item.label}</span>
@@ -280,11 +270,11 @@ export default function AI4SecurityPage() {
                                     </div>
 
                                     <aside className="overflow-hidden border border-slate-200/10 bg-[#07101f]">
-                                        <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                        <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                             Research Snapshot
                                         </div>
 
-                                        <div className="px-5 py-5">
+                                        <div className="px-4 py-4 sm:px-5 sm:py-5">
                                             <img
                                                 src="/projects/ai4security/cover-shield.png"
                                                 alt="AI4Security visual"
@@ -292,10 +282,10 @@ export default function AI4SecurityPage() {
                                             />
 
                                             <div className="mt-5 border-t border-slate-200/8 pt-5">
-                                                <div className="font-spacemono text-xs uppercase tracking-[0.22em] text-slate-400">
+                                                <div className="font-spacemono text-[11px] uppercase tracking-[0.18em] text-slate-400 sm:text-xs sm:tracking-[0.22em]">
                                                     Focus
                                                 </div>
-                                                <p className="mt-3 font-montserrat text-sm leading-relaxed text-slate-300/88">
+                                                <p className="mt-3 font-montserrat text-[0.95rem] leading-relaxed text-slate-300/88 sm:text-sm">
                                                     Evaluate whether LLMs can move beyond general text generation into
                                                     concrete cybersecurity analyst workflows with measurable value.
                                                 </p>
@@ -307,31 +297,31 @@ export default function AI4SecurityPage() {
                         </div>
                     </section>
 
-                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                    <section data-fade className="translate-y-4 px-4 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
                         <ProjectOverviewCardsRow cards={researchCards} columnsClass="lg:grid-cols-3" />
                     </section>
 
-                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                    <section data-fade className="translate-y-4 px-4 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
                         <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     Project Context
                                 </div>
-                                <div className="px-5 py-5">
-                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                                    <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         {ai4security.contextOne}
                                     </p>
-                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                    <p className="mt-4 font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         {ai4security.contextTwo}
                                     </p>
                                 </div>
                             </article>
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     Metadata
                                 </div>
-                                <dl className="space-y-5 px-5 py-5 font-spacemono text-sm text-slate-300/85">
+                                <dl className="space-y-3 px-4 py-4 font-spacemono text-[12px] text-slate-300/85 sm:space-y-5 sm:px-5 sm:py-5 sm:text-sm">
                                     {metadataItems.map((item) => (
                                         <div key={item.label} className="flex items-center justify-between gap-6">
                                             <dt>{item.label}</dt>
@@ -343,18 +333,18 @@ export default function AI4SecurityPage() {
                         </div>
                     </section>
 
-                    <section data-fade className="translate-y-4 px-6 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                    <section data-fade className="translate-y-4 px-4 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
                         <div className="mx-auto flex w-full max-w-[96rem] flex-col gap-6">
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     PCAP Analysis And Data Preparation
                                 </div>
 
-                                <div className="grid gap-5 px-5 py-5 lg:grid-cols-3">
+                                <div className="grid gap-4 px-4 py-4 sm:gap-5 sm:px-5 sm:py-5 lg:grid-cols-3">
                                     {openSourceWorkflow.map((item) => (
                                         <div key={item.title}>
                                             <ProcessNode title={item.title} body={item.body} Icon={item.Icon} />
-                                            <div className="border-x border-b border-slate-200/10 bg-slate-950/52 px-4 py-3 font-spacemono text-sm text-amber-200">
+                                            <div className="border-x border-b border-slate-200/10 bg-slate-950/52 px-4 py-3 font-spacemono text-[12px] text-amber-200 sm:text-sm">
                                                 {item.command}
                                             </div>
                                         </div>
@@ -363,18 +353,18 @@ export default function AI4SecurityPage() {
                             </article>
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     Alert Enrichment And Local Inference
                                 </div>
-                                <div className="grid gap-6 px-5 py-5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+                                <div className="grid gap-5 px-4 py-4 sm:gap-6 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
                                     <div>
-                                        <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                             One track focused on alert enrichment. We set up a PostgreSQL database with
                                             dummy asset records so an LLM could query internal asset context, match it
                                             against current CVE information, and generate vulnerability explanations and
                                             supporting analysis for the alert being investigated.
                                         </p>
-                                        <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                        <p className="mt-4 font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                             The goal was to give the model more than just the alert text. By combining
                                             asset details, vulnerability records, and current CVE context, the workflow
                                             could explain why a system might be exposed, what the likely risk meant, and
@@ -398,17 +388,17 @@ export default function AI4SecurityPage() {
                             </article>
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     CIC Modbus Detection Results
                                 </div>
-                                <div className="px-5 py-5">
-                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                                    <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         With PCAPs from the 2023 UNB CIC Modbus dataset represented as structured flows and prompts, we
                                         then compared different ways of classifying benign versus anomalous industrial
                                         traffic. The main question was which workflow still held up once the traffic
                                         started to vary from the examples we had prepared.
                                     </p>
-                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                    <p className="mt-4 font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         These results pushed the project away from treating the model as a standalone
                                         detector. Fine-tuning worked best when traffic stayed close to the training
                                         structure, prompt-based approaches were more flexible but still not accurate
@@ -421,7 +411,7 @@ export default function AI4SecurityPage() {
                                                 <div className="flex items-start gap-3">
                                                     <BugReportOutlined className="mt-0.5 text-amber-300" sx={{ fontSize: 19 }} />
                                                     <div>
-                                                        <h3 className="font-montserrat text-[1.08rem] font-semibold tracking-tight text-slate-100">
+                                                        <h3 className="font-montserrat text-[1rem] font-semibold tracking-tight text-slate-100 sm:text-[1.08rem]">
                                                             {item.title}
                                                         </h3>
                                                         <div className="mt-1 font-spacemono text-xs uppercase tracking-[0.18em] text-emerald-300">
@@ -429,7 +419,7 @@ export default function AI4SecurityPage() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <p className="mt-3 font-montserrat text-[0.98rem] leading-relaxed text-slate-300/88">
+                                                <p className="mt-3 font-montserrat text-[0.94rem] leading-relaxed text-slate-300/88 sm:text-[0.98rem]">
                                                     {item.body}
                                                 </p>
                                             </article>
@@ -440,25 +430,25 @@ export default function AI4SecurityPage() {
                         </div>
                     </section>
 
-                    <section data-fade className="translate-y-4 px-6 pb-14 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
+                    <section data-fade className="translate-y-4 px-4 pb-14 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
                         <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-2">
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     Conclusion
                                 </div>
-                                <div className="px-5 py-5">
-                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                                    <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         {ai4security.conclusion}
                                     </p>
                                 </div>
                             </article>
 
                             <article className="overflow-hidden border border-slate-200/10 bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-5 py-3 font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+                                <div className="border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:px-5 sm:text-sm sm:tracking-[0.22em]">
                                     Final Thoughts
                                 </div>
-                                <div className="px-5 py-5">
-                                    <p className="font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
+                                <div className="px-4 py-4 sm:px-5 sm:py-5">
+                                    <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
                                         {ai4security.finalThoughts}
                                     </p>
                                 </div>

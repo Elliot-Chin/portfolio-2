@@ -26,11 +26,11 @@ function ContactField({
     rows = 5,
 }) {
     const sharedClassName =
-        "w-full border-0 border-b border-slate-200/16 bg-transparent px-0 py-3 font-spacemono text-[1.1rem] uppercase tracking-[0.02em] text-blue-100 outline-none placeholder:text-slate-500/78 focus:border-amber-300/55"
+        "w-full border-0 border-b border-slate-200/16 bg-transparent px-0 py-2.5 font-spacemono text-[0.95rem] uppercase tracking-[0.02em] text-blue-100 outline-none placeholder:text-slate-500/78 focus:border-amber-300/55 sm:py-3 sm:text-[1.1rem]"
 
     return (
         <label className="block">
-            <div className="font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
+            <div className="font-spacemono text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px] sm:tracking-[0.18em]">
                 {label}
             </div>
             {multiline ? (
@@ -63,12 +63,12 @@ function ContactField({
 
 function ContactMetaCard({ onCopyEmail }) {
     return (
-        <aside className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-            <div className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
+        <aside className="border border-slate-200/10 bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5">
+            <div className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
                 Transmission Routes
             </div>
 
-            <div className="mt-5 space-y-4 font-spacemono text-sm text-slate-300/86">
+            <div className="mt-4 space-y-3 font-spacemono text-[12px] text-slate-300/86 sm:mt-5 sm:space-y-4 sm:text-sm">
                 <div className="flex items-center justify-between gap-6">
                     <span>Primary:</span>
                     <span className="text-right text-amber-300">EmailJS</span>
@@ -83,11 +83,11 @@ function ContactMetaCard({ onCopyEmail }) {
                 </div>
             </div>
 
-            <div className="mt-6 grid gap-3">
+            <div className="mt-5 grid gap-2.5 sm:mt-6 sm:gap-3">
                 <button
                     type="button"
                     onClick={onCopyEmail}
-                    className="home-btn home-btn-secondary w-full justify-between"
+                    className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3"
                 >
                     <span className="inline-flex items-center gap-2">
                         <ContentCopyOutlined sx={{ fontSize: 16 }} />
@@ -97,7 +97,7 @@ function ContactMetaCard({ onCopyEmail }) {
                 </button>
                 <a
                     href="mailto:contact@elliotc.dev"
-                    className="home-btn home-btn-secondary w-full justify-between"
+                    className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3"
                 >
                     <span className="inline-flex items-center gap-2">
                         <EmailOutlined sx={{ fontSize: 16 }} />
@@ -105,11 +105,11 @@ function ContactMetaCard({ onCopyEmail }) {
                     </span>
                     <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
                 </a>
-                <a href={linkedInLink} target="_blank" rel="noreferrer" className="home-btn home-btn-secondary w-full justify-between">
+                <a href={linkedInLink} target="_blank" rel="noreferrer" className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3">
                     <span>LinkedIn</span>
                     <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
                 </a>
-                <a href={githubLink} target="_blank" rel="noreferrer" className="home-btn home-btn-secondary w-full justify-between">
+                <a href={githubLink} target="_blank" rel="noreferrer" className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3">
                     <span>GitHub</span>
                     <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
                 </a>
@@ -235,19 +235,19 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                 <BackToTopButton targetRef={containerRef} />
 
                 <div className="pt-14">
-                    <section className="px-6 pb-14 pt-6 sm:px-10 lg:px-14">
+                    <section className="px-4 pb-12 pt-4 sm:px-10 sm:pb-14 sm:pt-6 lg:px-14">
                         <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-[minmax(0,1.18fr)_20rem]">
-                            <div className="overflow-hidden border border-slate-200/10 bg-slate-950/30 px-6 py-6 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] lg:px-8 lg:py-8">
-                                <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-4 py-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-amber-100">
+                            <div className="overflow-hidden border border-slate-200/10 bg-slate-950/30 px-4 py-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+                                <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-3 py-1.5 font-spacemono text-[10px] font-bold uppercase tracking-[0.14em] text-amber-100 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.18em]">
                                     <span className="h-2 w-2 rounded-full bg-amber-300" />
                                     <span>Encryption_Active</span>
                                 </div>
 
-                                <h1 className="mt-5 font-montserrat text-[2.8rem] font-semibold tracking-tight text-blue-100 md:text-[3.5rem]">
+                                <h1 className="mt-4 whitespace-nowrap font-montserrat text-[clamp(1.45rem,8vw,2.8rem)] font-semibold tracking-tight text-blue-100 md:text-[3.5rem]">
                                     CONTACT_NODE
                                 </h1>
 
-                                <p className="mt-3 max-w-3xl font-spacemono text-sm leading-6 text-slate-400/88">
+                                <p className="mt-3 max-w-3xl font-spacemono text-[12px] leading-5 text-slate-400/88 sm:text-sm sm:leading-6">
                                     Secure end-to-end messaging protocol initialized.
                                     <br />
                                     Please input your transmission parameters below.
@@ -257,7 +257,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                                     ref={formRef}
                                     onSubmit={handleSubmit}
                                     noValidate
-                                    className="mt-8 space-y-6"
+                                    className="mt-6 space-y-5 sm:mt-8 sm:space-y-6"
                                 >
                                     <input
                                         tabIndex={-1}
@@ -300,13 +300,13 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                                         rows={5}
                                     />
 
-                                    <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                                    <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                                         <div className="flex flex-wrap items-center gap-4">
                                             <button
                                                 id="contact-send-btn"
                                                 type="submit"
                                                 disabled={!canSubmit}
-                                                className="home-btn border-0 bg-amber-300 px-5 text-slate-950 disabled:cursor-not-allowed disabled:opacity-45"
+                                                className="home-btn border-0 bg-amber-300 px-4 py-2.5 text-slate-950 disabled:cursor-not-allowed disabled:opacity-45 sm:px-5"
                                             >
                                                 <span>&gt;</span>
                                                 <span>
@@ -321,13 +321,13 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                                             <button
                                                 type="button"
                                                 onClick={resetForm}
-                                                className="home-btn home-btn-secondary"
+                                                className="home-btn home-btn-secondary px-4 py-2.5 sm:px-6 sm:py-3"
                                             >
                                                 Reset_Buffer
                                             </button>
                                         </div>
 
-                                        <div className="font-spacemono text-xs uppercase tracking-[0.16em] text-slate-400">
+                                        <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-slate-400 sm:text-xs sm:tracking-[0.16em]">
                                             <span>SYSLOG: </span>
                                             <ReactTyped
                                                 key={syslogText}
@@ -341,7 +341,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                                         </div>
                                     </div>
 
-                                    <div className="font-spacemono text-xs uppercase tracking-[0.16em] text-slate-500">
+                                    <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-slate-500 sm:text-xs sm:tracking-[0.16em]">
                                         Payload budget remaining: {charsLeft}
                                     </div>
                                 </form>
