@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Typewriter from "typewriter-effect"
 import { ArrowOutward, KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
 import { AvatarCanvasSkeleton, HeroSectionOverlaySkeleton } from "@/components/sections/SectionSkeletons"
+import { VisitorCount } from "@/components/analytics/VisitorCount"
 
 const Model2 = dynamic(
     () => import("@/components/avatar/Model_2").then((mod) => mod.Model2),
@@ -131,6 +132,12 @@ export function HeroSection({ containerRef }) {
                             support. Specialized in bridging the gap between legacy industrial stability and modern
                             digital security architectures.
                         </p>
+
+                        <div className="mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-200/12 bg-slate-950/36 px-3 py-2 font-spacemono text-[10px] uppercase tracking-[0.18em] text-slate-300 sm:mt-5 sm:px-4 sm:text-[11px] sm:tracking-[0.24em]">
+                            <span className="text-amber-300">system</span>
+                            <span className="text-slate-500">/</span>
+                            <VisitorCount pageKey="site" label="Visitors" className="inline-flex items-center gap-1" />
+                        </div>
 
                         <div className="mt-7 flex flex-wrap gap-3 sm:mt-9 sm:gap-4 xl:mt-10">
                             <button
