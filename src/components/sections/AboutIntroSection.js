@@ -5,6 +5,7 @@ import {
     MemoryOutlined,
     TerminalOutlined,
 } from "@mui/icons-material"
+import { HorizontalScrollRail } from "@/components/ui/HorizontalScrollRail"
 
 const cards = [
     {
@@ -146,13 +147,16 @@ export function AboutIntroSection() {
         >
             <div className="mx-auto flex min-h-[100dvh] w-full max-w-[96rem] items-center px-6 py-12 sm:px-10 md:px-12 md:py-10 lg:min-h-[calc(100dvh-3.5rem)] lg:px-12 lg:py-8 xl:px-14 xl:py-10">
                 <div className="w-full">
-                    <div className="w-full md:hidden">
+                    <div className="w-full lg:hidden">
                         <div className="mb-4 flex items-center justify-between font-spacemono text-[10px] uppercase tracking-[0.2em] text-slate-400/70">
                             <span>System Modules</span>
                             <span>Swipe to browse</span>
                         </div>
 
-                        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10">
+                        <HorizontalScrollRail
+                            railClassName="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10"
+                            scrollStep={360}
+                        >
                             {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
                                 <article
                                     key={id}
@@ -190,10 +194,10 @@ export function AboutIntroSection() {
                                     </div>
                                 </article>
                             ))}
-                        </div>
+                        </HorizontalScrollRail>
                     </div>
 
-                    <div className="hidden w-full items-stretch gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 lg:gap-4 xl:gap-6">
+                    <div className="hidden w-full items-stretch gap-4 lg:grid lg:grid-cols-3 lg:gap-4 xl:gap-6">
                         {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
                             <article
                                 key={id}

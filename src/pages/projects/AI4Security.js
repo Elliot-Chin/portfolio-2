@@ -371,18 +371,20 @@ export default function AI4SecurityPage() {
                                             how the vulnerability related back to the asset under investigation.
                                         </p>
                                     </div>
-                                    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                                        {enrichmentShots.map((item) => (
-                                            <div key={item.alt} className="overflow-hidden border border-slate-200/10 bg-[#07101f] px-3 py-2">
-                                                <ProjectImage
-                                                    src={item.src}
-                                                    alt={item.alt}
-                                                    description={item.description}
-                                                    lg_size="w-full"
-                                                    maxH="max-h-[38vh]"
-                                                />
-                                            </div>
-                                        ))}
+                                    <div className="-mx-4 overflow-x-auto px-4 pb-2 snap-x snap-mandatory lg:mx-0 lg:grid lg:overflow-visible lg:px-0 lg:pb-0 lg:snap-none lg:gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                                        <div className="flex w-max min-w-full flex-nowrap gap-4 lg:contents">
+                                            {enrichmentShots.map((item) => (
+                                                <div key={item.alt} className="w-[85vw] min-w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/10 bg-[#07101f] px-3 py-2 lg:w-auto lg:min-w-0 lg:max-w-none lg:shrink lg:snap-none">
+                                                    <ProjectImage
+                                                        src={item.src}
+                                                        alt={item.alt}
+                                                        description={item.description}
+                                                        lg_size="w-full"
+                                                        maxH="max-h-[38vh]"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </article>

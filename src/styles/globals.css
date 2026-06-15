@@ -681,3 +681,16 @@ body.home-grid-bg::after {
         transform: translate(0.25rem, -0.25rem);
     }
 }
+@keyframes horizontal-scroll-hint-bounce {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+.horizontal-scroll-hint {
+  animation: horizontal-scroll-hint-bounce 1.05s ease-in-out infinite;
+}

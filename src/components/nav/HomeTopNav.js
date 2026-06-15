@@ -129,9 +129,9 @@ export function HomeTopNav({
 
     const items = useMemo(
         () => centerItems ?? [
-            { label: "Portfolio", href: "/" },
-            { label: "Skills", href: "/resume" },
+            { label: "Home", href: "/" },
             { label: "Projects", href: "/projects" },
+            { label: "Resume", href: "/resume" },
             { label: "Contact", href: "/contact" },
         ],
         [centerItems]
@@ -358,19 +358,12 @@ export function HomeTopNav({
 
                     <div className="hidden items-center lg:flex">
                         <Link
-                            href={resumeHref}
+                            href="/wtr/Elliot_Chin_Resume.pdf"
+                            target="_blank"
                             className="home-btn home-btn-primary min-w-0 px-3 !text-white sm:w-[144px] sm:px-6"
                             style={{ color: "#ffffff" }}
-                            onClick={(event) => {
-                                if (isRouteActive(currentPath, resumeHref)) {
-                                    event.preventDefault()
-                                    return
-                                }
-                                event.preventDefault()
-                                startNavigation(resumeHref, "Resume")
-                            }}
                         >
-                            Resume
+                            Download
                         </Link>
                     </div>
                 </div>

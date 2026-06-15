@@ -128,7 +128,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                     <span className="text-amber-100/85">&gt;_</span>
                     <AutoPanLabel text={`~/projects/${label.toLowerCase().replace(/\s+/g, "-")}`} className="flex-1" />
                 </div>
-                <div className="hidden items-center gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80 sm:flex">
+                <div className="hidden items-center gap-4 font-spacemono text-[11px] uppercase tracking-[0.22em] text-slate-400/80 lg:flex">
                     <span>
                         Branch: <span className="text-amber-300">{metadata.branch}</span>
                     </span>
@@ -138,7 +138,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
 
             <div className="grid gap-5 px-4 py-4 sm:px-6 sm:py-5 lg:grid-cols-[minmax(0,1.65fr)_18rem] lg:gap-8 lg:px-8 lg:py-7">
                 <div className="min-w-0">
-                    <div className="mb-3 flex items-center justify-between gap-4 sm:hidden">
+                    <div className="mb-3 flex items-center justify-between gap-4 lg:hidden">
                         <div className="font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/78">
                             <span>{metadata.branch}</span>
                             <span className="mx-2 text-slate-600">/</span>
@@ -146,7 +146,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                         </div>
                     </div>
 
-                    <h2 className="whitespace-nowrap font-montserrat text-[clamp(1.02rem,5.4vw,1.45rem)] font-semibold tracking-tight text-amber-100 sm:text-[1.7rem] md:text-[2.3rem]">
+                    <h2 className="font-montserrat text-[clamp(1.02rem,5.4vw,1.45rem)] font-semibold tracking-tight text-amber-100 sm:text-[1.7rem] md:text-[2.3rem]">
                         {heading}
                     </h2>
                     <p className="mt-3 max-w-4xl font-montserrat text-[0.95rem] leading-relaxed text-slate-100/92 sm:mt-4 sm:text-[1.02rem] md:text-lg">
@@ -166,14 +166,14 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                         </div>
                     </div>
 
-                    <div className="mt-4 sm:hidden">
+                    <div className="mt-4 lg:hidden">
                         <button
                             type="button"
                             onClick={() => setIsMobileExpanded((current) => !current)}
-                            className="inline-flex items-center gap-1.5 border border-slate-200/10 bg-slate-950/46 px-3 py-1.5 font-spacemono text-[10px] font-bold uppercase tracking-[0.16em] text-slate-200"
+                            className="inline-flex min-h-[2.75rem] items-center gap-2 border border-amber-200/18 bg-amber-300/10 px-4 py-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.2em] text-amber-50 shadow-[0_10px_24px_rgba(2,8,23,0.22)]"
                         >
                             <span>{isMobileExpanded ? "Less Details" : "More Details"}</span>
-                            <MobileToggleIcon sx={{ fontSize: 16 }} />
+                            <MobileToggleIcon sx={{ fontSize: 18 }} />
                         </button>
                     </div>
 
@@ -192,7 +192,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                     <div className={`mt-4 overflow-hidden border border-slate-200/10 bg-[#07101f] ${isMobileExpanded ? "block" : "hidden"} lg:block`}>
                         <div className="grid gap-0 lg:grid-cols-[minmax(0,1.18fr)_minmax(260px,0.82fr)]">
                             <div className="border-b border-slate-200/10 p-4 lg:border-b-0 lg:border-r">
-                                <div className="mb-3 font-spacemono text-[10px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:hidden">
+                                <div className="mb-3 font-spacemono text-[10px] font-bold uppercase tracking-[0.18em] text-amber-100 lg:hidden">
                                     Project Details
                                 </div>
                                 <div className="space-y-2 font-spacemono text-[12px] leading-5 text-slate-300/88 sm:text-[13px] sm:leading-6 md:text-[14px]">
@@ -217,7 +217,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                         </div>
                     </div>
 
-                    <div className="mt-4 sm:hidden">
+                    <div className="mt-4 lg:hidden">
                         <Link
                             href={project.link}
                             onClick={() => onOpen(label)}
@@ -272,7 +272,7 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
                     )}
 
                     {project.link && (
-                        <div className="mt-7 hidden sm:block lg:mt-9">
+                        <div className="mt-7 hidden lg:block lg:mt-9">
                             <Link
                                 href={project.link}
                                 onClick={() => onOpen(label)}
@@ -299,7 +299,6 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
 export default function ProjectsPage() {
     const containerRef = useRef(null)
     const [loadingProjectId, setLoadingProjectId] = useState(null)
-    const [isMobileViewport, setIsMobileViewport] = useState(false)
 
     const projects = useMemo(() => {
         if (projectsFromTimeline.length >= 1) return projectsFromTimeline
@@ -309,16 +308,6 @@ export default function ProjectsPage() {
     useEffect(() => {
         document.body.classList.add("home-grid-bg")
         return () => document.body.classList.remove("home-grid-bg")
-    }, [])
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia("(max-width: 639px)")
-        const updateViewport = () => setIsMobileViewport(mediaQuery.matches)
-
-        updateViewport()
-        mediaQuery.addEventListener?.("change", updateViewport)
-
-        return () => mediaQuery.removeEventListener?.("change", updateViewport)
     }, [])
 
     useEffect(() => {
@@ -371,12 +360,13 @@ export default function ProjectsPage() {
                                     <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
                                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
                                 </div>
-                                <div className="font-spacemono text-[clamp(0.95rem,4.1vw,2.2rem)] leading-tight text-amber-300 sm:whitespace-nowrap sm:text-[clamp(1.1rem,6vw,2.2rem)]">
-                                    <span className="block sm:inline">
-                                        <span className="text-amber-100">{isMobileViewport ? "visitor" : "visitor@elliot-chin"}</span>
+                                <div className="font-spacemono text-[clamp(0.95rem,4.1vw,2.2rem)] leading-tight text-amber-300 sm:text-[clamp(1.1rem,6vw,2.2rem)] lg:text-[clamp(1.28rem,2.05vw,1.95rem)] lg:whitespace-nowrap">
+                                    <span className="block lg:inline">
+                                        <span className="text-amber-100 lg:hidden">visitor</span>
+                                        <span className="hidden text-amber-100 lg:inline">visitor@elliot-chin</span>
                                         <span className="text-slate-200">:~/projects$ </span>
                                     </span>
-                                    <span className="block sm:inline">
+                                    <span className="block lg:inline">
                                         <ReactTyped
                                             strings={["ls -la --deep-inspect"]}
                                             typeSpeed={34}

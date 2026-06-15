@@ -61,7 +61,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                 </div>
             , document.body)}
 
-            <div className={`mx-auto mt-4 flex w-full flex-col gap-2 rounded-md sm:mt-5 ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
+            <div className={`mt-4 flex w-full min-w-0 flex-col gap-2 rounded-md sm:mt-5 ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
                 <div className="w-full rounded-md flex items-center justify-center">
                     <img
                         alt={alt}
