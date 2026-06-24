@@ -341,15 +341,15 @@ export default function ResumePage() {
                                     key={project.title}
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
                                 >
-                                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:px-5">
-                                        <div className="min-w-0 flex items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:text-sm">
-                                            <span className="text-slate-300">&gt;_</span>
-                                            <span className="truncate">~/projects/industrial-protocol-analysis</span>
+                                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:px-5">
+                                            <div className="min-w-0 flex items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:text-sm">
+                                                <span className="text-slate-300">&gt;_</span>
+                                                <span className="truncate">{project.path}</span>
+                                            </div>
+                                            <div className="font-spacemono text-[10px] uppercase tracking-[0.14em] text-slate-400/80 sm:text-[11px] sm:tracking-[0.22em]">
+                                                {project.context}
+                                            </div>
                                         </div>
-                                        <div className="font-spacemono text-[10px] uppercase tracking-[0.14em] text-slate-400/80 sm:text-[11px] sm:tracking-[0.22em]">
-                                            {project.context}
-                                        </div>
-                                    </div>
 
                                     <div className="grid gap-5 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1.55fr)_20rem] lg:gap-8 lg:px-8">
                                         <div className="min-w-0">

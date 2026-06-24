@@ -4,7 +4,7 @@ function makeSkillBadgeIcon(text, background = "#10233d", foreground = "#f8fafc"
 }
 
 export const resumeSummary =
-    "Software developer with experience across cybersecurity, OT and industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows and Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network and security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
+    "Software developer with experience across cybersecurity, OT/industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows/Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network/security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
 
 export const resumeContactLinks = [
     { label: "Email", value: "contact@elliotc.dev", href: "mailto:contact@elliotc.dev", iconKey: "Email" },
@@ -22,19 +22,20 @@ export const resumeHighlights = [
 
 export const resumeExperience = [
     {
-        title: "Jr Application Cybersecurity Specialist",
+        title: "Junior Application Cybersecurity Specialist",
         company: "Siemens",
         location: "Canada",
         duration: "June 2023 - Current",
         bullets: [
-            "Lead compatibility testing for SINEC Security Monitor across representative OT lab configurations and deployment scenarios.",
-            "Analyze industrial protocols including PROFINET, OPC UA, S7 communication, and IEC 104 with Wireshark and UAExpert.",
-            "Develop Zeek packet-analysis plugins in C++ to inspect, parse, and log industrial and OT traffic for cybersecurity monitoring and R&D use cases.",
-            "Administer Proxmox virtualization hosting R&D virtual machines, project infrastructure VMs, and remotely accessible jumpboxes.",
-            "Maintain an OT lab simulating electric power substation and building automation networks with relays, IEDs, servers, switches, and rack-mounted industrial equipment.",
-            "Configure VLANs, segmentation, switch connectivity, and OT lab infrastructure used for cybersecurity testing and development.",
-            "Troubleshoot Linux, Windows, Proxmox, Cisco switching, Cisco and Fortinet firewall environments, and industrial network equipment.",
-            "Build and debug tools and web applications using React, Next.js, Python, Flask, Docker, and Git, including SSM API integrations and protocol support work.",
+            "Lead compatibility testing for SINEC Security Monitor across lab configurations, validating integration behavior, deployment scenarios, and product functionality in representative OT environments.",
+            "Analyze industrial protocols including PROFINET, OPC UA, S7 communication, and IEC 104 using Wireshark and UAExpert.",
+            "Develop Zeek packet-analysis plugins in C++ to inspect, parse, and log industrial/OT protocol traffic for cybersecurity monitoring and R&D use cases.",
+            "Administer Proxmox-based virtualization infrastructure hosting R&D virtual machines, project infrastructure VMs, and remotely accessible jumpboxes.",
+            "Maintain and manage an OT lab environment that simulates electric power substation and building automation networks using relays, IEDs, servers, switches, and rack-mounted industrial equipment.",
+            "Configure and manage VLANs, network segmentation, switch connectivity, and lab infrastructure used for OT cybersecurity testing and development.",
+            "Troubleshot lab infrastructure across Linux, Windows, Proxmox, Cisco switching, Cisco and Fortinet firewall environments, and industrial network equipment.",
+            "Develop custom analysis workflows to compare observed network traffic against expected protocol behavior, generated Zeek logs, and cybersecurity monitoring use cases.",
+            "Build and debug software tools and web applications using React, Next.js, Python, Flask, Docker, and Git, including SSM API integrations, internal team management tooling, and SSM protocol support work.",
         ],
     },
     {
@@ -43,11 +44,14 @@ export const resumeExperience = [
         location: "Canada",
         duration: "May 2022 - Dec 2022",
         bullets: [
-            "Led the full-stack development effort for the Department of Electrical and Computer Engineering.",
-            "Gathered requirements from academic stakeholders for a department-wide tool supporting academic advising and CEAB accreditation workflows.",
-            "Designed and implemented maintainable software solutions that could scale with advising, curriculum, and accreditation needs.",
-            "Analyzed academic and accreditation-related data to identify improvement areas and support future development recommendations.",
-            "Provided progress updates in remote and in-person meetings with collaborators and stakeholders.",
+            "Served as the sole full-stack developer for the Department of Electrical and Computer Engineering, working directly with the Department Head and Software Engineering Advisor to design, deliver, and maintain two internal academic-support tools.",
+            "Developed a Java Swing desktop application with a Python backend to consolidate student academic records and generate CEAB audit-ready tier and ranking groups, giving stakeholders a clearer view of student standing and accreditation-related outcomes.",
+            "Built an academic-advising planning tool that analyzed completed courses, grades, intended future courses, course prerequisites, and failed courses to generate a program-wide course matrix for individual students.",
+            "Implemented advising recommendations that identified eligible courses, prerequisite gaps, required retakes, and suggested semester sequencing, helping advisors assess student progression and build realistic academic plans.",
+            "Translated stakeholder requirements into technical designs through twice-weekly meetings, where progress, defects, proposed changes, and workflow needs were reviewed collaboratively.",
+            "Used GitHub and GitHub Projects to manage source control, issues, enhancements, and release work through a Kanban-based, sprint-style workflow.",
+            "Delivered a stakeholder-testable release every two weeks, incorporating feedback into subsequent iterations through new features, bug fixes, and usability improvements.",
+            "Analyzed academic and accreditation data to identify process gaps and provide recommendations for future improvements to the department's advising and CEAB reporting workflows.",
         ],
     },
 ]
@@ -62,16 +66,16 @@ export const resumeCareerNodes = [
     },
     {
         years: "2023",
-        code: "02_JR",
-        title: "Jr. Software Developer",
-        summary: "Joined Siemens and worked on internal tooling, application support, and product-adjacent engineering workflows.",
+        code: "02_OT",
+        title: "OT Security",
+        summary: "Joined Siemens to support OT lab infrastructure, compatibility testing, and product-adjacent engineering workflows.",
         accent: "muted",
     },
     {
-        years: "2025 - Current",
+        years: "2023 - Current",
         code: "03_SEC",
-        title: "Jr. Cybersecurity Application Specialist",
-        summary: "Focused on OT lab operations, industrial protocol analysis, Zeek plugin development, and secure product tooling.",
+        title: "Cybersecurity",
+        summary: "Focused on industrial protocol analysis, Zeek plugin development, OT lab operations, and secure product tooling.",
         accent: "primary",
     },
 ]
@@ -80,16 +84,35 @@ export const resumeSelectedProjects = [
     {
         title: "Industrial Protocol Analysis / Zeek Plugin Development",
         context: "Canada",
+        path: "~/projects/industrial-protocol-analysis",
         command: "zeek-build --protocol opcua --lab ot-rnd",
         summary:
             "R&D work focused on understanding OPC UA behavior in industrial environments and translating that knowledge into protocol-aware monitoring for SINEC Security Monitor.",
         bullets: [
-            "Researched OPC UA protocol behavior in an R&D lab using PLCs, Wireshark, and UAExpert to simulate normal and abnormal communication scenarios.",
-            "Developed a Zeek-based protocol analysis plugin for SINEC Security Monitor to inspect and parse OPC UA traffic and emit event-specific logs.",
-            "Defined attack procedures and generated test data to validate detection, certificate handling, access-level checks, and write-response conditions.",
+            "Researched OPC UA protocol behavior within an R&D lab environment using PLCs, generated OPC UA traffic, Wireshark, and UAExpert to simulate and understand normal and abnormal industrial communication scenarios.",
+            "Developed a Zeek-based protocol-analysis plugin for SINEC Security Monitor to inspect and parse OPC UA traffic and generate event-specific logs for selected cybersecurity monitoring use cases.",
+            "Defined attack procedures and generated test-data scenarios to validate how the plugin detected and logged protocol events, communication behavior, certificate handling, access-level checks, and write-response conditions.",
         ],
         tech: ["Zeek", "C++", "Wireshark", "PLCs", "OPC UA", "Industrial Networking", "SINEC Security Monitor"],
         image: "/projects/ipa/Logo.png",
+    },
+    {
+        title: "Web Application Development / Expense Recorder",
+        context: "Personal Project",
+        path: "~/projects/expenses-recorder",
+        command: "npm run build && flask --app api serve",
+        summary:
+            "Personal full-stack project used to learn how modern web applications are designed, built, and deployed across frontend and backend components.",
+        bullets: [
+            "Learned and applied React and Next.js for frontend development, Flask and Python for backend services, and REST API patterns for communication between client interfaces and server-side application logic.",
+            "Developed a full-stack expense-recording application that allows users to record, organize, and review personal expense data through a web-based interface.",
+            "Designed the application around a Next.js frontend and Flask backend, implementing API endpoints to process expense records and connect the user interface to persistent storage.",
+            "Initially stored application data in a local PostgreSQL database, then migrated the project to Supabase to use a managed cloud-hosted PostgreSQL database and simplify data persistence.",
+            "Built practical understanding of frontend state and form handling, backend request processing, database integration, API design, and the end-to-end flow of data within a web application.",
+            "Expanded the project iteratively from a learning exercise into a larger usable tool, using each feature to strengthen understanding of full-stack architecture and deployment-oriented development practices.",
+        ],
+        tech: ["Next.js", "React", "Flask", "Python", "PostgreSQL", "Supabase", "REST APIs", "Full-Stack Development"],
+        image: "/projects/exprec/resume-mockup-v2.png",
     },
 ]
 
@@ -104,19 +127,37 @@ export const resumeSkillGroups = [
     },
     {
         title: "Cybersecurity / Analysis",
-        items: ["Wireshark", "Packet analysis", "Windows Event Viewer", "OpenSSL"],
+        items: [
+            "Wireshark",
+            "Packet analysis",
+            "Windows Event Viewer",
+            "Audit policy review",
+            "Authentication troubleshooting",
+            "OpenSSL",
+        ],
     },
     {
         title: "Industrial / OT",
-        items: ["OPC UA", "PROFINET", "S7 communication", "IEC 104", "VLANs", "Trunk and access ports", "SIEM/SCADA systems"],
+        items: ["OPC UA", "PROFINET", "S7 communication", "IEC 104", "VLANs", "Trunk/access ports", "SIEM/SCADA systems"],
     },
     {
         title: "Infrastructure / Tools",
-        items: ["Docker", "Linux", "Windows", "Proxmox", "Nginx", "Cisco switch", "Fortinet firewall", "Git", "PowerShell", "Bash"],
+        items: [
+            "Docker",
+            "Linux",
+            "Windows",
+            "Proxmox",
+            "Nginx",
+            "Cisco switch troubleshooting",
+            "Fortinet firewall diagnostics",
+            "Git",
+            "PowerShell",
+            "Bash",
+        ],
     },
     {
         title: "Languages",
-        items: ["English", "Mandarin", "Cantonese", "Malay"],
+        items: ["Mandarin", "English", "Cantonese", "Malay"],
     },
 ]
 
@@ -138,21 +179,23 @@ export const resumeSkillIconMap = {
     Wireshark: "https://cdn.simpleicons.org/wireshark",
     "Packet analysis": "https://cdn.simpleicons.org/wireshark",
     "Windows Event Viewer": "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows11.svg",
+    "Audit policy review": makeSkillBadgeIcon("AUD", "#475569", "#f8fafc"),
+    "Authentication troubleshooting": makeSkillBadgeIcon("AUTH", "#1e293b", "#f8fafc"),
     OpenSSL: "https://cdn.simpleicons.org/openssl",
     "OPC UA": makeSkillBadgeIcon("OPC", "#0f766e", "#ecfeff"),
     PROFINET: makeSkillBadgeIcon("PN", "#1d4ed8", "#eff6ff"),
     "S7 communication": makeSkillBadgeIcon("S7", "#7c3aed", "#f5f3ff"),
     "IEC 104": makeSkillBadgeIcon("104", "#b45309", "#fffbeb"),
     VLANs: "https://cdn.simpleicons.org/cisco",
-    "Trunk and access ports": "https://cdn.simpleicons.org/cisco",
+    "Trunk/access ports": "https://cdn.simpleicons.org/cisco",
     "SIEM/SCADA systems": makeSkillBadgeIcon("SOC", "#be123c", "#fff1f2"),
     Docker: "https://cdn.simpleicons.org/docker",
     Linux: "https://cdn.simpleicons.org/linux",
     Windows: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows11.svg",
     Proxmox: "https://cdn.simpleicons.org/proxmox",
     Nginx: "https://cdn.simpleicons.org/nginx",
-    "Cisco switch": "https://cdn.simpleicons.org/cisco",
-    "Fortinet firewall": "https://cdn.simpleicons.org/fortinet",
+    "Cisco switch troubleshooting": "https://cdn.simpleicons.org/cisco",
+    "Fortinet firewall diagnostics": "https://cdn.simpleicons.org/fortinet",
     Git: "https://cdn.simpleicons.org/git",
     PowerShell: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/powershell.svg",
     Bash: "https://cdn.simpleicons.org/gnubash",
