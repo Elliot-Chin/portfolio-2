@@ -5,17 +5,12 @@ import Typewriter from "typewriter-effect"
 import { ArrowOutward, KeyboardDoubleArrowDownOutlined } from "@mui/icons-material"
 import { AvatarCanvasSkeleton, HeroSectionOverlaySkeleton } from "@/components/sections/SectionSkeletons"
 import { VisitorCount } from "@/components/analytics/VisitorCount"
+import { heroContent } from "@/data/home"
 
 const Model2 = dynamic(
     () => import("@/components/avatar/Model_2").then((mod) => mod.Model2),
     { ssr: false, loading: () => <AvatarCanvasSkeleton /> }
 )
-
-const descriptorLines = [
-    "Cybersecurity architecture.",
-    "OT network resilience.",
-    "Infrastructure hardening.",
-]
 
 export function HeroSection({ containerRef }) {
     const [isModelReady, setIsModelReady] = useState(false)
@@ -99,13 +94,13 @@ export function HeroSection({ containerRef }) {
                     <div className={`lg:py-3 ${isModelReady ? "" : "invisible"}`} aria-hidden={!isModelReady}>
                         <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/8 px-3 py-2 font-spacemono text-[9px] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_0_30px_rgba(251,146,60,0.08)] sm:gap-3 sm:px-4 sm:text-[11px] sm:tracking-[0.28em]">
                             <span className="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.8)]" />
-                            <span>System_Active // Secure_Link_Established</span>
+                            <span>{heroContent.statusLabel}</span>
                         </div>
 
                         <h1 className="mt-6 max-w-4xl font-spacemono text-[clamp(2.4rem,13vw,5.9rem)] font-bold uppercase leading-[0.92] tracking-[-0.06em] text-white md:mt-7 lg:text-[clamp(4.25rem,7vw,5.55rem)] xl:mt-8 xl:text-[clamp(4.6rem,7vw,5.9rem)]">
-                            <span className="block text-white">Elliot Chin</span>
+                            <span className="block text-white">{heroContent.title}</span>
                             <span className="mt-2 block text-[1.05rem] leading-tight tracking-normal text-white sm:text-2xl lg:text-[1.65rem] xl:mt-3 xl:text-3xl">
-                                JR. Cybersecurity application Specialist
+                                {heroContent.role}
                             </span>
                         </h1>
 
@@ -113,7 +108,7 @@ export function HeroSection({ containerRef }) {
                             <span className="mr-2 text-amber-400 sm:mr-3">&gt;</span>
                             <Typewriter
                                 options={{
-                                    strings: descriptorLines,
+                                    strings: heroContent.descriptorLines,
                                     autoStart: true,
                                     loop: true,
                                     delay: 42,
@@ -127,10 +122,7 @@ export function HeroSection({ containerRef }) {
                         </div>
 
                         <p className="mt-5 max-w-3xl text-balance font-montserrat text-base leading-relaxed text-white sm:mt-7 sm:text-lg lg:max-w-[42rem] lg:text-[1.03rem] lg:leading-[1.7] xl:mt-8 xl:text-xl">
-                            Software developer with experience across cybersecurity, OT/industrial networking,
-                            infrastructure management, full-stack application development, and applied AI research
-                            support. Specialized in bridging the gap between legacy industrial stability and modern
-                            digital security architectures.
+                            {heroContent.summary}
                         </p>
 
                         <div className="mt-4 inline-flex max-w-full items-center gap-2 rounded-full border border-amber-200/12 bg-slate-950/36 px-3 py-2 font-spacemono text-[10px] uppercase tracking-[0.18em] text-slate-300 sm:mt-5 sm:px-4 sm:text-[11px] sm:tracking-[0.24em]">

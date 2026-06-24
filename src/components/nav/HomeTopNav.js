@@ -10,6 +10,7 @@ import {
     HomeOutlined,
     PsychologyAltOutlined,
 } from "@mui/icons-material"
+import { defaultMobileNavItems, defaultNavItems } from "@/data/nav"
 
 function isRouteActive(currentPath, href) {
     if (!href) return false
@@ -128,22 +129,19 @@ export function HomeTopNav({
     const [isMobileNavVisible, setIsMobileNavVisible] = useState(false)
 
     const items = useMemo(
-        () => centerItems ?? [
-            { label: "Home", href: "/" },
-            { label: "Projects", href: "/projects" },
-            { label: "Resume", href: "/resume" },
-            { label: "Contact", href: "/contact" },
-        ],
+        () => centerItems ?? defaultNavItems,
         [centerItems]
     )
 
+    const mobileIconMap = {
+        HomeOutlined,
+        GridViewOutlined,
+        PsychologyAltOutlined,
+        AlternateEmailOutlined,
+    }
+
     const mobileItems = useMemo(
-        () => [
-            { label: "Home", href: "/", Icon: HomeOutlined },
-            { label: "Projects", href: "/projects", Icon: GridViewOutlined },
-            { label: "Resume", href: "/resume", Icon: PsychologyAltOutlined },
-            { label: "Contact", href: "/contact", Icon: AlternateEmailOutlined },
-        ],
+        () => defaultMobileNavItems.map((item) => ({ ...item, Icon: mobileIconMap[item.iconKey] })),
         []
     )
 

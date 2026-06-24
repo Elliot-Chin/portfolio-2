@@ -15,190 +15,25 @@ import {
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { SeoHead } from "@/components/seo/SeoHead"
+import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { AutoPanLabel } from "@/components/ui/AutoPanLabel"
+import {
+    resumeCareerNodes,
+    resumeContactLinks,
+    resumeEducation,
+    resumeExperience,
+    resumeHighlights,
+    resumeSelectedProjects,
+    resumeSkillGroups,
+    resumeSkillIconMap,
+    resumeSummary,
+} from "@/data/resume"
 
-const summary =
-    "Software developer with experience across cybersecurity, OT and industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows and Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network and security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
-
-const contactLinks = [
-    { label: "Email", value: "contact@elliotc.dev", href: "mailto:contact@elliotc.dev", Icon: Email },
-    { label: "GitHub", value: "Elliot-Chin", href: "https://github.com/Elliot-Chin", Icon: GitHub },
-    { label: "LinkedIn", value: "elliot-chin", href: "https://www.linkedin.com/in/elliot-chin-90b4311a6", Icon: LinkedIn },
-    { label: "Portfolio", value: "elliotc.dev", href: "https://elliotc.dev", Icon: PublicOutlined },
-]
-
-const highlights = [
-    "Cybersecurity",
-    "Industrial Networking",
-    "Full-Stack Development",
-    "Virtualized Lab Infrastructure",
-]
-
-function AutoPanLabel({ text, className = "" }) {
-    const viewportRef = useRef(null)
-    const trackRef = useRef(null)
-    const [style, setStyle] = useState({})
-    const [shouldPan, setShouldPan] = useState(false)
-
-    useEffect(() => {
-        const viewport = viewportRef.current
-        const track = trackRef.current
-        if (!viewport || !track) return
-
-        const update = () => {
-            const mobile = window.innerWidth < 640
-            if (!mobile) {
-                setShouldPan(false)
-                setStyle({})
-                return
-            }
-
-            const overflow = Math.ceil(track.scrollWidth - viewport.clientWidth)
-            if (overflow <= 8) {
-                setShouldPan(false)
-                setStyle({})
-                return
-            }
-
-            setShouldPan(true)
-            setStyle({
-                "--experience-title-scroll-distance": `-${overflow}px`,
-                "--experience-title-scroll-duration": `${Math.max(7, overflow / 26 + 5)}s`,
-                "--experience-title-scroll-delay": "1s",
-            })
-        }
-
-        const requestUpdate = () => requestAnimationFrame(update)
-        const resizeObserver = new ResizeObserver(requestUpdate)
-        resizeObserver.observe(viewport)
-        resizeObserver.observe(track)
-        window.addEventListener("resize", requestUpdate)
-        update()
-
-        return () => {
-            resizeObserver.disconnect()
-            window.removeEventListener("resize", requestUpdate)
-        }
-    }, [text])
-
-    return (
-        <div ref={viewportRef} className={`max-w-full overflow-hidden ${className}`}>
-            <div
-                ref={trackRef}
-                style={style}
-                className={`inline-flex min-w-max whitespace-nowrap ${shouldPan ? "experience-title-marquee" : ""}`}
-            >
-                {text}
-            </div>
-        </div>
-    )
-}
-
-const experience = [
-    {
-        title: "Jr Application Cybersecurity Specialist",
-        company: "Siemens",
-        location: "Canada",
-        duration: "June 2023 - Current",
-        bullets: [
-            "Lead compatibility testing for SINEC Security Monitor across representative OT lab configurations and deployment scenarios.",
-            "Analyze industrial protocols including PROFINET, OPC UA, S7 communication, and IEC 104 with Wireshark and UAExpert.",
-            "Develop Zeek packet-analysis plugins in C++ to inspect, parse, and log industrial and OT traffic for cybersecurity monitoring and R&D use cases.",
-            "Administer Proxmox virtualization hosting R&D virtual machines, project infrastructure VMs, and remotely accessible jumpboxes.",
-            "Maintain an OT lab simulating electric power substation and building automation networks with relays, IEDs, servers, switches, and rack-mounted industrial equipment.",
-            "Configure VLANs, segmentation, switch connectivity, and OT lab infrastructure used for cybersecurity testing and development.",
-            "Troubleshoot Linux, Windows, Proxmox, Cisco switching, Cisco and Fortinet firewall environments, and industrial network equipment.",
-            "Build and debug tools and web applications using React, Next.js, Python, Flask, Docker, and Git, including SSM API integrations and protocol support work.",
-        ],
-    },
-    {
-        title: "Software Developer",
-        company: "University of New Brunswick",
-        location: "Canada",
-        duration: "May 2022 - Dec 2022",
-        bullets: [
-            "Led the full-stack development effort for the Department of Electrical and Computer Engineering.",
-            "Gathered requirements from academic stakeholders for a department-wide tool supporting academic advising and CEAB accreditation workflows.",
-            "Designed and implemented maintainable software solutions that could scale with advising, curriculum, and accreditation needs.",
-            "Analyzed academic and accreditation-related data to identify improvement areas and support future development recommendations.",
-            "Provided progress updates in remote and in-person meetings with collaborators and stakeholders.",
-        ],
-    },
-]
-
-const careerNodes = [
-    {
-        years: "2022",
-        code: "01_DEV",
-        title: "Software Developer",
-        summary: "Full-stack delivery for advising and accreditation workflows at UNB.",
-        accent: "muted",
-    },
-    {
-        years: "2023",
-        code: "02_JR",
-        title: "Jr. Software Developer",
-        summary: "Joined Siemens and worked on internal tooling, application support, and product-adjacent engineering workflows.",
-        accent: "muted",
-    },
-    {
-        years: "2025 - Current",
-        code: "03_SEC",
-        title: "Jr. Cybersecurity Application Specialist",
-        summary: "Focused on OT lab operations, industrial protocol analysis, Zeek plugin development, and secure product tooling.",
-        accent: "primary",
-    },
-]
-
-const selectedProjects = [
-    {
-        title: "Industrial Protocol Analysis / Zeek Plugin Development",
-        context: "Canada",
-        command: "zeek-build --protocol opcua --lab ot-rnd",
-        summary:
-            "R&D work focused on understanding OPC UA behavior in industrial environments and translating that knowledge into protocol-aware monitoring for SINEC Security Monitor.",
-        bullets: [
-            "Researched OPC UA protocol behavior in an R&D lab using PLCs, Wireshark, and UAExpert to simulate normal and abnormal communication scenarios.",
-            "Developed a Zeek-based protocol analysis plugin for SINEC Security Monitor to inspect and parse OPC UA traffic and emit event-specific logs.",
-            "Defined attack procedures and generated test data to validate detection, certificate handling, access-level checks, and write-response conditions.",
-        ],
-        tech: ["Zeek", "C++", "Wireshark", "PLCs", "OPC UA", "Industrial Networking", "SINEC Security Monitor"],
-        image: "/projects/ipa/Logo.png",
-    },
-]
-
-const skillGroups = [
-    {
-        title: "Programming / Web",
-        items: ["JavaScript", "React", "Next.js", "Python", "Flask", "REST APIs", "HTML/CSS", "Tailwind CSS", "Material UI", "HeroUI"],
-    },
-    {
-        title: "Data / Backend",
-        items: ["Redis", "Backend event handling", "API design", "Real-time communication"],
-    },
-    {
-        title: "Cybersecurity / Analysis",
-        items: ["Wireshark", "Packet analysis", "Windows Event Viewer", "Audit policy review", "Authentication and logon troubleshooting", "OpenSSL"],
-    },
-    {
-        title: "Industrial / OT",
-        items: ["OPC UA", "PROFINET", "S7 communication", "IEC 104", "VLANs", "Trunk and access ports", "SIEM/SCADA systems"],
-    },
-    {
-        title: "Infrastructure / Tools",
-        items: ["Docker", "Linux", "Windows", "Proxmox", "Nginx", "Cisco switch troubleshooting", "Fortinet firewall diagnostics", "Git", "PowerShell", "Bash"],
-    },
-    {
-        title: "Languages",
-        items: ["English", "Mandarin", "Cantonese", "Malay"],
-    },
-]
-
-const education = {
-    school: "University of New Brunswick",
-    location: "Fredericton, NB, Canada",
-    degree: "Bachelor of Science in Software Engineering",
-    year: "2023",
-    notes: ["CEAB-accredited program"],
+const contactIconMap = {
+    Email,
+    GitHub,
+    LinkedIn,
+    PublicOutlined,
 }
 
 function InfoLink({ href, label, value, Icon }) {
@@ -242,6 +77,27 @@ function SectionShell({ id, title, Icon, children }) {
     )
 }
 
+function SkillChip({ item }) {
+    const icon = resumeSkillIconMap[item]
+
+    return (
+        <span className="inline-flex items-center gap-2 border border-slate-200/10 bg-[#0b1626] px-3 py-2 font-montserrat text-[13px] font-semibold text-amber-50 shadow-[0_8px_22px_rgba(2,8,23,0.24)] sm:px-4 sm:text-sm">
+            {icon ? (
+                <img
+                    src={icon}
+                    alt={item}
+                    width="18"
+                    height="18"
+                    className="h-[18px] w-[18px] shrink-0 object-contain"
+                />
+            ) : (
+                <span className="font-spacemono text-[11px] text-amber-200">+</span>
+            )}
+            <span className="tracking-[0.01em]">{item}</span>
+        </span>
+    )
+}
+
 function CareerSchematic() {
     return (
         <div className="overflow-hidden border border-slate-200/10 bg-[#06101d]/92 px-4 py-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:px-5 sm:py-5">
@@ -252,7 +108,7 @@ function CareerSchematic() {
             <div className="relative items-center border border-slate-200/6 bg-[#050d18] px-4 py-5 sm:px-6 sm:py-6">
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(151,190,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(151,190,255,0.03)_1px,transparent_1px)] bg-[size:22px_22px]" />
                 <div className="relative grid gap-6 lg:hidden">
-                    {careerNodes.map((node, index) => (
+                    {resumeCareerNodes.map((node, index) => (
                         <div
                             key={node.code}
                             className={`border ${node.accent === "primary" ? "border-amber-300/55 bg-[#24170d]" : "border-slate-200/10 bg-slate-900/78"} p-4`}
@@ -268,7 +124,7 @@ function CareerSchematic() {
                                 {node.summary}
                             </p>
                             <div className={`mt-4 h-[2px] w-16 ${node.accent === "primary" ? "bg-amber-300" : "bg-amber-200/50"}`} />
-                            {index < careerNodes.length - 1 && (
+                            {index < resumeCareerNodes.length - 1 && (
                                 <div className="mt-4 h-6 border-l border-dashed border-amber-300/45 ml-1" />
                             )}
                         </div>
@@ -277,7 +133,7 @@ function CareerSchematic() {
 
                 <div className="relative hidden px-4 py-6 lg:block">
                     <div className="flex items-center justify-center">
-                        {careerNodes.map((node, index) => (
+                        {resumeCareerNodes.map((node, index) => (
                             <div key={node.code} className="contents">
                                 <div className="w-[21rem]">
                                     <div
@@ -307,7 +163,7 @@ function CareerSchematic() {
                                     </div>
                                 </div>
 
-                                {index < careerNodes.length - 1 && (
+                                {index < resumeCareerNodes.length - 1 && (
                                     <div className="relative mt-[8rem] w-[7rem] self-start">
                                         <div className={`career-flow-line h-px w-full ${index === 0 ? "career-flow-seg-1" : "career-flow-seg-2"}`} />
                                         <span className="career-flow-node left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -326,38 +182,7 @@ function CareerSchematic() {
 export default function ResumePage() {
     const containerRef = useRef(null)
     const [loadingProjectCta, setLoadingProjectCta] = useState(false)
-
-    useEffect(() => {
-        document.body.classList.add("home-grid-bg")
-        return () => document.body.classList.remove("home-grid-bg")
-    }, [])
-
-    useEffect(() => {
-        const root = containerRef.current
-        if (!root) return
-
-        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
-        if (!nodes.length) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return
-                    entry.target.classList.add("!translate-y-0", "!opacity-100")
-                    observer.unobserve(entry.target)
-                })
-            },
-            {
-                root,
-                threshold: 0.14,
-                rootMargin: "0px 0px -8% 0px",
-            }
-        )
-
-        nodes.forEach((node) => observer.observe(node))
-
-        return () => observer.disconnect()
-    }, [])
+    useHomeGridPage(containerRef)
 
     return (
         <>
@@ -401,7 +226,7 @@ export default function ResumePage() {
                                                     Elliot Chin
                                                 </h1>
                                                 <div className="mt-4 flex flex-wrap gap-2">
-                                                    {highlights.map((item) => (
+                                                    {resumeHighlights.map((item) => (
                                                         <span
                                                             key={item}
                                                             className="border border-amber-200/10 bg-amber-300/10 px-2.5 py-1 font-spacemono text-[10px] font-bold uppercase tracking-[0.12em] text-amber-100 sm:px-3 sm:text-[11px] sm:tracking-[0.16em]"
@@ -422,7 +247,7 @@ export default function ResumePage() {
                                         </div>
 
                                         <p className="mt-6 max-w-5xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-7 sm:text-lg">
-                                            {summary}
+                                            {resumeSummary}
                                         </p>
                                     </div>
                                 </div>
@@ -433,8 +258,8 @@ export default function ResumePage() {
                                             Contact / Links
                                         </div>
                                         <div className="mt-4 grid gap-2.5 sm:gap-3">
-                                            {contactLinks.map((item) => (
-                                                <InfoLink key={item.label} {...item} />
+                                            {resumeContactLinks.map((item) => (
+                                                <InfoLink key={item.label} {...item} Icon={contactIconMap[item.iconKey]} />
                                             ))}
                                         </div>
                                     </div>
@@ -469,7 +294,7 @@ export default function ResumePage() {
 
                     <SectionShell id="experience" title="Engineering Experience" Icon={WorkOutline}>
                         <div className="grid gap-6">
-                            {experience.map((role) => (
+                            {resumeExperience.map((role) => (
                                 <article
                                     key={`${role.company}-${role.title}`}
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
@@ -511,7 +336,7 @@ export default function ResumePage() {
 
                     <SectionShell id="projects" title="Selected Projects" Icon={FolderCopyOutlined}>
                         <div className="grid gap-6">
-                            {selectedProjects.map((project) => (
+                            {resumeSelectedProjects.map((project) => (
                                 <article
                                     key={project.title}
                                     className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
@@ -600,7 +425,7 @@ export default function ResumePage() {
 
                     <SectionShell id="skills" title="Specialized Skills" Icon={BoltOutlined}>
                         <div className="grid gap-5 lg:grid-cols-2">
-                            {skillGroups.map((group) => (
+                            {resumeSkillGroups.map((group) => (
                                 <article
                                     key={group.title}
                                     className="border border-slate-white bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5"
@@ -608,14 +433,9 @@ export default function ResumePage() {
                                     <h3 className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
                                         {group.title}
                                     </h3>
-                                    <div className="mt-4 flex flex-wrap gap-2">
+                                    <div className="mt-4 flex flex-wrap gap-3">
                                         {group.items.map((item) => (
-                                            <span
-                                                key={item}
-                                                className="border border-slate-200/10 bg-slate-900/76 px-2.5 py-1.5 font-montserrat text-[13px] text-slate-100/92 sm:px-3 sm:text-sm"
-                                            >
-                                                {item}
-                                            </span>
+                                            <SkillChip key={item} item={item} />
                                         ))}
                                     </div>
                                 </article>
@@ -630,20 +450,20 @@ export default function ResumePage() {
                                     <AutoPanLabel text="university_of_new_brunswick::education_record" />
                                 </div>
                                 <div className="w-full font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:w-auto sm:text-[11px] sm:tracking-[0.22em]">
-                                    {education.year}
+                                    {resumeEducation.year}
                                 </div>
                             </div>
                             <div className="px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
                                 <h3 className="font-montserrat text-[clamp(1.4rem,6vw,2rem)] font-semibold tracking-tight text-amber-100">
-                                    {education.school}
+                                    {resumeEducation.school}
                                 </h3>
                                 <div className="mt-3 flex flex-wrap items-center gap-3 font-montserrat text-[0.96rem] text-slate-300/86 sm:gap-4 sm:text-base">
-                                    <span>{education.degree}</span>
+                                    <span>{resumeEducation.degree}</span>
                                     <span className="font-spacemono text-slate-500">/</span>
-                                    <span>{education.location}</span>
+                                    <span>{resumeEducation.location}</span>
                                 </div>
                                 <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
-                                    {education.notes.map((note) => (
+                                    {resumeEducation.notes.map((note) => (
                                         <div key={note} className="flex gap-3 font-montserrat text-[0.96rem] leading-relaxed text-slate-100/90 sm:text-[1rem]">
                                             <span className="pt-1 font-spacemono text-amber-200">+</span>
                                             <span>{note}</span>

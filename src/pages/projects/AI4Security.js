@@ -16,141 +16,21 @@ import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
+import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { ai4securityProject } from "@/data/project-pages/ai4security"
 
-const ai4security = {
-    title: "AI4Security Research",
-    slug: "~/projects/ai4security-research",
-    eyebrow: "AI security research / alert enrichment / CIC Modbus PCAP analysis / agentic AI",
-    duration: "Internal Siemens research project",
-    year: "2024",
-    TLDR:
-        "An internal Siemens research project with two main tracks: an LLM-based alert-enrichment workflow backed by asset and CVE context, and AI-assisted traffic analysis using PCAPs from the 2023 UNB CIC Modbus dataset.",
-    command: "evaluate ai-security-workflows --tracks alert-enrichment,cic-modbus-analysis",
-    contextOne:
-        "I worked on this project with a co-op student to investigate where AI could actually help security analysis rather than just generate convincing text. One track focused on alert enrichment, where we combined dummy asset records stored in PostgreSQL with current CVE information so an LLM could explain why a system might be vulnerable and relate that risk back to the asset under investigation.",
-    contextTwo:
-        "The second track focused on packet analysis using PCAPs from the 2023 UNB CIC Modbus dataset. We evaluated open-source models already fine-tuned for cybersecurity, prepared structured JSON training data for Azure fine-tuning, and reformatted the dataset traffic into higher-level flow and prompt representations to test whether the models could distinguish benign from anomalous behavior more reliably.",
-    conclusion:
-        "The main takeaway was that LLMs were not reliable enough for exact byte counting or raw hex interpretation on their own, but they became more useful when the input was transformed into structured protocol or flow context and placed inside a validated analysis loop.",
-    finalThoughts:
-        "The project was put on hold after the co-op term ended, but it clarified where AI fits best in security analysis: narrow fine-tuned workflows can work on consistent traffic structures, while prompt-based and agentic approaches are better for variation when paired with preprocessing, structure, and validation rather than treated as a standalone detection engine.",
+const aiIconMap = {
+    AutoAwesomeOutlined,
+    HubOutlined,
+    InsightsOutlined,
+    PsychologyOutlined,
+    SecurityOutlined,
+    StorageOutlined,
 }
 
-const researchCards = [
-    {
-        title: "PCAP + Protocol Research",
-        body:
-            "Analyzed packet captures from the 2023 UNB CIC Modbus dataset to understand which fields, byte patterns, and protocol structures mattered for AI-assisted threat analysis.",
-        Icon: InsightsOutlined,
-    },
-    {
-        title: "LLM Fine-Tuning + Prompting",
-        body:
-            "Evaluated open-source models that were already fine-tuned for cybersecurity, prepared structured JSON training data for Azure fine-tuning, and compared those paths against one-shot, multi-shot, and chain-of-thought prompting for packet reasoning.",
-        Icon: SecurityOutlined,
-    },
-    {
-        title: "Agentic Validation Loop",
-        body:
-            "Designed a workflow where AI agents could generate expected traffic frames or behavioral baselines, compare them against observed traffic, and pass invalid outputs back through a correction step instead of relying on a single-pass classifier.",
-        Icon: PsychologyOutlined,
-    },
-]
-
-const metadataItems = [
-    { label: "Domain:", value: "OT Cybersecurity / AI Research" },
-    { label: "Primary Themes:", value: "PCAP Analysis / Industrial Protocols / Threat Detection" },
-    { label: "Model Sources:", value: "Open-Source Cybersecurity-Tuned Models + Azure Fine-Tuned Models" },
-    { label: "Methods:", value: "Fine-Tuning / One-Shot / Multi-Shot / Chain-of-Thought / Agentic Loops" },
-    { label: "Dataset:", value: "2023 UNB CIC Modbus" },
-    { label: "Data Context:", value: "Dataset PCAPs / Structured JSON / NetFlow-Style Traffic Views" },
-]
-
-const openSourceWorkflow = [
-    {
-        title: "Hex-Level Parsing",
-        body:
-            "Started with raw packet bytes from PCAPs and mapped out which byte sequences, packet fields, and protocol segments should be inspected, skipped, or preserved as context for the model.",
-        command: "pcap -> hex -> packet structure -> labeled fields",
-        Icon: HubOutlined,
-    },
-    {
-        title: "Structured Training Data",
-        body:
-            "Converted packet-analysis findings into structured JSON for Azure fine-tuning while also benchmarking open-source cybersecurity-tuned models against the same packet-analysis problem.",
-        command: "pcap review -> json examples + cyber models -> compare outputs",
-        Icon: StorageOutlined,
-    },
-    {
-        title: "Higher-Level Traffic Context",
-        body:
-            "Shifted from direct hex reasoning toward NetFlow-style and protocol-aware summaries so the model could reason over communication patterns, metadata, and expected behavior rather than only raw bytes.",
-        command: "pcap -> flow context -> behavioral reasoning",
-        Icon: AutoAwesomeOutlined,
-    },
-]
-
-const anomalyApproaches = [
-    {
-        title: "Approach 1: Fine-Tuning on Structured PCAP Data",
-        metric: "Best on narrow, repeatable traffic",
-        body:
-            "Fine-tuned models performed efficiently when the incoming PCAP closely matched the traffic structure seen in the training examples, but the approach degraded when the packet patterns varied from the baseline.",
-    },
-    {
-        title: "Approach 2: Prompt-Based Reasoning",
-        metric: "More flexible, still not detection-grade",
-        body:
-            "One-shot, multi-shot, and chain-of-thought prompting handled variation better than fine-tuning alone, but the outputs were still not accurate enough to be trusted as a reliable threat-detection workflow.",
-    },
-    {
-        title: "Approach 3: Agentic Baseline + Validation",
-        metric: "Most promising direction for control",
-        body:
-            "A more agentic pipeline showed better potential by having models generate expected frames or baselines, compare them with observed traffic, and use a feedback loop to reject and regenerate invalid analyses.",
-    },
-]
-
-const externalLinks = [
-    { label: "HF_Models", href: "https://huggingface.co/models?pipeline_tag=text-generation&other=cybersecurity" },
-    { label: "CIC_Modbus_Dataset", href: "https://www.unb.ca/cic/datasets/modbus-2023.html" },
-]
-
-const enrichmentShots = [
-    {
-        src: "/projects/ai4security/hf-model-search.png",
-        alt: "Hugging Face cybersecurity model search",
-        description: "Model discovery phase for narrowing cybersecurity-domain candidates on Hugging Face.",
-    },
-    {
-        src: "/projects/ai4security/local-model-load.png",
-        alt: "Local model loading code",
-        description: "Example of loading a quantized open-source cybersecurity model for local inference.",
-    },
-    {
-        src: "/projects/ai4security/alert-response-sample.png",
-        alt: "Alert enrichment response sample",
-        description: "Sample model output summarizing a security alert and associated vulnerability context.",
-    },
-]
-
-const dataShots = [
-    {
-        src: "/projects/ai4security/modbus-netflow-json.png",
-        alt: "UNB CIC Modbus flow record",
-        description: "Example flow record derived from a PCAP in the 2023 UNB CIC Modbus dataset, preserving protocol, byte, timing, and endpoint fields for downstream analysis.",
-    },
-    {
-        src: "/projects/ai4security/netflow-prompt-format.png",
-        alt: "NetFlow prompt format",
-        description: "Structured prompt format built from the 2023 UNB CIC Modbus flow data so the model could reason over traffic context instead of raw packet bytes alone.",
-    },
-    {
-        src: "/projects/ai4security/raw-netflow-record.png",
-        alt: "Raw Modbus NetFlow record",
-        description: "Another prompt-ready flow example from the 2023 UNB CIC Modbus dataset showing the higher-level traffic representation we used for anomaly classification experiments.",
-    },
-]
+const hero = ai4securityProject.hero
+const researchCards = ai4securityProject.researchCards.map((item) => ({ ...item, Icon: aiIconMap[item.iconKey] }))
+const openSourceWorkflow = ai4securityProject.openSourceWorkflow.map((item) => ({ ...item, Icon: aiIconMap[item.iconKey] }))
 
 function ProcessNode({ title, body, Icon }) {
     return (
@@ -170,38 +50,7 @@ function ProcessNode({ title, body, Icon }) {
 
 export default function AI4SecurityPage() {
     const containerRef = useRef(null)
-
-    useEffect(() => {
-        document.body.classList.add("home-grid-bg")
-        return () => document.body.classList.remove("home-grid-bg")
-    }, [])
-
-    useEffect(() => {
-        const root = containerRef.current
-        if (!root) return
-
-        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
-        if (!nodes.length) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return
-                    entry.target.classList.add("!translate-y-0", "!opacity-100")
-                    observer.unobserve(entry.target)
-                })
-            },
-            {
-                root,
-                threshold: 0.14,
-                rootMargin: "0px 0px -8% 0px",
-            }
-        )
-
-        nodes.forEach((node) => observer.observe(node))
-
-        return () => observer.disconnect()
-    }, [])
+    useHomeGridPage(containerRef)
 
     return (
         <>
@@ -225,28 +74,28 @@ export default function AI4SecurityPage() {
                                 <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
                                     <div className="flex min-w-0 w-full items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
                                         <span className="text-slate-300">&gt;_</span>
-                                        <ProjectTerminalLabel text={ai4security.slug} className="flex-1" />
+                                        <ProjectTerminalLabel text={hero.slug} className="flex-1" />
                                     </div>
                                     <div className="w-full font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:w-auto sm:text-[11px] sm:tracking-[0.22em]">
-                                        AI research / cybersecurity / {ai4security.year}
+                                        AI research / cybersecurity / {hero.year}
                                     </div>
                                 </div>
 
                                 <div className="grid gap-5 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:gap-8 lg:px-8 lg:py-8">
                                     <div className="min-w-0">
                                         <div className="font-spacemono text-[12px] uppercase tracking-[0.16em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
-                                            {ai4security.eyebrow}
+                                            {hero.eyebrow}
                                         </div>
 
                                         <h1 className="mt-3 font-montserrat text-[clamp(1.75rem,8vw,3.15rem)] font-semibold tracking-tight text-blue-100">
-                                            {ai4security.title}
+                                            {hero.title}
                                         </h1>
 
                                         <p className="mt-4 max-w-4xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-6 sm:text-lg">
-                                            {ai4security.TLDR}
+                                            {hero.TLDR}
                                         </p>
 
-                                        <ProjectTerminalCommand text={ai4security.command} className="mt-5 sm:mt-7" />
+                                        <ProjectTerminalCommand text={hero.command} className="mt-5 sm:mt-7" />
 
                                         <div className="mt-7 flex flex-wrap gap-3">
                                             <Link href="/projects" className="home-btn home-btn-primary w-full justify-center sm:w-auto">
@@ -254,7 +103,7 @@ export default function AI4SecurityPage() {
                                                 <span>All_Projects</span>
                                             </Link>
 
-                                            {externalLinks.map((item) => (
+                                            {ai4securityProject.externalLinks.map((item) => (
                                                 <a
                                                     key={item.label}
                                                     href={item.href}
@@ -309,10 +158,10 @@ export default function AI4SecurityPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {ai4security.contextOne}
+                                        {hero.contextOne}
                                     </p>
                                     <p className="mt-4 font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {ai4security.contextTwo}
+                                        {hero.contextTwo}
                                     </p>
                                 </div>
                             </article>
@@ -322,7 +171,7 @@ export default function AI4SecurityPage() {
                                     Metadata
                                 </div>
                                 <dl className="space-y-3 px-4 py-4 font-spacemono text-[12px] text-slate-300/85 sm:space-y-5 sm:px-5 sm:py-5 sm:text-sm">
-                                    {metadataItems.map((item) => (
+                                    {ai4securityProject.metadataItems.map((item) => (
                                         <div key={item.label} className="flex items-center justify-between gap-6">
                                             <dt>{item.label}</dt>
                                             <dd className="text-right text-slate-100">{item.value}</dd>
@@ -373,7 +222,7 @@ export default function AI4SecurityPage() {
                                     </div>
                                     <div className="-mx-4 overflow-x-auto px-4 pb-2 snap-x snap-mandatory lg:mx-0 lg:grid lg:overflow-visible lg:px-0 lg:pb-0 lg:snap-none lg:gap-4 lg:grid-cols-2 xl:grid-cols-3">
                                         <div className="flex w-max min-w-full flex-nowrap gap-4 lg:contents">
-                                            {enrichmentShots.map((item) => (
+                                            {ai4securityProject.enrichmentShots.map((item) => (
                                                 <div key={item.alt} className="w-[85vw] min-w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/10 bg-[#07101f] px-3 py-2 lg:w-auto lg:min-w-0 lg:max-w-none lg:shrink lg:snap-none">
                                                     <ProjectImage
                                                         src={item.src}
@@ -408,7 +257,7 @@ export default function AI4SecurityPage() {
                                         because it added control and feedback around the model output.
                                     </p>
                                     <div className="mt-5 grid gap-4 lg:grid-cols-3">
-                                        {anomalyApproaches.map((item) => (
+                                        {ai4securityProject.anomalyApproaches.map((item) => (
                                             <article key={item.title} className="border border-slate-200/10 bg-[#07101f] p-4">
                                                 <div className="flex items-start gap-3">
                                                     <BugReportOutlined className="mt-0.5 text-amber-300" sx={{ fontSize: 19 }} />
@@ -440,7 +289,7 @@ export default function AI4SecurityPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {ai4security.conclusion}
+                                        {hero.conclusion}
                                     </p>
                                 </div>
                             </article>
@@ -451,7 +300,7 @@ export default function AI4SecurityPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {ai4security.finalThoughts}
+                                        {hero.finalThoughts}
                                     </p>
                                 </div>
                             </article>

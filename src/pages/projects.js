@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ReactTyped } from "react-typed"
 import { ExpandLessOutlined, ExpandMoreOutlined } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
+import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
 import { SeoHead } from "@/components/seo/SeoHead"
+import { AutoPanLabel } from "@/components/ui/AutoPanLabel"
 
 import { timeline } from "@/components/data/timelineData"
 
@@ -46,66 +48,6 @@ const getProjectMetadata = (project) => {
         version: metadata.version ?? "UNVERSIONED",
         branch: metadata.branch ?? (project?.year >= 2024 ? "MAIN" : "LEGACY"),
     }
-}
-
-function AutoPanLabel({ text, className = "" }) {
-    const viewportRef = useRef(null)
-    const trackRef = useRef(null)
-    const [style, setStyle] = useState({})
-    const [shouldPan, setShouldPan] = useState(false)
-
-    useEffect(() => {
-        const viewport = viewportRef.current
-        const track = trackRef.current
-        if (!viewport || !track) return
-
-        const update = () => {
-            const mobile = window.innerWidth < 640
-            if (!mobile) {
-                setShouldPan(false)
-                setStyle({})
-                return
-            }
-
-            const overflow = Math.ceil(track.scrollWidth - viewport.clientWidth)
-            if (overflow <= 8) {
-                setShouldPan(false)
-                setStyle({})
-                return
-            }
-
-            setShouldPan(true)
-            setStyle({
-                "--experience-title-scroll-distance": `-${overflow}px`,
-                "--experience-title-scroll-duration": `${Math.max(7, overflow / 26 + 5)}s`,
-                "--experience-title-scroll-delay": "1s",
-            })
-        }
-
-        const requestUpdate = () => requestAnimationFrame(update)
-        const resizeObserver = new ResizeObserver(requestUpdate)
-        resizeObserver.observe(viewport)
-        resizeObserver.observe(track)
-        window.addEventListener("resize", requestUpdate)
-        update()
-
-        return () => {
-            resizeObserver.disconnect()
-            window.removeEventListener("resize", requestUpdate)
-        }
-    }, [text])
-
-    return (
-        <div ref={viewportRef} className={`max-w-full overflow-hidden ${className}`}>
-            <div
-                ref={trackRef}
-                style={style}
-                className={`inline-flex min-w-max whitespace-nowrap ${shouldPan ? "experience-title-marquee" : ""}`}
-            >
-                {text}
-            </div>
-        </div>
-    )
 }
 
 function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false }) {
@@ -299,42 +241,11 @@ function ProjectPanel({ project, isLoading, onOpen, revealImmediately = false })
 export default function ProjectsPage() {
     const containerRef = useRef(null)
     const [loadingProjectId, setLoadingProjectId] = useState(null)
+    useHomeGridPage(containerRef)
 
     const projects = useMemo(() => {
         if (projectsFromTimeline.length >= 1) return projectsFromTimeline
         return []
-    }, [])
-
-    useEffect(() => {
-        document.body.classList.add("home-grid-bg")
-        return () => document.body.classList.remove("home-grid-bg")
-    }, [])
-
-    useEffect(() => {
-        const root = containerRef.current
-        if (!root) return
-
-        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
-        if (!nodes.length) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return
-                    entry.target.classList.add("!translate-y-0", "!opacity-100")
-                    observer.unobserve(entry.target)
-                })
-            },
-            {
-                root,
-                threshold: 0.14,
-                rootMargin: "0px 0px -8% 0px",
-            }
-        )
-
-        nodes.forEach((node) => observer.observe(node))
-
-        return () => observer.disconnect()
     }, [])
 
     return (

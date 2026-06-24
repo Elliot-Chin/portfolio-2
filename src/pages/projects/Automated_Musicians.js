@@ -12,42 +12,29 @@ import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
+import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
 
 import { am } from "../../../public/data/Projects"
-
-const researchCards = [
-    {
-        title: "Music Algorithms",
-        body: am.musicAlgorithmsDesc,
-        Icon: GraphicEqOutlined,
-    },
-    {
-        title: "Pattern Recognition",
-        body: am.patternExtractionDesc,
-        Icon: PsychologyOutlined,
-    },
-    {
-        title: "Composition Generator",
-        body: am.compositionGenDesc,
-        Icon: LibraryMusicOutlined,
-    },
-]
+import { automatedMusiciansPageData } from "@/data/project-pages/automatedMusicians"
 
 const algorithmShots = [am.hStepImg, am.iScaleImg, am.aScaleImg]
 const patternShots = [am.sheetMusicImg, am.abcFormatImg]
 const generatorShots = [am.pseudocodeImg]
 
-const externalLinks = [
-    am.ytLink ? { label: "YouTube_Demo", href: am.ytLink } : null,
-    am.ghLink ? { label: "GitHub_Repo", href: am.ghLink } : null,
-    am.cbcLink ? { label: "CBC_Feature", href: am.cbcLink } : null,
-].filter(Boolean)
+const automatedMusiciansIconMap = {
+    GraphicEqOutlined,
+    PsychologyOutlined,
+    LibraryMusicOutlined,
+}
 
-const heroSignals = [
-    "Music theory rules were encoded first so later pattern extraction had a structured base to operate on.",
-    "Pattern recognition stages focused on identifying recurring note relationships that could be reused compositionally.",
-    "The generation pipeline explored how algorithmic structure could produce coherent musical output instead of random sequences.",
-]
+const researchCardsData = automatedMusiciansPageData.researchCards.map((item) => ({
+    title: item.title,
+    body: am[item.body],
+    Icon: automatedMusiciansIconMap[item.iconKey],
+}))
+const externalLinksData = automatedMusiciansPageData.externalLinkSources
+    .map((item) => (am[item.key] ? { label: item.label, href: am[item.key] } : null))
+    .filter(Boolean)
 
 function ImageStrip({ items, columnsClass = "" }) {
     return (
@@ -69,38 +56,7 @@ function ImageStrip({ items, columnsClass = "" }) {
 
 export default function AutomatedMusiciansPage() {
     const containerRef = useRef(null)
-
-    useEffect(() => {
-        document.body.classList.add("home-grid-bg")
-        return () => document.body.classList.remove("home-grid-bg")
-    }, [])
-
-    useEffect(() => {
-        const root = containerRef.current
-        if (!root) return
-
-        const nodes = Array.from(root.querySelectorAll("[data-fade]"))
-        if (!nodes.length) return
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return
-                    entry.target.classList.add("!translate-y-0", "!opacity-100")
-                    observer.unobserve(entry.target)
-                })
-            },
-            {
-                root,
-                threshold: 0.14,
-                rootMargin: "0px 0px -8% 0px",
-            }
-        )
-
-        nodes.forEach((node) => observer.observe(node))
-
-        return () => observer.disconnect()
-    }, [])
+    useHomeGridPage(containerRef)
 
     return (
         <>
@@ -124,33 +80,33 @@ export default function AutomatedMusiciansPage() {
                                 <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
                                     <div className="flex min-w-0 w-full items-center gap-3 font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
                                         <span className="text-slate-300">&gt;_</span>
-                                        <ProjectTerminalLabel text="~/projects/automated-musicians" className="flex-1" />
+                                        <ProjectTerminalLabel text={automatedMusiciansPageData.shell.slug} className="flex-1" />
                                     </div>
                                     <div className="w-full font-spacemono text-[10px] uppercase tracking-[0.16em] text-slate-400/80 sm:w-auto sm:text-[11px] sm:tracking-[0.22em]">
-                                        Engineering capstone / 2021-2022
+                                        {automatedMusiciansPageData.shell.meta}
                                     </div>
                                 </div>
 
                                 <div className="grid gap-5 px-4 py-5 sm:px-6 sm:py-6 lg:grid-cols-[minmax(0,1.25fr)_24rem] lg:gap-8 lg:px-8 lg:py-8">
                                     <div className="min-w-0">
                                         <div className="font-spacemono text-[12px] uppercase tracking-[0.16em] text-amber-300 sm:text-sm sm:tracking-[0.22em]">
-                                            Capstone / music systems / pattern analysis
+                                            {automatedMusiciansPageData.shell.eyebrow}
                                         </div>
                                         <h1 className="mt-3 font-montserrat text-[clamp(1.8rem,8vw,3.25rem)] font-semibold tracking-tight text-blue-100">
-                                            Automated Musicians
+                                            {automatedMusiciansPageData.shell.title}
                                         </h1>
                                         <p className="mt-4 max-w-4xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-6 sm:text-lg">
                                             {am.TLDR}
                                         </p>
 
-                                        <ProjectTerminalCommand text="compile motifs --extract-patterns --generate-score" className="mt-5 sm:mt-7" />
+                                        <ProjectTerminalCommand text={automatedMusiciansPageData.shell.command} className="mt-5 sm:mt-7" />
 
                                         <div className="mt-7 flex flex-wrap gap-3">
                                             <Link href="/projects" className="home-btn home-btn-primary w-full justify-center sm:w-auto">
                                                 <FolderCopyOutlined sx={{ fontSize: 18 }} />
                                                 <span>All_Projects</span>
                                             </Link>
-                                            {externalLinks.map((item) => (
+                                            {externalLinksData.map((item) => (
                                                 <a
                                                     key={item.label}
                                                     href={item.href}
@@ -179,7 +135,7 @@ export default function AutomatedMusiciansPage() {
                                                     Operational Intent
                                                 </div>
                                                 <div className="mt-4 space-y-3">
-                                                    {heroSignals.map((signal) => (
+                                                    {automatedMusiciansPageData.heroSignals.map((signal) => (
                                                         <div key={signal} className="flex gap-3">
                                                             <span className="text-amber-200">+</span>
                                                             <p className="font-montserrat text-[0.95rem] leading-relaxed text-slate-300/88">
@@ -197,7 +153,7 @@ export default function AutomatedMusiciansPage() {
                     </section>
 
                     <section data-fade className="translate-y-4 px-4 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
-                        <ProjectOverviewCardsRow cards={researchCards} columnsClass="lg:grid-cols-3" />
+                        <ProjectOverviewCardsRow cards={researchCardsData} columnsClass="lg:grid-cols-3" />
                     </section>
 
                     <section data-fade className="translate-y-4 px-4 pb-6 opacity-0 transition duration-700 ease-out sm:px-10 lg:px-14">
@@ -208,13 +164,10 @@ export default function AutomatedMusiciansPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        This project was conducted during senior-year engineering capstone work and focused on
-                                        automated music generation through programmed music theory, pattern recognition, and
-                                        composition automation.
+                                        {automatedMusiciansPageData.projectContext[0]}
                                     </p>
                                     <p className="mt-4 font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        The system was structured in stages so that music-theory modeling supported pattern
-                                        extraction, and the extracted structures then fed the composition generator.
+                                        {automatedMusiciansPageData.projectContext[1]}
                                     </p>
                                 </div>
                             </article>
@@ -224,22 +177,12 @@ export default function AutomatedMusiciansPage() {
                                     Metadata
                                 </div>
                                 <div className="space-y-3 px-4 py-4 font-spacemono text-[12px] text-slate-300/85 sm:space-y-5 sm:px-5 sm:py-5 sm:text-sm">
-                                    <div className="flex items-center justify-between gap-6">
-                                        <dt>Duration:</dt>
-                                        <dd className="text-right text-slate-100">{am.duration}</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between gap-6">
-                                        <dt>Domain:</dt>
-                                        <dd className="text-right text-amber-300">Music AI</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between gap-6">
-                                        <dt>Delivery:</dt>
-                                        <dd className="text-right text-slate-100">Capstone Project</dd>
-                                    </div>
-                                    <div className="flex items-center justify-between gap-6">
-                                        <dt>Coverage:</dt>
-                                        <dd className="text-right text-slate-100">Theory / Extraction / Generation</dd>
-                                    </div>
+                                    {automatedMusiciansPageData.metadataRows.map(({ label, value, accent }) => (
+                                        <div key={label} className="flex items-center justify-between gap-6">
+                                            <dt>{label}</dt>
+                                            <dd className={`text-right ${accent ?? "text-slate-100"}`}>{value}</dd>
+                                        </div>
+                                    ))}
                                 </div>
                             </article>
                         </div>

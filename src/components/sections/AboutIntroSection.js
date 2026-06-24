@@ -6,75 +6,13 @@ import {
     TerminalOutlined,
 } from "@mui/icons-material"
 import { HorizontalScrollRail } from "@/components/ui/HorizontalScrollRail"
+import { aboutIntroCards, floatingSignals, floatingSkills } from "@/data/home"
 
-const cards = [
-    {
-        id: "01/03",
-        title: "View Projects",
-        body: "Exploring hardened architectures, OT protocol parsers, and custom security tooling.",
-        cta: "Access_Repository",
-        href: "/projects",
-        Icon: TerminalOutlined,
-        accent: "text-amber-200",
-    },
-    {
-        id: "02/03",
-        title: "Technical Skills",
-        body: "Systematic mastery of C++, Python, Modbus/TCP, and secure cloud infrastructure.",
-        cta: "Load_Capabilities",
-        href: "/resume",
-        Icon: MemoryOutlined,
-        accent: "text-emerald-300",
-    },
-    {
-        id: "03/03",
-        title: "Contact",
-        body: "Reach out for collaboration, security engineering work, or thoughtful technical conversations.",
-        cta: "Open_Channel",
-        href: "/contact",
-        Icon: ContactSupportOutlined,
-        accent: "text-amber-100",
-    },
-]
-
-const floatingSignals = [
-    "Engineer @ Siemens",
-    "OT Security",
-    "Full-Stack Systems",
-    "Protocol Analysis",
-    "Network Hardening",
-    "Detection Tooling",
-    "Cybersecurity",
-    "Industrial Networking",
-]
-
-const floatingSkills = [
-    { name: "Python", src: "https://cdn.simpleicons.org/python" },
-    { name: "Pandas", src: "https://cdn.simpleicons.org/pandas" },
-    { name: "Flask", src: "https://cdn.simpleicons.org/flask/ffffff" },
-    { name: "JavaScript", src: "https://cdn.simpleicons.org/javascript" },
-    { name: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs/ffffff" },
-    { name: "React", src: "https://cdn.simpleicons.org/react" },
-    { name: "Node.js", src: "https://cdn.simpleicons.org/nodedotjs" },
-    { name: "Postgres", src: "https://cdn.simpleicons.org/postgresql" },
-    { name: "MySQL", src: "https://cdn.simpleicons.org/mysql" },
-    { name: "Redis", src: "https://cdn.simpleicons.org/redis" },
-    { name: "Tailwind", src: "https://cdn.simpleicons.org/tailwindcss" },
-    { name: "Material UI", src: "https://cdn.simpleicons.org/mui" },
-    { name: "Docker", src: "https://cdn.simpleicons.org/docker" },
-    { name: "Linux", src: "https://cdn.simpleicons.org/linux" },
-    { name: "Ubuntu", src: "https://cdn.simpleicons.org/ubuntu" },
-    { name: "Windows", src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/windows11.svg" },
-    { name: "Git", src: "https://cdn.simpleicons.org/git" },
-    { name: "GitHub", src: "https://cdn.simpleicons.org/github/ffffff" },
-    { name: "Vercel", src: "https://cdn.simpleicons.org/vercel/ffffff" },
-    { name: "Nginx", src: "https://cdn.simpleicons.org/nginx" },
-    { name: "C++", src: "https://cdn.simpleicons.org/cplusplus" },
-    { name: "Azure", src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftazure.svg" },
-    { name: "Wireshark", src: "https://cdn.simpleicons.org/wireshark" },
-    { name: "Cisco", src: "https://cdn.simpleicons.org/cisco" },
-    { name: "OpenAI", src: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg" },
-]
+const cardIcons = {
+    TerminalOutlined,
+    MemoryOutlined,
+    ContactSupportOutlined,
+}
 
 function CardLink({ href, children, className }) {
     const shared = `${className} group inline-flex items-center gap-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.22em]`
@@ -157,7 +95,9 @@ export function AboutIntroSection() {
                             railClassName="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 sm:-mx-10 sm:px-10"
                             scrollStep={360}
                         >
-                            {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
+                            {aboutIntroCards.map(({ id, title, body, cta, href, iconKey, accent }) => {
+                                const Icon = cardIcons[iconKey]
+                                return (
                                 <article
                                     key={id}
                                     className="relative min-h-[24rem] w-[85vw] max-w-[24rem] shrink-0 snap-center overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42"
@@ -193,12 +133,15 @@ export function AboutIntroSection() {
                                         </div>
                                     </div>
                                 </article>
-                            ))}
+                                )
+                            })}
                         </HorizontalScrollRail>
                     </div>
 
                     <div className="hidden w-full items-stretch gap-4 lg:grid lg:grid-cols-3 lg:gap-4 xl:gap-6">
-                        {cards.map(({ id, title, body, cta, href, Icon, accent }) => (
+                        {aboutIntroCards.map(({ id, title, body, cta, href, iconKey, accent }) => {
+                            const Icon = cardIcons[iconKey]
+                            return (
                             <article
                                 key={id}
                                 className="relative h-full overflow-hidden border border-slate-200/8 bg-slate-950/34 px-5 py-5 shadow-[0_10px_40px_rgba(2,8,23,0.22)] backdrop-blur-[2px] transition hover:border-amber-200/16 hover:bg-slate-950/42 lg:px-5 lg:py-5 xl:px-7 xl:py-7"
@@ -234,7 +177,8 @@ export function AboutIntroSection() {
                                     </div>
                                 </div>
                             </article>
-                        ))}
+                            )
+                        })}
                     </div>
 
                     <div className="mt-6 w-full space-y-4 md:mt-8">
