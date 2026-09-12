@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import Link from "next/link"
 import {
     AutoGraphOutlined,
@@ -13,6 +13,7 @@ import { ProjectImage } from "@/components/projects/ProjectImage"
 import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCardsRow"
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { expensesRecorderPageData } from "@/data/project-pages/expensesRecorder"
 
 const expensesIconMap = {
@@ -22,7 +23,7 @@ const expensesIconMap = {
     TimelineOutlined,
 }
 
-const featureCardsData = expensesRecorderPageData.featureCards.map((item) => ({ ...item, Icon: expensesIconMap[item.iconKey] }))
+const featureCardsData = resolveIconCards(expensesRecorderPageData.featureCards, expensesIconMap)
 
 export default function ExpensesRecorder() {
     const containerRef = useRef(null)

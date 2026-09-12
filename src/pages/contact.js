@@ -9,7 +9,7 @@ import { useCooldown } from "@/components/hooks/useCooldown"
 import { useDraft } from "@/components/hooks/useDraft"
 import { useCopyToClipboard } from "@/components/hooks/useCopyToClipboard"
 import { MAX_MESSAGE, MIN_NAME } from "@/utils/contactConstants"
-import { githubLink, linkedInLink } from "../../public/data/Links"
+import { emailAddress, githubLink, linkedInLink } from "@/data/socialLinks"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
 import { contactPageContent } from "@/data/contact"
@@ -170,7 +170,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
 
     const copyToClipboard = useCopyToClipboard()
     const handleCopyEmail = useCallback(async () => {
-        const ok = await copyToClipboard("contact@elliotc.dev")
+        const ok = await copyToClipboard(emailAddress)
         setToast(
             ok
                 ? { kind: "success", text: "Email copied to clipboard." }

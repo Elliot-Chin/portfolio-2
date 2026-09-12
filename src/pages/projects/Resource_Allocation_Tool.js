@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import {
     AssignmentTurnedInOutlined,
     FolderCopyOutlined,
@@ -15,6 +15,7 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { resourceAllocationToolPageData } from "@/data/project-pages/resourceAllocationTool"
 
 const ratIconMap = {
@@ -27,8 +28,8 @@ const ratIconMap = {
 }
 
 const hero = resourceAllocationToolPageData.hero
-const overviewCardsData = resourceAllocationToolPageData.overviewCards.map((item) => ({ ...item, Icon: ratIconMap[item.iconKey] }))
-const stackCardsData = resourceAllocationToolPageData.stackCards.map((item) => ({ ...item, Icon: ratIconMap[item.iconKey] }))
+const overviewCardsData = resolveIconCards(resourceAllocationToolPageData.overviewCards, ratIconMap)
+const stackCardsData = resolveIconCards(resourceAllocationToolPageData.stackCards, ratIconMap)
 
 export default function ResourceAllocationToolPage() {
     const containerRef = useRef(null)

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import {
     ApiOutlined,
     DashboardOutlined,
@@ -15,6 +15,7 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { northboundApiPageData } from "@/data/project-pages/northboundApi"
 
 const northboundIconMap = {
@@ -28,9 +29,9 @@ const northboundIconMap = {
 }
 
 const hero = northboundApiPageData.hero
-const overviewCardsData = northboundApiPageData.overviewCards.map((item) => ({ ...item, Icon: northboundIconMap[item.iconKey] }))
-const implementationCardsData = northboundApiPageData.implementationCards.map((item) => ({ ...item, Icon: northboundIconMap[item.iconKey] }))
-const outcomeCardsData = northboundApiPageData.outcomeCards.map((item) => ({ ...item, Icon: northboundIconMap[item.iconKey] }))
+const overviewCardsData = resolveIconCards(northboundApiPageData.overviewCards, northboundIconMap)
+const implementationCardsData = resolveIconCards(northboundApiPageData.implementationCards, northboundIconMap)
+const outcomeCardsData = resolveIconCards(northboundApiPageData.outcomeCards, northboundIconMap)
 
 export default function NorthboundApiPage() {
     const containerRef = useRef(null)

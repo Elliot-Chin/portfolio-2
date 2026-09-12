@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import {
     AutoAwesomeOutlined,
     BugReportOutlined,
@@ -17,6 +17,7 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { ai4securityProject } from "@/data/project-pages/ai4security"
 
 const aiIconMap = {
@@ -29,8 +30,8 @@ const aiIconMap = {
 }
 
 const hero = ai4securityProject.hero
-const researchCards = ai4securityProject.researchCards.map((item) => ({ ...item, Icon: aiIconMap[item.iconKey] }))
-const openSourceWorkflow = ai4securityProject.openSourceWorkflow.map((item) => ({ ...item, Icon: aiIconMap[item.iconKey] }))
+const researchCards = resolveIconCards(ai4securityProject.researchCards, aiIconMap)
+const openSourceWorkflow = resolveIconCards(ai4securityProject.openSourceWorkflow, aiIconMap)
 
 function ProcessNode({ title, body, Icon }) {
     return (

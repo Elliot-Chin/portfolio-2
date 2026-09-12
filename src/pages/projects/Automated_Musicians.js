@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import {
     FolderCopyOutlined,
     GraphicEqOutlined,
@@ -13,13 +13,11 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
-
-import { am } from "../../../public/data/Projects"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { automatedMusiciansPageData } from "@/data/project-pages/automatedMusicians"
 
-const algorithmShots = [am.hStepImg, am.iScaleImg, am.aScaleImg]
-const patternShots = [am.sheetMusicImg, am.abcFormatImg]
-const generatorShots = [am.pseudocodeImg]
+const { content, images } = automatedMusiciansPageData
+const { algorithmShots, patternShots, generatorShots } = images
 
 const automatedMusiciansIconMap = {
     GraphicEqOutlined,
@@ -27,14 +25,11 @@ const automatedMusiciansIconMap = {
     LibraryMusicOutlined,
 }
 
-const researchCardsData = automatedMusiciansPageData.researchCards.map((item) => ({
-    title: item.title,
-    body: am[item.body],
-    Icon: automatedMusiciansIconMap[item.iconKey],
-}))
-const externalLinksData = automatedMusiciansPageData.externalLinkSources
-    .map((item) => (am[item.key] ? { label: item.label, href: am[item.key] } : null))
-    .filter(Boolean)
+const researchCardsData = resolveIconCards(
+    automatedMusiciansPageData.researchCards.map((item) => ({ ...item, body: content[item.bodyKey] })),
+    automatedMusiciansIconMap
+)
+const externalLinksData = automatedMusiciansPageData.externalLinks
 
 function ImageStrip({ items, columnsClass = "" }) {
     return (
@@ -96,7 +91,7 @@ export default function AutomatedMusiciansPage() {
                                             {automatedMusiciansPageData.shell.title}
                                         </h1>
                                         <p className="mt-4 max-w-4xl font-montserrat text-[0.98rem] leading-relaxed text-slate-100/90 sm:mt-6 sm:text-lg">
-                                            {am.TLDR}
+                                            {content.TLDR}
                                         </p>
 
                                         <ProjectTerminalCommand text={automatedMusiciansPageData.shell.command} className="mt-5 sm:mt-7" />
@@ -197,7 +192,7 @@ export default function AutomatedMusiciansPage() {
                                 <div className="grid gap-5 px-4 py-4 sm:gap-6 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                                     <div>
                                         <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                            {am.musicAlgorithmsDesc}
+                                            {content.musicAlgorithmsDesc}
                                         </p>
                                     </div>
                                     <ImageStrip items={algorithmShots} columnsClass="md:grid-cols-2 xl:grid-cols-3" />
@@ -211,7 +206,7 @@ export default function AutomatedMusiciansPage() {
                                 <div className="grid gap-5 px-4 py-4 sm:gap-6 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                                     <div>
                                         <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                            {am.patternExtractionDesc}
+                                            {content.patternExtractionDesc}
                                         </p>
                                     </div>
                                     <ImageStrip items={patternShots} />
@@ -225,7 +220,7 @@ export default function AutomatedMusiciansPage() {
                                 <div className="grid gap-5 px-4 py-4 sm:gap-6 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
                                     <div>
                                         <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                            {am.compositionGenDesc}
+                                            {content.compositionGenDesc}
                                         </p>
                                     </div>
                                     <ImageStrip items={generatorShots} />
@@ -242,7 +237,7 @@ export default function AutomatedMusiciansPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {am.conclusion}
+                                        {content.conclusion}
                                     </p>
                                 </div>
                             </article>
@@ -253,7 +248,7 @@ export default function AutomatedMusiciansPage() {
                                 </div>
                                 <div className="px-4 py-4 sm:px-5 sm:py-5">
                                     <p className="font-montserrat text-[0.96rem] leading-relaxed text-slate-300/88 sm:text-[1rem]">
-                                        {am.finalThoughts}
+                                        {content.finalThoughts}
                                     </p>
                                 </div>
                             </article>

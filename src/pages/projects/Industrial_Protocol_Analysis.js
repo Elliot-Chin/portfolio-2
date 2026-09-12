@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import {
     AccountTreeOutlined,
     BugReportOutlined,
@@ -16,6 +16,7 @@ import { ProjectOverviewCardsRow } from "@/components/projects/ProjectOverviewCa
 import { ProjectTerminalCommand, ProjectTerminalLabel } from "@/components/projects/ProjectTerminalLine"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
+import { resolveIconCards } from "@/utils/resolveIconCards"
 import { industrialProtocolAnalysisPageData } from "@/data/project-pages/industrialProtocolAnalysis"
 
 const industrialIconMap = {
@@ -29,8 +30,8 @@ const industrialIconMap = {
 }
 
 const hero = industrialProtocolAnalysisPageData.hero
-const researchCards = industrialProtocolAnalysisPageData.researchCards.map((item) => ({ ...item, Icon: industrialIconMap[item.iconKey] }))
-const developmentSteps = industrialProtocolAnalysisPageData.developmentSteps.map((item) => ({ ...item, Icon: industrialIconMap[item.iconKey] }))
+const researchCards = resolveIconCards(industrialProtocolAnalysisPageData.researchCards, industrialIconMap)
+const developmentSteps = resolveIconCards(industrialProtocolAnalysisPageData.developmentSteps, industrialIconMap)
 
 function FlowNode({ label, active = false }) {
     return (
