@@ -205,6 +205,14 @@ export const resumeSkillIconMap = {
     Malay: makeSkillBadgeIcon("MS", "#065f46", "#ecfdf5"),
 }
 
+export const resumeCertifications = [
+    {
+        name: "GIAC Security Essentials (GSEC)",
+        issuer: "GIAC",
+        notes: ["SANS SEC401: Security Essentials"],
+    },
+]
+
 export const resumeEducation = {
     school: "University of New Brunswick",
     location: "Fredericton, NB, Canada",

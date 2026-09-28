@@ -11,6 +11,7 @@ import {
     PlaceOutlined,
     PublicOutlined,
     SchoolOutlined,
+    VerifiedOutlined,
     WorkOutline,
 } from "@mui/icons-material"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
@@ -19,6 +20,7 @@ import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
 import { AutoPanLabel } from "@/components/ui/AutoPanLabel"
 import {
     resumeCareerNodes,
+    resumeCertifications,
     resumeContactLinks,
     resumeEducation,
     resumeExperience,
@@ -437,6 +439,39 @@ export default function ResumePage() {
                                         {group.items.map((item) => (
                                             <SkillChip key={item} item={item} />
                                         ))}
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </SectionShell>
+
+                    <SectionShell id="certifications" title="Certifications" Icon={VerifiedOutlined}>
+                        <div className="grid gap-5">
+                            {resumeCertifications.map((certification) => (
+                                <article
+                                    key={certification.name}
+                                    className="overflow-hidden border border-white bg-slate-950/38 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]"
+                                >
+                                    <div className="flex flex-col items-start gap-2.5 border-b border-slate-200/8 bg-slate-900/78 px-4 py-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:px-5">
+                                        <div className="min-w-0 w-full font-spacemono text-[12px] font-bold text-amber-200 sm:w-auto sm:flex-1 sm:flex-none sm:text-sm">
+                                            <AutoPanLabel text={`${certification.issuer.toLowerCase()}::certification_record`} />
+                                        </div>
+                                    </div>
+                                    <div className="px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                                        <h3 className="font-montserrat text-[clamp(1.4rem,6vw,2rem)] font-semibold tracking-tight text-amber-100">
+                                            {certification.name}
+                                        </h3>
+                                        <p className="mt-3 font-montserrat text-[0.96rem] text-slate-300/86 sm:text-base">
+                                            {certification.issuer}
+                                        </p>
+                                        <div className="mt-4 grid gap-2.5 sm:mt-5 sm:gap-3">
+                                            {certification.notes.map((note) => (
+                                                <div key={note} className="flex items-baseline gap-3 font-montserrat text-[0.96rem] leading-relaxed text-slate-100/90 sm:text-[1rem]">
+                                                    <span className="shrink-0 font-spacemono text-amber-200">+</span>
+                                                    <span>{note}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </article>
                             ))}
