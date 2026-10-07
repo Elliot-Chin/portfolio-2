@@ -384,7 +384,7 @@ export function HomeTopNav({
                         aria-label="Mobile navigation"
                         className="overflow-hidden border-t border-[#6d74ff]/35 bg-[#0b1526]/95 shadow-[0_-12px_40px_rgba(2,8,23,0.38)] backdrop-blur-xl"
                     >
-                        <div className="grid grid-cols-4 border-t border-slate-200/6 bg-[linear-gradient(180deg,rgba(16,30,52,0.82)_0%,rgba(10,20,36,0.92)_100%)] pb-[env(safe-area-inset-bottom)]">
+                        <div className="grid grid-cols-4 border-t border-slate-200/6 bg-[linear-gradient(180deg,rgba(16,30,52,0.82)_0%,rgba(10,20,36,0.92)_100%)]">
                             {mobileItems.map((item) => (
                             <MobileNavItem
                                 key={item.label}
