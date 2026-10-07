@@ -306,7 +306,6 @@ body.home-grid-bg::after {
 
 body.home-grid-bg::before {
     background:
-        linear-gradient(178deg, transparent 0 calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 42px), rgba(146, 186, 255, 0.16) calc(100% - 41px), transparent calc(100% - 41px)),
         linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
     opacity: 1;
 }
@@ -694,3 +693,18 @@ body.home-grid-bg::after {
 .horizontal-scroll-hint {
   animation: horizontal-scroll-hint-bounce 1.05s ease-in-out infinite;
 }
+
+/* Shared feedback stays on the control that initiated the action. */
+a, button, [role="button"] { -webkit-tap-highlight-color: rgba(251,146,60,.2); }
+a[data-click-feedback],button[data-click-feedback],[role="button"][data-click-feedback] { animation:interaction-feedback 550ms ease-out; }
+[data-navigation-pending] { cursor:progress; }
+[data-loading-arrow] { display:inline-block!important; animation:control-arrow-loading 1.8s ease-in-out infinite!important; }
+[data-loading-fallback] { position:relative; }
+[data-loading-fallback]::after { content:''!important; position:absolute!important; left:auto!important; right:-20px!important; top:calc(50% - 6px)!important; bottom:auto!important; width:12px!important; height:12px!important; background:none!important; border:2px solid rgba(251,146,60,.25)!important; border-top-color:#fb923c!important; border-radius:50%!important; animation:feedback-spin .75s linear infinite!important; }
+.navigation-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] { display:inline-block; animation:control-arrow-loading 1.8s ease-in-out infinite!important; }
+@keyframes interaction-feedback { 0% {box-shadow:0 0 0 3px rgba(251,146,60,.4);} 100% {box-shadow:0 0 0 7px rgba(251,146,60,0);} }
+@keyframes feedback-spin { to {transform:rotate(360deg);} }
+@keyframes control-arrow-loading { 0%,12% {transform:translateY(0) rotate(0deg);} 18% {transform:translateY(2px) rotate(-12deg);} 30% {transform:translateY(-9px) rotate(-160deg);} 42% {transform:translateY(-5px) rotate(-310deg);} 50% {transform:translateY(2px) rotate(-360deg);} 56%,100% {transform:translateY(0) rotate(-360deg);} }
+@media(prefers-reduced-motion:reduce) { [data-click-feedback] {animation:none!important;} [data-navigation-pending] {outline:2px solid #fb923c; outline-offset:3px;} [data-loading-arrow],[data-loading-fallback]::after,form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] {animation:none!important;} }
+[data-loading-fallback]:has(img)::after { right:12px!important; top:12px!important; box-shadow:0 0 0 6px #091528; }

@@ -1,11 +1,29 @@
 export const timeline = [
     {
+        id: "2026-trip-scheduler",
+        year: 2026,
+        title: "TripScheduler",
+        desc: "A travel planner that brings daily plans and travel companions together, making it easier to organise the next adventure.",
+        type: "project",
+        link: "/projects/trip-scheduler",
+        logo: "/projects/trip-scheduler/cover.png",
+        metadata: { updated: "2026", risk: "LOW", version: "ACTIVE", branch: "DEVELOPMENT" },
+        details: [
+            "Started as an Excel planner for personal road trips and holidays.",
+            "Keeps upcoming adventures and past journeys in one place.",
+            "Makes each day easy to follow, from travel and meals to stays and activities.",
+            "Lets travel companions plan together and keep ideas alongside the itinerary.",
+        ],
+        tech: ["Travel Planning", "Excel", "Web Application", "Collaboration"],
+        deploy: "trip_scheduler",
+    },
+    {
         id: "2026-industrial-protocol-analysis",
         year: 2026,
         title: "Industrial Protocol Analysis",
         desc: "Zeek plugin development for Siemens SINEC Security Monitor, an OT security monitoring platform for passive, continuous visibility into industrial assets, threats, and network intrusions during production.",
         type: "project",
-        link: "/projects/Industrial_Protocol_Analysis",
+        link: "/projects/industrial-protocol-analysis",
         logo: "/projects/ipa/Logo.png",
         metadata: {
             updated: "2026",
@@ -29,7 +47,7 @@ export const timeline = [
         title: "Expenses Recorder",
         desc: "Where budgets meet common sense - simple, predictable, and actually nice to use.",
         type: "project",
-        link: "/projects/Expenses_Recorder",
+        link: "/projects/expense-recorder",
         logo: "/projects/exprec/Logo.png",
         metadata: {
             updated: "2025",
@@ -53,7 +71,7 @@ export const timeline = [
         title: "AI4Security Research",
         desc: "Internal Siemens research into whether AI could analyze industrial PCAP data using both open-source cybersecurity-tuned models and Azure fine-tuning to help distinguish benign versus potentially malicious network behavior.",
         type: "project",
-        link: "/projects/AI4Security",
+        link: "/projects/ai4security",
         logo: "/projects/ai4security/cover-shield.png",
         metadata: {
             updated: "2024",
@@ -76,7 +94,7 @@ export const timeline = [
         title: "Resource Allocation Tool",
         desc: "A proposal to turn an Excel-based employee time-allocation tracker into a web application so managers could see team capacity more clearly and judge whether additional projects could be taken on. The effort ended after phase one when a management change removed the need for continued development.",
         type: "project",
-        link: "/projects/Resource_Allocation_Tool",
+        link: "/projects/resource-allocation-tool",
         logo: "/projects/rat-proposal/logo.png",
         metadata: {
             updated: "2024",
@@ -100,7 +118,7 @@ export const timeline = [
         title: "Northbound API",
         desc: "A proof-of-concept Northbound API interface for Siemens SINEC Security Monitor so processed security data and asset information could be extracted, displayed in an external dashboard, or forwarded into other downstream workflows.",
         type: "project",
-        link: "/projects/Northbound_API",
+        link: "/projects/northbound-api",
         logo: "/projects/northbound-api/logo.png",
         metadata: {
             updated: "2024",
@@ -123,7 +141,7 @@ export const timeline = [
         title: "Automated Musicians",
         desc: "Where music meets algorithms - a creative blend of theory, pattern recognition, and composition automation.",
         type: "project",
-        link: "/projects/Automated_Musicians",
+        link: "/projects/automated-musicians",
         logo: "/projects/am/Logo.png",
         metadata: {
             updated: "2023",

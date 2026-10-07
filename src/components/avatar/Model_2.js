@@ -10,15 +10,18 @@ export const Model2 = ({
     dprMax = 2,       // 2 is crisp on most screens
     className = "",
     onReady,
+    reducedMotion = false,
+    active = true,
 }) => {
     return (
         <Canvas
             className={`w-full h-full ${className}`}
             dpr={[1, dprMax]}
+            frameloop={active && !reducedMotion ? "always" : "demand"}
             camera={{ position: [0, 0, cameraZ], fov }}
             gl={{ antialias: true }}
         >
-            <Experience2 modelScale={modelScale} modelY={modelY} onReady={onReady} />
+            <Experience2 modelScale={modelScale} modelY={modelY} onReady={onReady} reducedMotion={reducedMotion} />
         </Canvas>
     );
 };

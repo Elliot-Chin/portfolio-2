@@ -1,117 +1,43 @@
-import dynamic from "next/dynamic"
-import Link from "next/link"
-import { useEffect, useRef } from "react"
-import { ReactTyped } from "react-typed"
-import { ArrowOutwardOutlined, ErrorOutlineOutlined } from "@mui/icons-material"
+import { useRef } from "react"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
-import { notFoundContent } from "@/data/notFound"
+import s from "@/styles/NotFound.module.css"
 
-const ModelMissingAnimation = dynamic(
-    () => import("@/components/avatar/Model_MissingAnimation").then((mod) => mod.ModelMissingAnimation),
-    { ssr: false }
-)
+const routes = [
+    ["Projects", "Explore the projects.", "/projects"],
+    ["Resume", "Experience, skills, and background.", "/resume"],
+    ["Contact", "Start a conversation.", "/contact"],
+]
 
 export default function Custom404() {
     const containerRef = useRef(null)
     useHomeGridPage(containerRef, { observeFades: false })
-
-    return (
-        <>
-            <SeoHead
-                title={notFoundContent.seo.title}
-                description={notFoundContent.seo.description}
-                path={notFoundContent.seo.path}
-                noindex
-            />
-
-            <main
-                ref={containerRef}
-                className="relative min-h-[100svh] bg-transparent text-slate-50 pb-10"
-            >
-
-                <section className="px-6 pb-10 pt-20 sm:px-10 sm:pt-24 lg:px-14">
-                    <div className="mx-auto grid w-full max-w-[96rem] items-start gap-8 lg:min-h-[calc(100svh-5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] lg:items-center lg:gap-10">
-                        <div className="min-w-0">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-4 py-2 font-spacemono text-[11px] font-bold uppercase tracking-[0.18em] text-amber-100">
-                                <span className="h-2 w-2 rounded-full bg-amber-300" />
-                                <span>{notFoundContent.badge}</span>
-                            </div>
-
-                            <h1 className="mt-6 break-words font-montserrat text-[1.5rem] font-semibold tracking-tight text-blue-100 md:text-[4.8rem]">
-                                {notFoundContent.title}
-                            </h1>
-
-                            <div className="mt-5 text-xs uppercase tracking-[0.16em] text-slate-400 sm:text-sm">
-                                <span>SYSLOG: </span>
-                                <ReactTyped
-                                    strings={[notFoundContent.syslog]}
-                                    typeSpeed={24}
-                                    showCursor={false}
-                                    startWhenVisible
-                                    className="inline"
-                                />
-                                <span className="typewriter-cursor">_</span>
-                            </div>
-
-                            <p className="mt-6 max-w-3xl font-montserrat text-base leading-relaxed text-slate-100/88 sm:text-lg">
-                                {notFoundContent.summary}
-                            </p>
-
-                            <div className="mt-8 grid gap-4 sm:max-w-[42rem] sm:grid-cols-2">
-                                <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                    <div className="flex items-center gap-3">
-                                        <ErrorOutlineOutlined className="text-amber-300" sx={{ fontSize: 22 }} />
-                                        <h2 className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                            {notFoundContent.cards[0].title}
-                                        </h2>
-                                    </div>
-                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {notFoundContent.cards[0].body}
-                                    </p>
-                                </div>
-
-                                <div className="border border-slate-200/10 bg-slate-950/38 p-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px]">
-                                    <div className="font-spacemono text-sm font-bold uppercase tracking-[0.22em] text-amber-100">
-                                        {notFoundContent.cards[1].title}
-                                    </div>
-                                    <p className="mt-4 font-montserrat text-[1rem] leading-relaxed text-slate-300/88">
-                                        {notFoundContent.cards[1].body}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                                <Link href={notFoundContent.actions[0].href} className="home-btn home-btn-primary w-full sm:w-auto">
-                                    <span>{notFoundContent.actions[0].label}</span>
-                                    <ArrowOutwardOutlined sx={{ fontSize: 17 }} />
-                                </Link>
-                                <Link href={notFoundContent.actions[1].href} className="home-btn home-btn-secondary w-full sm:w-auto">
-                                    <span>{notFoundContent.actions[1].label}</span>
-                                </Link>
-                                <Link href={notFoundContent.actions[2].href} className="home-btn home-btn-secondary w-full sm:w-auto">
-                                    <span>{notFoundContent.actions[2].label}</span>
-                                </Link>
-                            </div>
-                        </div>
-
-                        <div className="relative mx-auto h-[320px] w-full max-w-[38rem] overflow-hidden border border-slate-200/10 bg-slate-950/28 shadow-[0_18px_50px_rgba(2,8,23,0.28)] backdrop-blur-[2px] sm:h-[420px] lg:h-[520px]">
-                            <div className="flex items-center justify-between border-b border-slate-200/8 bg-slate-900/78 px-5 py-3">
-                                <div className="flex items-center gap-2">
-                                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400/90" />
-                                    <span className="h-2.5 w-2.5 rounded-full bg-amber-300/90" />
-                                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
-                                </div>
-                                <div className="font-spacemono text-[11px] uppercase tracking-[0.22em] text-amber-100">{notFoundContent.consoleTitle}</div>
-                            </div>
-
-                            <div className="absolute inset-x-0 bottom-0 top-[49px]">
-                                <ModelMissingAnimation cameraZ={4.1} fov={24} modelY={-1.35} modelScale={0.92} />
-                            </div>
-                        </div>
+    return <>
+        <SeoHead title="404 — Page Not Found | Elliot Chin" description="This page doesn't exist or may have moved. Return to Elliot Chin's portfolio, projects, resume, or contact page." path="/404" noindex />
+        <main ref={containerRef} className={s.page}>
+            <div className={s.container}>
+                <section className={s.hero} aria-labelledby="error-heading">
+                    <div className={s.copy}>
+                        <p className={s.path}>~/404</p>
+                        <h1 id="error-heading"><span className={s.number}>404</span><span className={s.heading}>Route not found<span className={s.dot}>.</span></span></h1>
+                        <p className={s.intro}>The page you're looking for doesn't exist<br className={s.break} /> or may have moved.</p>
+                        <div className={s.actions}><a href="/" className={s.button}>Return Home <span aria-hidden="true">→</span></a><a href="/projects" className={s.textLink}>View Projects <span aria-hidden="true">→</span></a></div>
+                    </div>
+                    <div className={s.diagram}>
+                        <svg className={s.desktopDiagram} viewBox="0 0 420 350" role="img" aria-label="A router connects to Home, Projects, and Resume. A fourth route ends at a missing destination.">
+                            <g className={s.lines}><path d="M60 40V90M60 138V290M60 170H300M60 220H300M60 270H300" /><path className={s.failed} d="M60 290V320H245" /></g>
+                            <g className={s.nodes}><rect x="20" y="90" width="100" height="48" rx="6"/><circle cx="300" cy="170" r="4"/><circle cx="300" cy="220" r="4"/><circle cx="300" cy="270" r="4"/></g>
+                            <g className={s.labels}><text x="60" y="25" textAnchor="middle">REQUEST</text><text x="70" y="119" textAnchor="middle">ROUTER</text><text x="320" y="174">HOME</text><text x="320" y="224">PROJECTS</text><text x="320" y="274">RESUME</text><text x="270" y="325" className={s.failed}>NOT_FOUND</text></g>
+                            <path className={s.cross} d="M243 313L257 327M257 313L243 327"/>
+                            <circle className={s.packet} cx="60" cy="150" r="4" />
+                        </svg>
+                        <svg className={s.mobileDiagram} viewBox="0 0 340 80" role="img" aria-label="A request reaches the router, then stops at a missing route."><path className={s.lines} d="M30 25H150"/><path className={s.failed} d="M150 25H295"/><circle className={s.nodes} cx="30" cy="25" r="4"/><circle className={s.nodes} cx="150" cy="25" r="4"/><path className={s.cross} d="M290 18L304 32M304 18L290 32"/><g className={s.labels}><text x="5" y="60">REQUEST</text><text x="125" y="60">ROUTER</text><text x="265" y="60" className={s.failed}>404</text></g></svg>
+                        <p className={s.diagnostic}>STATUS::NOT_FOUND</p>
                     </div>
                 </section>
-            </main>
-        </>
-    )
+                <nav className={s.recovery} aria-label="Recovery options"><p className={s.label}>Recovery options</p><div className={s.routes}>{routes.map(([title,description,href],index)=><a href={href} key={href}><span className={s.routeNumber}>0{index+1}</span><div><h2>{title}</h2><p>{description}</p></div><span className={s.arrow} aria-hidden="true">→</span></a>)}</div></nav>
+                <footer className={s.footer}><span>STATUS::404 <span className={s.separator}>/</span> FALLBACK::/</span><span>© Elliot Chin</span></footer>
+            </div>
+        </main>
+    </>
 }

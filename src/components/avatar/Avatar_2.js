@@ -7,7 +7,7 @@ import React, { useEffect, useRef } from 'react'
 import { useAnimations, useFBX, useGLTF } from '@react-three/drei'
 import { useRouter } from 'next/router'
 
-export function Avatar2({ onReady, ...props }) {
+export function Avatar2({ onReady, reducedMotion = false, ...props }) {
     const { basePath } = useRouter()
   const { nodes, materials } = useGLTF(basePath + '/models/avatar.glb')
 
@@ -20,8 +20,13 @@ export function Avatar2({ onReady, ...props }) {
   const { actions } = useAnimations(typingAnimation, group)
 
   useEffect(() => {
-    actions["Typing"].reset().play()
-  }, [])
+    const action = actions["Typing"]
+    if (!action) return
+    action.reset().play()
+    action.timeScale = 0.65
+    action.paused = reducedMotion
+    return () => action.stop()
+  }, [actions, reducedMotion])
 
   useEffect(() => {
     onReady?.()
@@ -44,5 +49,3 @@ export function Avatar2({ onReady, ...props }) {
     </group>
   )
 }
-
-useGLTF.preload('models/avatar.glb')

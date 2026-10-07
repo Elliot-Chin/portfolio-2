@@ -1,0 +1,69 @@
+.page { --ink:#e2eaf5; --muted:#aab8ca; --line:rgba(151,190,255,.16); --orange:#fb923c; height:100dvh; overflow-y:auto; position:relative; padding-top:76px; color:var(--ink); font-family:Montserrat,sans-serif; scroll-behavior:smooth; }
+.page * { box-sizing:border-box; }
+.container { max-width:1180px; width:calc(100% - 64px); margin:auto; }
+.page a { color:inherit; text-decoration:none; }
+.page button { font:inherit; cursor:pointer; }
+.page a:focus-visible,.page button:focus-visible,.success:focus-visible { outline:2px solid var(--orange); outline-offset:5px; }
+.hero { padding:76px 0 64px; position:relative; overflow:hidden; border-bottom:1px solid var(--line); }
+.path,.sectionLabel,.label,.field label { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.1em; }
+.path { color:var(--orange); margin:0 0 22px; }
+.hero h1 { font-size:clamp(4rem,7.2vw,6rem); line-height:1.05; font-weight:650; letter-spacing:-.065em; margin:0 0 26px; }
+.hero h1 span { color:var(--orange); }
+.intro { max-width:660px; font-size:17px; line-height:1.8; color:var(--muted); margin:0 0 30px; }
+.heroEmail { display:inline-flex; gap:24px; padding:10px 0; border-bottom:1px solid var(--line); font-size:18px; }
+.heroEmail span,.contactItem a span { color:var(--orange); }
+.wave { position:absolute; right:-50px; bottom:-80px; width:420px; height:280px; stroke:var(--orange); stroke-width:1; opacity:.16; z-index:-1; pointer-events:none; }
+.contactArea { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(0,1fr); gap:80px; padding:64px 0 72px; }
+.sectionLabel { text-transform:uppercase; font-weight:400; color:var(--muted); margin:0 0 32px; }
+.field { margin-bottom:28px; }
+.field label { display:block; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.field input,.field textarea { width:100%; display:block; font:400 16px/1.7 Montserrat,sans-serif; color:var(--ink); background:rgba(9,21,40,.18); border:0; border-bottom:1px solid var(--line); border-radius:0; padding:12px 0; min-height:48px; outline:none; transition:border-color 160ms; }
+.field textarea { resize:vertical; min-height:170px; }
+.field input::placeholder,.field textarea::placeholder { color:#8191a7; opacity:1; }
+.field input:focus,.field textarea:focus { border-bottom:2px solid var(--orange); }
+.field [aria-invalid=true] { border-bottom-color:#fda4af; }
+.error { color:#fda4af; font-size:13px; margin:8px 0 0; line-height:1.6; }
+.characterCount { text-align:right; color:var(--muted); font-family:'Space Mono',monospace; font-size:10px; margin:-18px 0 24px; }
+.button { border:0; background:var(--orange); color:#091528; border-radius:8px; padding:15px 22px; display:inline-flex; align-items:center; justify-content:space-between; gap:32px; font-size:13px!important; font-weight:600!important; transition:transform 180ms,background 180ms; min-height:48px; }
+.button:hover:not(:disabled) { background:#fdba74; transform:translateY(-1px); }
+.button span { transition:transform 180ms; }
+.button:hover span { transform:translateX(3px); }
+.button:disabled { cursor:wait; opacity:.6; }
+.formNote { font-size:12px; color:var(--muted); line-height:1.8; margin:16px 0 0; }
+.direct { border-left:1px solid var(--line); padding-left:44px; }
+.contactItem { margin-bottom:30px; }
+.label { display:block; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.contactItem a { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:14px; min-height:32px; }
+.contactItem a:hover,.heroEmail:hover,.footer a:hover { color:var(--orange); }
+.contactItem p { font-size:14px; margin:12px 0 0; }
+.textButton { padding:10px 0; background:none; border:0; color:var(--muted); font-size:12px!important; min-height:44px; text-decoration:underline; text-underline-offset:5px; }
+.textButton:hover { color:var(--orange); }
+.copyStatus { display:block; min-height:18px; font-size:11px; color:var(--orange); }
+.feedback { font-size:13px; line-height:1.8; color:var(--muted); }
+.feedback a { color:var(--orange); text-decoration:underline; }
+.success { padding:20px 0; animation:appear 300ms ease; }
+.success h3 { font-size:30px; letter-spacing:-.04em; margin:16px 0; }
+.success p { color:var(--muted); line-height:1.8; }
+.honeypot { display:none; }
+.footer { border-top:1px solid var(--line); padding:32px 0 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; font-size:11px; color:var(--muted); }
+.footer strong { color:var(--ink); font-size:13px; font-weight:600; }
+.footer p { margin:8px 0 0; line-height:1.7; }
+.footer nav { display:flex; gap:24px; }
+@keyframes appear { from {opacity:0; transform:translateY(4px);} to {opacity:1; transform:translateY(0);} }
+@media(max-width:1023px) { .page {padding-top:56px;} .contactArea {gap:40px;} .direct {padding-left:28px;} }
+@media(max-width:700px) { .container {width:calc(100% - 32px);} .hero {padding:48px 0 40px;} .hero h1 {font-size:clamp(3rem,14vw,5rem);} .intro {font-size:15px;} .desktopBreak {display:none;} .heroEmail {font-size:16px;} .wave {right:-240px;} .contactArea {grid-template-columns:1fr; gap:40px; padding:40px 0 48px;} .direct {border-left:0; border-top:1px solid var(--line); padding:32px 0 0;} .contactItem a {min-height:44px;} .button {width:100%;} .sectionLabel {margin-bottom:24px;} .footer {align-items:flex-start; flex-direction:column; padding-bottom:100px;} }
+@media(prefers-reduced-motion:reduce) { .page {scroll-behavior:auto;} .page * {animation:none!important; transition:none!important;} }
+
+.emailRow { display:flex; align-items:center; gap:12px; }
+.emailRow a { min-width:0; }
+.copyButton { display:inline-flex; align-items:center; justify-content:center; flex:0 0 40px; width:40px; height:40px; padding:0; border:0; border-radius:6px; background:transparent; color:var(--muted); transition:color 160ms,background 160ms; }
+.copyButton:hover { color:var(--orange); background:rgba(251,146,60,.08); }
+@media(max-width:700px) { .copyButton { width:44px; height:44px; flex-basis:44px; } }
+.emailRow { gap:8px; }
+.emailRow .emailAddress { justify-content:flex-start; }
+.emailRow .emailArrow { margin-left:auto; justify-content:flex-end; min-width:24px; }
+/* Both parts of the email link share the same hover treatment. */
+.emailRow:has(.emailAddress:hover) .emailAddress,
+.emailRow:has(.emailAddress:hover) .emailArrow,
+.emailRow:has(.emailArrow:hover) .emailAddress,
+.emailRow:has(.emailArrow:hover) .emailArrow { color:var(--orange); }

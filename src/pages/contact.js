@@ -1,362 +1,139 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import emailjs from "@emailjs/browser"
-import { ReactTyped } from "react-typed"
-import { ArrowOutwardOutlined, ContentCopyOutlined, EmailOutlined } from "@mui/icons-material"
-
 import { BackToTopButton } from "@/components/nav/BackTopTop"
 import { fetchEnvVars } from "@/utils/ServerFetchFunction"
 import { useCooldown } from "@/components/hooks/useCooldown"
 import { useDraft } from "@/components/hooks/useDraft"
 import { useCopyToClipboard } from "@/components/hooks/useCopyToClipboard"
-import { MAX_MESSAGE, MIN_NAME } from "@/utils/contactConstants"
-import { emailAddress, githubLink, linkedInLink } from "@/data/socialLinks"
+import { MAX_MESSAGE } from "@/utils/contactConstants"
+import { emailAddress, githubLink, linkedInLink, resumeLink } from "@/data/socialLinks"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
-import { contactPageContent } from "@/data/contact"
-
-const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test((value || "").trim())
-const actionIcons = {
-    ContentCopyOutlined,
-    EmailOutlined,
-}
-
-function ContactField({
-    label,
-    name,
-    placeholder,
-    value,
-    onChange,
-    error,
-    maxLength,
-    multiline = false,
-    rows = 5,
-}) {
-    const sharedClassName =
-        "w-full border-0 border-b border-slate-200/16 bg-transparent px-0 py-2.5 font-spacemono text-[0.95rem] uppercase tracking-[0.02em] text-blue-100 outline-none placeholder:text-slate-500/78 focus:border-amber-300/55 sm:py-3 sm:text-[1.1rem]"
-
-    return (
-        <label className="block">
-            <div className="font-spacemono text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px] sm:tracking-[0.18em]">
-                {label}
-            </div>
-            {multiline ? (
-                <textarea
-                    name={name}
-                    rows={rows}
-                    value={value}
-                    onChange={onChange}
-                    maxLength={maxLength}
-                    placeholder={placeholder}
-                    className={`${sharedClassName} resize-none`}
-                />
-            ) : (
-                <input
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    maxLength={maxLength}
-                    placeholder={placeholder}
-                    className={sharedClassName}
-                    autoComplete="off"
-                />
-            )}
-            <div className={`pt-2 font-montserrat text-sm ${error ? "text-rose-300" : "text-transparent"}`}>
-                {error || "placeholder"}
-            </div>
-        </label>
-    )
-}
-
-function ContactMetaCard({ onCopyEmail }) {
-    return (
-        <aside className="border border-slate-200/10 bg-slate-950/38 p-4 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:p-5">
-            <div className="font-spacemono text-[12px] font-bold uppercase tracking-[0.18em] text-amber-100 sm:text-sm sm:tracking-[0.22em]">
-                {contactPageContent.metaTitle}
-            </div>
-
-            <div className="mt-4 space-y-3 font-spacemono text-[12px] text-slate-300/86 sm:mt-5 sm:space-y-4 sm:text-sm">
-                {contactPageContent.transmissionRoutes.map((route) => (
-                    <div key={route.label} className="flex items-center justify-between gap-6">
-                        <span>{route.label}</span>
-                        <span className={`text-right ${route.accent}`}>{route.value}</span>
-                    </div>
-                ))}
-            </div>
-
-            <div className="mt-5 grid gap-2.5 sm:mt-6 sm:gap-3">
-                {contactPageContent.routeButtons.map((item) => {
-                    const Icon = item.iconKey ? actionIcons[item.iconKey] : null
-                    const href = item.href === "linkedin" ? linkedInLink : item.href === "github" ? githubLink : item.href
-
-                    if (item.action === "copy") {
-                        return (
-                            <button
-                                key={item.label}
-                                type="button"
-                                onClick={onCopyEmail}
-                                className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3"
-                            >
-                                <span className="inline-flex items-center gap-2">
-                                    {Icon ? <Icon sx={{ fontSize: 16 }} /> : null}
-                                    {item.label}
-                                </span>
-                                <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
-                            </button>
-                        )
-                    }
-
-                    return (
-                        <a key={item.label} href={href} target={href?.startsWith("http") ? "_blank" : undefined} rel={href?.startsWith("http") ? "noreferrer" : undefined} className="home-btn home-btn-secondary w-full justify-between !px-4 !py-2.5 sm:!px-6 sm:!py-3">
-                            <span className="inline-flex items-center gap-2">
-                                {Icon ? <Icon sx={{ fontSize: 16 }} /> : null}
-                                {item.label}
-                            </span>
-                            <ArrowOutwardOutlined sx={{ fontSize: 16 }} />
-                        </a>
-                    )
-                })}
-            </div>
-        </aside>
-    )
-}
-
-function Toast({ kind, text, onClose }) {
-    useEffect(() => {
-        const timer = window.setTimeout(onClose, 3600)
-        return () => window.clearTimeout(timer)
-    }, [onClose])
-
-    return (
-        <div className="fixed bottom-5 right-5 z-[90] border border-slate-200/10 bg-[#091528]/95 px-4 py-3 shadow-[0_18px_42px_rgba(2,8,23,0.36)] backdrop-blur-md">
-            <div className={`font-montserrat text-sm ${kind === "success" ? "text-amber-100" : "text-rose-200"}`}>
-                {text}
-            </div>
-        </div>
-    )
-}
+import s from "@/styles/Contact.module.css"
 
 export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     const containerRef = useRef(null)
     const formRef = useRef(null)
-
-    const [toast, setToast] = useState(null)
-    const [sending, setSending] = useState(false)
-    const [hp, setHp] = useState("")
+    const statusRef = useRef(null)
+    const copyTimer = useRef(null)
     const [draft, setDraft] = useDraft()
+    const [errors, setErrors] = useState({})
+    const [status, setStatus] = useState("idle")
+    const [copied, setCopied] = useState("")
+    const [hp, setHp] = useState("")
     const { remaining, start: startCooldown } = useCooldown()
-    const [showErrors, setShowErrors] = useState(false)
-
-    useHomeGridPage(containerRef, { observeFades: false })
-
-    const rawNameInvalid = (draft.name || "").trim().length < MIN_NAME
-    const rawEmailInvalid = !isValidEmail(draft.email || "")
-    const rawMessageBlank = !((draft.message || "").trim().length > 0)
-    const rawMsgTooLong = (draft.message || "").length > MAX_MESSAGE
-
-    const charsLeft = MAX_MESSAGE - (draft.message?.length || 0)
-
-    const nameError = showErrors && rawNameInvalid ? `Minimum ${MIN_NAME} characters required.` : ""
-    const emailError = showErrors && rawEmailInvalid ? "Valid email required." : ""
-    const messageError = showErrors && rawMsgTooLong
-        ? `Limit is ${MAX_MESSAGE} characters.`
-        : showErrors && rawMessageBlank
-            ? "Message cannot be empty."
-            : ""
-
-    const canSubmit = useMemo(
-        () => hp === "" && !sending && !remaining && !rawNameInvalid && !rawEmailInvalid && !rawMessageBlank && !rawMsgTooLong,
-        [hp, sending, remaining, rawNameInvalid, rawEmailInvalid, rawMessageBlank, rawMsgTooLong]
-    )
-
     const copyToClipboard = useCopyToClipboard()
-    const handleCopyEmail = useCallback(async () => {
+    const emailServiceReady = Boolean(EMAIL_SVCID && EMAIL_TEMPID && EMAIL_PUBKEY)
+    useHomeGridPage(containerRef, { observeFades: false })
+    useEffect(() => () => window.clearTimeout(copyTimer.current), [])
+    useEffect(() => {
+        if (status === "success") statusRef.current?.focus()
+    }, [status])
+
+    const updateField = (event) => {
+        const { name, value } = event.target
+        setDraft(current => ({ ...current, [name]: value }))
+        setErrors(current => ({ ...current, [name]: "" }))
+        if (status === "error" || status === "draft") setStatus("idle")
+    }
+    const handleCopy = async () => {
         const ok = await copyToClipboard(emailAddress)
-        setToast(
-            ok
-                ? { kind: "success", text: "Email copied to clipboard." }
-                : { kind: "error", text: "Could not copy email." }
-        )
-    }, [copyToClipboard])
-
-    const resetForm = useCallback(() => {
-        setDraft({ name: "", email: "", message: "" })
-        setShowErrors(false)
-        if (formRef.current) formRef.current.reset()
-    }, [setDraft])
-
+        setCopied(ok ? "Copied ✓" : "Couldn't copy. Select the address instead.")
+        window.clearTimeout(copyTimer.current)
+        copyTimer.current = window.setTimeout(() => setCopied(""), 2200)
+    }
     const handleSubmit = async (event) => {
         event.preventDefault()
-
-        if (!canSubmit) {
-            setShowErrors(true)
+        if (hp || status === "sending" || remaining) return
+        const invalid = {}
+        if (!draft.name?.trim()) invalid.name = "Please enter your name."
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email?.trim() || "")) invalid.email = "Please enter a valid email address."
+        if (!draft.message?.trim()) invalid.message = "Please add a message."
+        else if (draft.message.length > MAX_MESSAGE) invalid.message = `Please keep your message within ${MAX_MESSAGE} characters.`
+        setErrors(invalid)
+        if (Object.keys(invalid).length) {
+            formRef.current.elements[Object.keys(invalid)[0]]?.focus()
             return
         }
-
-        if (!EMAIL_SVCID || !EMAIL_TEMPID || !EMAIL_PUBKEY) {
-            setToast({ kind: "error", text: "Email service not configured." })
+        if (!emailServiceReady) {
+            window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(`Message from ${draft.name.trim()}`)}&body=${encodeURIComponent(`${draft.message}\n\nFrom: ${draft.name}\nReply to: ${draft.email}`)}`
+            setStatus("draft")
             return
         }
-
-        setShowErrors(false)
-        setSending(true)
-        setToast(null)
-
+        setStatus("sending")
         try {
             await emailjs.sendForm(EMAIL_SVCID, EMAIL_TEMPID, formRef.current, EMAIL_PUBKEY)
-            setToast({ kind: "success", text: "Transmission complete. Reply will follow shortly." })
-            resetForm()
+            setDraft({ name: "", email: "", message: "" })
             startCooldown()
+            setStatus("success")
         } catch {
-            setToast({ kind: "error", text: "Transmission failed. Use direct email instead." })
-        } finally {
-            setSending(false)
+            setStatus("error")
         }
     }
 
-    const syslogText = sending
-        ? "Transmitting payload"
-        : remaining
-            ? "Rate limit active"
-            : "Awaiting submission"
+    const field = (name, label, placeholder, multiline = false) => {
+        const props = {
+            id: `contact-${name}`, name, value: draft[name] || "", onChange: updateField,
+            placeholder, autoComplete: "off", required: true, "aria-invalid": Boolean(errors[name]),
+            "aria-describedby": errors[name] ? `contact-${name}-error` : name === "message" ? "message-limit" : undefined,
+        }
+        return <div className={s.field}>
+            <label htmlFor={props.id}>{label}</label>
+            {multiline ? <textarea {...props} rows={6} maxLength={MAX_MESSAGE} /> : <input {...props} type={name === "email" ? "email" : "text"} autoComplete="off" />}
+            {errors[name] && <p id={`contact-${name}-error`} className={s.error}>{errors[name]}</p>}
+        </div>
+    }
 
-    return (
-        <>
-            <SeoHead
-                title={contactPageContent.seo.title}
-                description={contactPageContent.seo.description}
-                path={contactPageContent.seo.path}
-            />
-
-            <main
-                ref={containerRef}
-                className="relative h-screen overflow-y-scroll scroll-smooth overscroll-contain bg-transparent text-slate-50"
-            >
-                <BackToTopButton targetRef={containerRef} />
-
-                <div className="pt-14">
-                    <section className="px-4 pb-12 pt-4 sm:px-10 sm:pb-14 sm:pt-6 lg:px-14">
-                        <div className="mx-auto grid w-full max-w-[96rem] gap-6 lg:grid-cols-[minmax(0,1.18fr)_20rem]">
-                            <div className="overflow-hidden border border-slate-200/10 bg-slate-950/30 px-4 py-5 shadow-[0_12px_40px_rgba(2,8,23,0.24)] backdrop-blur-[2px] sm:px-6 sm:py-6 lg:px-8 lg:py-8">
-                                <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/18 bg-amber-300/10 px-3 py-1.5 font-spacemono text-[10px] font-bold uppercase tracking-[0.14em] text-amber-100 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.18em]">
-                                    <span className="h-2 w-2 rounded-full bg-amber-300" />
-                                    <span>{contactPageContent.badge}</span>
-                                </div>
-
-                                <h1 className="mt-4 whitespace-nowrap font-montserrat text-[clamp(1.45rem,8vw,2.8rem)] font-semibold tracking-tight text-blue-100 md:text-[3.5rem]">
-                                    {contactPageContent.title}
-                                </h1>
-
-                                <p className="mt-3 max-w-3xl font-spacemono text-[12px] leading-5 text-slate-400/88 sm:text-sm sm:leading-6">
-                                    {contactPageContent.introLines[0]}
-                                    <br />
-                                    {contactPageContent.introLines[1]}
-                                </p>
-
-                                <form
-                                    ref={formRef}
-                                    onSubmit={handleSubmit}
-                                    noValidate
-                                    className="mt-6 space-y-5 sm:mt-8 sm:space-y-6"
-                                >
-                                    <input
-                                        tabIndex={-1}
-                                        autoComplete="off"
-                                        className="hidden"
-                                        name="company"
-                                        onChange={(event) => setHp(event.target.value)}
-                                    />
-
-                                    <ContactField
-                                        label={contactPageContent.fieldLabels.name}
-                                        name="name"
-                                        placeholder={contactPageContent.placeholders.name}
-                                        value={draft.name || ""}
-                                        onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))}
-                                        error={nameError}
-                                    />
-
-                                    <ContactField
-                                        label={contactPageContent.fieldLabels.email}
-                                        name="email"
-                                        placeholder={contactPageContent.placeholders.email}
-                                        value={draft.email || ""}
-                                        onChange={(event) => setDraft((current) => ({ ...current, email: event.target.value }))}
-                                        error={emailError}
-                                    />
-
-                                    <ContactField
-                                        label={contactPageContent.fieldLabels.message}
-                                        name="message"
-                                        placeholder={contactPageContent.placeholders.message}
-                                        value={draft.message || ""}
-                                        onChange={(event) => setDraft((current) => ({
-                                            ...current,
-                                            message: event.target.value.slice(0, MAX_MESSAGE),
-                                        }))}
-                                        error={messageError}
-                                        maxLength={MAX_MESSAGE}
-                                        multiline
-                                        rows={5}
-                                    />
-
-                                    <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-                                        <div className="flex flex-wrap items-center gap-4">
-                                            <button
-                                                id="contact-send-btn"
-                                                type="submit"
-                                                disabled={!canSubmit}
-                                                className="home-btn border-0 bg-amber-300 px-4 py-2.5 text-slate-950 disabled:cursor-not-allowed disabled:opacity-45 sm:px-5"
-                                            >
-                                                <span>&gt;</span>
-                                                <span>
-                                                    {sending
-                                                        ? "Transmitting..."
-                                                        : remaining
-                                                            ? `Cooldown_${remaining}s`
-                                                            : "Execute_Transmission"}
-                                                </span>
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                onClick={resetForm}
-                                                className="home-btn home-btn-secondary px-4 py-2.5 sm:px-6 sm:py-3"
-                                            >
-                                                Reset_Buffer
-                                            </button>
-                                        </div>
-
-                                        <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-slate-400 sm:text-xs sm:tracking-[0.16em]">
-                                            <span>SYSLOG: </span>
-                                            <ReactTyped
-                                                key={syslogText}
-                                                strings={[syslogText]}
-                                                typeSpeed={24}
-                                                showCursor={false}
-                                                startWhenVisible
-                                                className="inline"
-                                            />
-                                            <span className="typewriter-cursor">_</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="font-spacemono text-[11px] uppercase tracking-[0.14em] text-slate-500 sm:text-xs sm:tracking-[0.16em]">
-                                        Payload budget remaining: {charsLeft}
-                                    </div>
-                                </form>
-                            </div>
-
-                            <ContactMetaCard onCopyEmail={handleCopyEmail} />
+    return <>
+        <SeoHead title="Contact | Elliot Chin" description="Have something interesting to build, secure, or figure out? Contact Elliot Chin about software, cybersecurity, industrial systems, and infrastructure." path="/contact" />
+        <main ref={containerRef} className={s.page}>
+            <div className={s.container}>
+                <header className={s.hero}>
+                    <p className={s.path}>~/contact</p>
+                    <h1>Let's talk<span>.</span></h1>
+                    <p className={s.intro}>Have something interesting to build, secure, debug, or figure out?<br className={s.desktopBreak} /> Send me a message.</p>
+                    <a className={s.heroEmail} href={`mailto:${emailAddress}`}>{emailAddress} <span aria-hidden="true">↗</span></a>
+                    <svg className={s.wave} viewBox="0 0 420 280" fill="none" aria-hidden="true"><path d="M430 10C170 40 430 120 210 170S30 200-20 280M450 35C190 65 450 145 230 195S50 225 0 305" /></svg>
+                </header>
+                <section className={s.contactArea} aria-label="Contact options">
+                    <div>
+                        <h2 className={s.sectionLabel}>Send a message</h2>
+                        {status === "success" ? <div className={s.success} ref={statusRef} tabIndex={-1}>
+                            <span className={s.path}>STATUS::DELIVERED</span>
+                            <h3>Message sent.</h3><p>Thanks — I'll get back to you by email.</p>
+                            <button className={s.textButton} onClick={() => setStatus("idle")}>Write another message →</button>
+                        </div> : <form ref={formRef} onSubmit={handleSubmit} autoComplete="off" noValidate aria-busy={status === "sending"}>
+                            <div className={s.honeypot} aria-hidden="true"><input name="company" tabIndex={-1} autoComplete="off" value={hp} onChange={event => setHp(event.target.value)} /></div>
+                            {field("name", "Name", "Your name")}
+                            {field("email", "Email", "you@example.com")}
+                            {field("message", "Message", "What's the problem you're trying to solve?", true)}
+                            <p id="message-limit" className={s.characterCount}>{draft.message?.length || 0} / {MAX_MESSAGE}</p>
+                            <button className={s.button} type="submit" disabled={status === "sending" || remaining > 0}>{status === "sending" ? "Sending…" : remaining ? `Send again in ${remaining}s` : emailServiceReady ? "Send message" : "Open email draft"}<span aria-hidden="true">→</span></button>
+                            <p className={s.formNote}>{emailServiceReady ? "I'll reply to the email address you provide." : "Opens your email app with your message ready to send."}</p>
+                        </form>}
+                        <div className={s.feedback} role={status === "error" ? "alert" : "status"} aria-live="polite" aria-atomic="true">
+                            {status === "sending" && "Sending your message…"}
+                            {status === "success" && "Message sent. Thanks — I'll get back to you by email."}
+                            {status === "error" && <p>Something went wrong while sending. You can <a href={`mailto:${emailAddress}`}>email me directly at {emailAddress}</a>. Your message is still here.</p>}
+                            {status === "draft" && <p>Your draft is ready in your email app. If it didn't open, <a href={`mailto:${emailAddress}`}>email me directly</a> — your message is saved here.</p>}
+                            {Object.values(errors).filter(Boolean).length > 0 && "Please check the highlighted fields."}
                         </div>
-                    </section>
-                </div>
+                    </div>
+                    <aside className={s.direct} aria-labelledby="direct-heading">
+                        <h2 id="direct-heading" className={s.sectionLabel}>Direct contact</h2>
+                        <div className={s.contactItem}><span className={s.label}>Email</span><div className={s.emailRow}><a className={s.emailAddress} href={`mailto:${emailAddress}`}>{emailAddress}</a><button type="button" className={s.copyButton} onClick={handleCopy} aria-label="Copy email address" title="Copy email address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" /></svg></button><a className={s.emailArrow} href={`mailto:${emailAddress}`} aria-label="Email Elliot"><span aria-hidden="true">↗</span></a></div><span className={s.copyStatus} role="status">{copied}</span></div>
+                        <div className={s.contactItem}><span className={s.label}>LinkedIn</span><a href={linkedInLink} target="_blank" rel="noreferrer">View profile <span aria-hidden="true">↗</span></a></div>
+                        <div className={s.contactItem}><span className={s.label}>GitHub</span><a href={githubLink} target="_blank" rel="noreferrer">View repositories <span aria-hidden="true">↗</span></a></div>
 
-                {toast && <Toast kind={toast.kind} text={toast.text} onClose={() => setToast(null)} />}
-            </main>
-        </>
-    )
+                        <p className={s.formNote}>Email is the best way to reach me.</p>
+                    </aside>
+                </section>
+                <footer className={s.footer}><div><strong>Elliot Chin</strong><p>Software · Cybersecurity · Industrial Systems</p></div><nav aria-label="Footer links"><a href={githubLink} target="_blank" rel="noreferrer">GitHub ↗</a><a href={linkedInLink} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={resumeLink}>Resume ↓</a></nav><span>© Elliot Chin</span></footer>
+            </div>
+            <BackToTopButton targetRef={containerRef} />
+        </main>
+    </>
 }
-
 export async function getServerSideProps() {
     return fetchEnvVars(["EMAIL_SVCID", "EMAIL_TEMPID", "EMAIL_PUBKEY"])
 }

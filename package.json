@@ -7,6 +7,7 @@
     },
     "scripts": {
       "dev": "next dev",
+      "dev:portfolio": "next dev -p 3001",
       "build": "next build",
       "analyze": "set ANALYZE=true&& next build",
       "start": "next start",

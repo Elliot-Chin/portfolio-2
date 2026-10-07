@@ -34,3 +34,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Private source material and local verification artifacts
+.env
+.env.*
+!.env.example
+/Trips.xlsx
+/outputs/
+/*preview.jpg
+/.next-audit/
+/public/projects/trip-scheduler/online-dashboard.jpg
+/public/projects/trip-scheduler/online-dashboard-v2.jpg
+/public/projects/trip-scheduler/online-itinerary.jpg
+/public/projects/trip-scheduler/online-itinerary-v2.jpg
+/public/projects/trip-scheduler/online-list.jpg
+/public/projects/trip-scheduler/online-list-v2.jpg

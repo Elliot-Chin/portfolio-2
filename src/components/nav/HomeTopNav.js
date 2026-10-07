@@ -11,6 +11,7 @@ import {
     PsychologyAltOutlined,
 } from "@mui/icons-material"
 import { defaultMobileNavItems, defaultNavItems } from "@/data/nav"
+import navStyles from "@/styles/SharedNavigation.module.css"
 
 function isRouteActive(currentPath, href) {
     if (!href) return false
@@ -117,7 +118,8 @@ export function HomeTopNav({
     resumeHref = "/resume",
 }) {
     const router = useRouter()
-    const currentPath = router.asPath?.split("?")[0] ?? router.pathname
+    const currentPath = router.asPath?.split(/[?#]/)[0] ?? router.pathname
+    const refined = router.pathname === "/404" || router.pathname === "/nice-try" || currentPath === "/" || currentPath === "/resume" || currentPath === "/contact" || currentPath === "/projects" || currentPath.startsWith("/projects/")
 
     const navRailRef = useRef(null)
     const navItemRefs = useRef({})
@@ -282,7 +284,7 @@ export function HomeTopNav({
 
     return (
         <>
-            <nav className="fixed inset-x-0 top-0 z-40 border-b border-slate-200/6 bg-[#091528]/92 backdrop-blur-md">
+            <nav aria-label="Main navigation" className={`fixed inset-x-0 top-0 z-40 border-b border-slate-200/6 bg-[#091528]/92 backdrop-blur-md ${refined ? navStyles.header : ""}`}>
                 <div className="mx-auto flex h-14 w-full max-w-[96rem] items-center justify-between gap-3 px-4 sm:px-10 lg:px-14">
                     {brandOnClick ? (
                         <button

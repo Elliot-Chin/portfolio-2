@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 
-export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
+export const ProjectImage = ({ alt, src, description, lg_size, maxH, enlarged = false, compact = false }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [mounted, setMounted] = useState(false)
 
@@ -36,7 +36,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                     onClick={() => setIsOpen(false)}
                 >
                     <div
-                        className="w-full max-w-5xl overflow-hidden rounded-[20px] border border-white/10 bg-[rgba(30,41,59,0.34)] shadow-[0_24px_80px_rgba(2,8,23,0.5)] backdrop-blur-2xl"
+                        className={`w-full ${enlarged ? 'max-w-[96rem] max-h-[94vh] overflow-y-auto' : 'max-w-5xl overflow-hidden'} rounded-[20px] border border-white/10 bg-[rgba(30,41,59,0.34)] shadow-[0_24px_80px_rgba(2,8,23,0.5)] backdrop-blur-2xl`}
                         onClick={(event) => event.stopPropagation()}
                     >
                         <div className="flex items-center justify-between gap-4 border-b border-white/8 px-4 py-3 sm:px-6 sm:py-4">
@@ -50,7 +50,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                             </button>
                         </div>
                         <div className="flex items-center justify-center px-4 py-4 sm:px-6 sm:py-6">
-                            <img alt={alt} src={src} className={`max-w-full h-auto object-contain rounded-md ${maxHClasses}`} />
+                            <img alt={alt} src={src} className={`max-w-full h-auto object-contain rounded-md ${enlarged ? 'max-h-[75vh]' : maxHClasses}`} />
                         </div>
                         <div className="px-4 pb-4 sm:px-6 sm:pb-5">
                             <span className="block text-center font-montserrat text-[13px] italic text-white sm:text-sm lg:text-xl">
@@ -61,7 +61,7 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                 </div>
             , document.body)}
 
-            <div className={`mt-4 flex w-full min-w-0 flex-col gap-2 rounded-md sm:mt-5 ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
+            <div className={`${compact ? '' : 'mt-4 sm:mt-5'} flex w-full min-w-0 flex-col gap-2 rounded-md ${lg_size ? `xl:${lg_size}` : "xl:w-1/3"}`}>
                 <div className="w-full rounded-md flex items-center justify-center">
                     <img
                         alt={alt}
@@ -70,9 +70,9 @@ export const ProjectImage = ({ alt, src, description, lg_size, maxH }) => {
                         className={`w-full h-auto object-contain bg-transparent hover:cursor-zoom-in ${maxHClasses}`}
                     />
                 </div>
-                <span className="w-full text-center font-montserrat text-[13px] italic text-slate-950 dark:text-white sm:text-sm">
+                {!compact && <span className="w-full text-center font-montserrat text-[13px] italic text-slate-950 dark:text-white sm:text-sm">
                     {description}
-                </span>
+                </span>}
             </div>
         </>
     )
