@@ -396,7 +396,7 @@ export function HomeTopNav({
                 </div>
 
                 {!isMobileNavVisible && (
-                    <div className="pointer-events-auto absolute inset-x-0 bottom-[calc(env(safe-area-inset-bottom)+0.6rem)] flex justify-center">
+                    <div className="pointer-events-auto absolute inset-x-0 bottom-3 flex justify-center">
                         <button
                             type="button"
                             aria-label="Show navigation"
