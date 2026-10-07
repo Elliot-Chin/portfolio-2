@@ -66,7 +66,7 @@ export const BackToTopButton = ({ targetRef }) => {
     }
 
     return (
-        <div className={`fixed bottom-3 right-3 z-50 lg:bottom-5 lg:right-10 ${show ? "flex" : "hidden"}`}>
+        <div className={`back-to-top-control fixed bottom-3 right-3 z-50 lg:bottom-5 lg:right-10 ${show ? "flex" : "hidden"}`}>
             <button
                 type="button"
                 onClick={scrollToTop}

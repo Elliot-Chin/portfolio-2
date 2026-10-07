@@ -708,3 +708,4 @@ form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] { displa
 @keyframes control-arrow-loading { 0%,12% {transform:translateY(0) rotate(0deg);} 18% {transform:translateY(2px) rotate(-12deg);} 30% {transform:translateY(-9px) rotate(-160deg);} 42% {transform:translateY(-5px) rotate(-310deg);} 50% {transform:translateY(2px) rotate(-360deg);} 56%,100% {transform:translateY(0) rotate(-360deg);} }
 @media(prefers-reduced-motion:reduce) { [data-click-feedback] {animation:none!important;} [data-navigation-pending] {outline:2px solid #fb923c; outline-offset:3px;} [data-loading-arrow],[data-loading-fallback]::after,form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] {animation:none!important;} }
 [data-loading-fallback]:has(img)::after { right:12px!important; top:12px!important; box-shadow:0 0 0 6px #091528; }
+@media(max-width:1023px) { body.mobile-nav-open .back-to-top-control { display:none!important; } }

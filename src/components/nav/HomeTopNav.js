@@ -130,6 +130,11 @@ export function HomeTopNav({
     const [underlineStyle, setUnderlineStyle] = useState({ opacity: 0, transform: "translateX(0px)", width: 0 })
     const [isMobileNavVisible, setIsMobileNavVisible] = useState(false)
 
+    useEffect(() => {
+        document.body.classList.toggle("mobile-nav-open", isMobileNavVisible)
+        return () => document.body.classList.remove("mobile-nav-open")
+    }, [isMobileNavVisible])
+
     const items = useMemo(
         () => centerItems ?? defaultNavItems,
         [centerItems]
