@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import {
     AlternateEmailOutlined,
-    AutorenewOutlined,
     GridViewOutlined,
     HomeOutlined,
     PsychologyAltOutlined,
@@ -81,9 +80,7 @@ function MobileNavItem({ item, isActive, onNavigateStart }) {
     }`
     const Icon = item.Icon
 
-    const iconNode = isLoading
-        ? <AutorenewOutlined sx={{ fontSize: 26 }} className="animate-spin" />
-        : <Icon sx={{ fontSize: 26 }} />
+    const iconNode = <Icon sx={{ fontSize: 26 }} />
 
     if (isActive && !isLoading) {
         return (

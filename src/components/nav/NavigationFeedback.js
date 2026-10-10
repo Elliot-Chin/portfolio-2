@@ -30,6 +30,8 @@ export function NavigationFeedback() {
             previousBusy = control.getAttribute("aria-busy")
             control.setAttribute("aria-busy", "true")
             control.setAttribute("data-navigation-pending", "true")
+            // Global navigation already provides its own pending underline.
+            if (control.closest('nav[aria-label="Main navigation"], nav[aria-label="Mobile navigation"]')) return
             arrow = [...control.querySelectorAll("span")].find(node => /^[→↗↖←↓↑↘↙➜➔]+$/.test(node.textContent.trim()) && node.children.length === 0)
             if (arrow) arrow.setAttribute("data-loading-arrow", "true")
             else control.setAttribute("data-loading-fallback", "true")

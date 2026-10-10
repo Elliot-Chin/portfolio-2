@@ -1,3 +1,4 @@
+import { TypedText } from "@/components/ui/TypedText"
 import { useRef } from "react"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
@@ -12,7 +13,7 @@ export default function NiceTry({ decoyHits }) {
         <main className={s.page} ref={containerRef}><div className={s.container}>
             <section className={s.hero} aria-labelledby="decoy-heading">
                 <div className={s.copy}><p className={s.path}>~/nothing-to-see-here</p>
-                    <h1 id="decoy-heading"><span className={s.number}>403<span style={{fontSize:".25em",marginLeft:12}}>ish</span></span><span className={s.heading}>Nice try<span className={s.dot}>.</span></span></h1>
+                    <h1 id="decoy-heading"><span className={s.number}>403<span style={{fontSize:".25em",marginLeft:12}}>ish</span></span><span className={s.heading}><TypedText text="Nice try" /><span className={s.dot}>.</span></span></h1>
                     <p className={s.intro}>The secrets are in another castle.<br />You found the decoy. Want to see what I actually build?</p>
                     <div className={s.actions}><a className={s.button} href="/">Return Home <span aria-hidden="true">→</span></a><a className={s.textLink} href="/projects">View Projects <span aria-hidden="true">→</span></a></div>
                 </div>

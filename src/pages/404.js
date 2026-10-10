@@ -1,3 +1,4 @@
+import { TypedText } from "@/components/ui/TypedText"
 import { useRef } from "react"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
@@ -19,7 +20,7 @@ export default function Custom404() {
                 <section className={s.hero} aria-labelledby="error-heading">
                     <div className={s.copy}>
                         <p className={s.path}>~/404</p>
-                        <h1 id="error-heading"><span className={s.number}>404</span><span className={s.heading}>Route not found<span className={s.dot}>.</span></span></h1>
+                        <h1 id="error-heading"><span className={s.number}>404</span><span className={s.heading}><TypedText text="Route not found" /><span className={s.dot}>.</span></span></h1>
                         <p className={s.intro}>The page you're looking for doesn't exist<br className={s.break} /> or may have moved.</p>
                         <div className={s.actions}><a href="/" className={s.button}>Return Home <span aria-hidden="true">→</span></a><a href="/projects" className={s.textLink}>View Projects <span aria-hidden="true">→</span></a></div>
                     </div>

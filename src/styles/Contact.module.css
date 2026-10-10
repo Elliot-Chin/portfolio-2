@@ -18,7 +18,7 @@
 .field { margin-bottom:28px; }
 .field label { display:block; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
 .field input,.field textarea { width:100%; display:block; font:400 16px/1.7 Montserrat,sans-serif; color:var(--ink); background:rgba(9,21,40,.18); border:0; border-bottom:1px solid var(--line); border-radius:0; padding:12px 0; min-height:48px; outline:none; transition:border-color 160ms; }
-.field textarea { resize:vertical; min-height:170px; }
+.field textarea { resize:none; min-height:170px; }
 .field input::placeholder,.field textarea::placeholder { color:#8191a7; opacity:1; }
 .field input:focus,.field textarea:focus { border-bottom:2px solid var(--orange); }
 .field [aria-invalid=true] { border-bottom-color:#fda4af; }
@@ -67,3 +67,6 @@
 .emailRow:has(.emailAddress:hover) .emailArrow,
 .emailRow:has(.emailArrow:hover) .emailAddress,
 .emailRow:has(.emailArrow:hover) .emailArrow { color:var(--orange); }
+.emailRow:has(.emailAddress:hover) .emailArrow [data-diagonal-arrow],
+.emailRow:has(.emailAddress:focus-visible) .emailArrow [data-diagonal-arrow] { transform:translate(3px,-3px); }
+@media(prefers-reduced-motion:reduce) { .emailRow:has(.emailAddress:hover) .emailArrow [data-diagonal-arrow],.emailRow:has(.emailAddress:focus-visible) .emailArrow [data-diagonal-arrow] { transform:none; } }

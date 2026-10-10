@@ -709,3 +709,22 @@ form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] { displa
 @media(prefers-reduced-motion:reduce) { [data-click-feedback] {animation:none!important;} [data-navigation-pending] {outline:2px solid #fb923c; outline-offset:3px;} [data-loading-arrow],[data-loading-fallback]::after,form[aria-busy="true"] button[type="submit"] > span[aria-hidden="true"] {animation:none!important;} }
 [data-loading-fallback]:has(img)::after { right:12px!important; top:12px!important; box-shadow:0 0 0 6px #091528; }
 @media(max-width:1023px) { body.mobile-nav-open .back-to-top-control { display:none!important; } }
+
+.typed-text { display:inline-grid; position:relative; vertical-align:baseline; }
+.typed-reserve,.typed-visible { grid-area:1 / 1; }
+.typed-reserve { visibility:hidden; }
+.typed-visible { white-space:normal; }
+.typed-cursor { display:inline-block; width:0; font-size:.65em; vertical-align:.08em; animation:typed-cursor-blink 750ms step-end infinite; }
+.typed-accessible { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+@keyframes typed-cursor-blink { 50% {opacity:0;} }
+@media(prefers-reduced-motion:reduce) { .typed-cursor {display:none;} .typed-reserve {visibility:visible;} .typed-visible {visibility:hidden;} }
+
+.typed-reserve,.typed-visible { white-space:pre-line; }
+.scroll-reveal-enabled [data-fade] { opacity:0; transform:translateY(20px); transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.7,.3,1); }
+.scroll-reveal-enabled [data-fade].is-revealed { opacity:1; transform:translateY(0); }
+@media(prefers-reduced-motion:reduce) { .scroll-reveal-enabled [data-fade] { opacity:1; transform:none; transition:none; } }
+
+/* External-link arrows follow their direction on hover and keyboard focus. */
+a [data-diagonal-arrow] { display:inline-block; transition:transform 180ms ease; }
+a:hover [data-diagonal-arrow],a:focus-visible [data-diagonal-arrow] { transform:translate(3px,-3px)!important; }
+@media(prefers-reduced-motion:reduce) { a:hover [data-diagonal-arrow],a:focus-visible [data-diagonal-arrow] { transform:none!important; } }

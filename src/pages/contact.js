@@ -1,3 +1,4 @@
+import { TypedText } from "@/components/ui/TypedText"
 import { useEffect, useRef, useState } from "react"
 import emailjs from "@emailjs/browser"
 import { BackToTopButton } from "@/components/nav/BackTopTop"
@@ -6,6 +7,7 @@ import { useCooldown } from "@/components/hooks/useCooldown"
 import { useDraft } from "@/components/hooks/useDraft"
 import { useCopyToClipboard } from "@/components/hooks/useCopyToClipboard"
 import { MAX_MESSAGE } from "@/utils/contactConstants"
+import { CONTACT_LIMITS, sanitizeContactField, sanitizeContactDraft } from "@/utils/contactInput"
 import { emailAddress, githubLink, linkedInLink, resumeLink } from "@/data/socialLinks"
 import { SeoHead } from "@/components/seo/SeoHead"
 import { useHomeGridPage } from "@/components/hooks/useHomeGridPage"
@@ -24,7 +26,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     const { remaining, start: startCooldown } = useCooldown()
     const copyToClipboard = useCopyToClipboard()
     const emailServiceReady = Boolean(EMAIL_SVCID && EMAIL_TEMPID && EMAIL_PUBKEY)
-    useHomeGridPage(containerRef, { observeFades: false })
+    useHomeGridPage(containerRef)
     useEffect(() => () => window.clearTimeout(copyTimer.current), [])
     useEffect(() => {
         if (status === "success") statusRef.current?.focus()
@@ -32,7 +34,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
 
     const updateField = (event) => {
         const { name, value } = event.target
-        setDraft(current => ({ ...current, [name]: value }))
+        setDraft(current => ({ ...current, [name]: sanitizeContactField(name, value) }))
         setErrors(current => ({ ...current, [name]: "" }))
         if (status === "error" || status === "draft") setStatus("idle")
     }
@@ -45,10 +47,11 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (hp || status === "sending" || remaining) return
+        const cleanDraft = sanitizeContactDraft(draft)
         const invalid = {}
-        if (!draft.name?.trim()) invalid.name = "Please enter your name."
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email?.trim() || "")) invalid.email = "Please enter a valid email address."
-        if (!draft.message?.trim()) invalid.message = "Please add a message."
+        if (!cleanDraft.name.trim()) invalid.name = "Please enter your name."
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanDraft.email)) invalid.email = "Please enter a valid email address."
+        if (!cleanDraft.message.trim()) invalid.message = "Please add a message."
         else if (draft.message.length > MAX_MESSAGE) invalid.message = `Please keep your message within ${MAX_MESSAGE} characters.`
         setErrors(invalid)
         if (Object.keys(invalid).length) {
@@ -56,13 +59,13 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
             return
         }
         if (!emailServiceReady) {
-            window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(`Message from ${draft.name.trim()}`)}&body=${encodeURIComponent(`${draft.message}\n\nFrom: ${draft.name}\nReply to: ${draft.email}`)}`
+            window.location.href = `mailto:${emailAddress}?subject=${encodeURIComponent(`Message from ${cleanDraft.name.trim()}`)}&body=${encodeURIComponent(`${cleanDraft.message}\n\nFrom: ${cleanDraft.name}\nReply to: ${cleanDraft.email}`)}`
             setStatus("draft")
             return
         }
         setStatus("sending")
         try {
-            await emailjs.sendForm(EMAIL_SVCID, EMAIL_TEMPID, formRef.current, EMAIL_PUBKEY)
+            await emailjs.send(EMAIL_SVCID, EMAIL_TEMPID, { ...cleanDraft, company: "" }, EMAIL_PUBKEY)
             setDraft({ name: "", email: "", message: "" })
             startCooldown()
             setStatus("success")
@@ -74,7 +77,7 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
     const field = (name, label, placeholder, multiline = false) => {
         const props = {
             id: `contact-${name}`, name, value: draft[name] || "", onChange: updateField,
-            placeholder, autoComplete: "off", required: true, "aria-invalid": Boolean(errors[name]),
+            placeholder, autoComplete: "off", maxLength: CONTACT_LIMITS[name], "data-lpignore": "true", "data-1p-ignore": "true", required: true, "aria-invalid": Boolean(errors[name]),
             "aria-describedby": errors[name] ? `contact-${name}-error` : name === "message" ? "message-limit" : undefined,
         }
         return <div className={s.field}>
@@ -90,12 +93,12 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
             <div className={s.container}>
                 <header className={s.hero}>
                     <p className={s.path}>~/contact</p>
-                    <h1>Let's talk<span>.</span></h1>
+                    <h1><TypedText text="Let's talk" /><span>.</span></h1>
                     <p className={s.intro}>Have something interesting to build, secure, debug, or figure out?<br className={s.desktopBreak} /> Send me a message.</p>
-                    <a className={s.heroEmail} href={`mailto:${emailAddress}`}>{emailAddress} <span aria-hidden="true">↗</span></a>
+                    <a className={s.heroEmail} href={`mailto:${emailAddress}`}>{emailAddress} <span data-diagonal-arrow aria-hidden="true">↗</span></a>
                     <svg className={s.wave} viewBox="0 0 420 280" fill="none" aria-hidden="true"><path d="M430 10C170 40 430 120 210 170S30 200-20 280M450 35C190 65 450 145 230 195S50 225 0 305" /></svg>
                 </header>
-                <section className={s.contactArea} aria-label="Contact options">
+                <section data-fade className={s.contactArea} aria-label="Contact options">
                     <div>
                         <h2 className={s.sectionLabel}>Send a message</h2>
                         {status === "success" ? <div className={s.success} ref={statusRef} tabIndex={-1}>
@@ -121,9 +124,9 @@ export default function Contact({ EMAIL_SVCID, EMAIL_TEMPID, EMAIL_PUBKEY }) {
                     </div>
                     <aside className={s.direct} aria-labelledby="direct-heading">
                         <h2 id="direct-heading" className={s.sectionLabel}>Direct contact</h2>
-                        <div className={s.contactItem}><span className={s.label}>Email</span><div className={s.emailRow}><a className={s.emailAddress} href={`mailto:${emailAddress}`}>{emailAddress}</a><button type="button" className={s.copyButton} onClick={handleCopy} aria-label="Copy email address" title="Copy email address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" /></svg></button><a className={s.emailArrow} href={`mailto:${emailAddress}`} aria-label="Email Elliot"><span aria-hidden="true">↗</span></a></div><span className={s.copyStatus} role="status">{copied}</span></div>
-                        <div className={s.contactItem}><span className={s.label}>LinkedIn</span><a href={linkedInLink} target="_blank" rel="noreferrer">View profile <span aria-hidden="true">↗</span></a></div>
-                        <div className={s.contactItem}><span className={s.label}>GitHub</span><a href={githubLink} target="_blank" rel="noreferrer">View repositories <span aria-hidden="true">↗</span></a></div>
+                        <div className={s.contactItem}><span className={s.label}>Email</span><div className={s.emailRow}><a className={s.emailAddress} href={`mailto:${emailAddress}`}>{emailAddress}</a><button type="button" className={s.copyButton} onClick={handleCopy} aria-label="Copy email address" title="Copy email address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" /></svg></button><a className={s.emailArrow} href={`mailto:${emailAddress}`} aria-label="Email Elliot"><span data-diagonal-arrow aria-hidden="true">↗</span></a></div><span className={s.copyStatus} role="status">{copied}</span></div>
+                        <div className={s.contactItem}><span className={s.label}>LinkedIn</span><a href={linkedInLink} target="_blank" rel="noreferrer">View profile <span data-diagonal-arrow aria-hidden="true">↗</span></a></div>
+                        <div className={s.contactItem}><span className={s.label}>GitHub</span><a href={githubLink} target="_blank" rel="noreferrer">View repositories <span data-diagonal-arrow aria-hidden="true">↗</span></a></div>
 
                         <p className={s.formNote}>Email is the best way to reach me.</p>
                     </aside>

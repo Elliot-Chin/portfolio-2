@@ -49,24 +49,29 @@ export function useHomeGridPage(containerRef, { observeFades = true } = {}) {
 
         const nodes = Array.from(root.querySelectorAll("[data-fade]"))
         if (!nodes.length) return
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+        root.classList.add("scroll-reveal-enabled")
 
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (!entry.isIntersecting) return
-                    entry.target.classList.add("!translate-y-0", "!opacity-100")
+                    entry.target.classList.add("is-revealed")
                     observer.unobserve(entry.target)
                 })
             },
             {
                 root,
-                threshold: 0.14,
+                threshold: 0.05,
                 rootMargin: "0px 0px -8% 0px",
             }
         )
 
         nodes.forEach((node) => observer.observe(node))
 
-        return () => observer.disconnect()
+        return () => {
+            observer.disconnect()
+            root.classList.remove("scroll-reveal-enabled")
+        }
     }, [containerRef, observeFades])
 }

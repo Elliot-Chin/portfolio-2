@@ -1,5 +1,6 @@
 // components/contact/hooks/useDraft.js
 import { useEffect, useState } from "react"
+import { sanitizeContactDraft } from "@/utils/contactInput"
 
 const DRAFT_KEY = "contact_draft_v1"
 
@@ -13,11 +14,7 @@ export function useDraft(initial = { name: "", email: "", message: "" }) {
             if (raw) {
                 const saved = JSON.parse(raw)
                 if (saved && typeof saved === "object") {
-                    setDraft({
-                        name: typeof saved.name === "string" ? saved.name : "",
-                        email: typeof saved.email === "string" ? saved.email : "",
-                        message: typeof saved.message === "string" ? saved.message : "",
-                    })
+                    setDraft(sanitizeContactDraft(saved))
                 }
             }
         } catch { }
