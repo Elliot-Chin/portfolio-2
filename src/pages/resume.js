@@ -10,7 +10,8 @@ import s from "@/styles/Resume.module.css"
 const pdf = "/wtr/Elliot_Chin_Resume.pdf"
 const socials = resumeContactLinks.filter(link => ["GitHub", "LinkedIn"].includes(link.label))
 const roles = [
-    { date: "JUN 2023 — PRESENT", company: "Siemens", title: "Junior Application Cybersecurity Specialist", summary: "Engineering and research across OT cybersecurity, industrial communication, and the infrastructure behind secure networked systems.", bullets: [
+    { date: "PRESENT", company: "Siemens", title: "Information Security Professional", summary: "Progressed from Junior Application Cybersecurity Specialist to Information Security Professional.", bullets: [], tech: "" },
+    { date: "FROM JUN 2023", company: "Siemens", title: "Junior Application Cybersecurity Specialist", summary: "Engineering and research across OT cybersecurity, industrial communication, and the infrastructure behind secure networked systems.", bullets: [
         <><strong>Analyze industrial protocols</strong> including OPC UA, PROFINET, S7, and IEC 104 using Wireshark and UAExpert.</>,
         <>Develop <strong>Zeek packet-analysis plugins in C++</strong> to parse industrial traffic and produce event-specific logs for cybersecurity monitoring.</>,
         <>Lead <strong>SINEC Security Monitor compatibility testing</strong>, validating deployment and integration behavior in representative OT environments.</>,
@@ -43,14 +44,14 @@ export default function Resume() {
     const pageRef = useRef(null)
     useHomeGridPage(pageRef)
     return <main className={s.page} ref={pageRef}>
-        <SeoHead title="Resume | Elliot Chin" description="Software development, cybersecurity, and industrial systems engineering. Experience at Siemens and the University of New Brunswick." path="/resume" />
+        <SeoHead title="Resume | Elliot Chin" description="Information Security Professional at Siemens with experience in cybersecurity, industrial networking, and infrastructure." path="/resume" />
         <a className={s.skipLink} href="#resume-content">Skip to content</a>
         <div id="resume-content" className={s.container}>
             <section className={s.hero} aria-labelledby="identity">
                 <p className={s.eyebrow}>~/resume/elliot-chin</p>
                 <h1 id="identity"><TypedText text="Elliot Chin" /><span>.</span></h1>
-                <p className={s.subtitle}>Software Developer &amp;<br />Cybersecurity Engineer</p>
-                <p className={s.intro}>Software developer working across cybersecurity, industrial networking, full-stack applications, and infrastructure. I build tools and systems that help analyze, test, and secure complex networked environments.</p>
+                <p className={s.subtitle}>Information Security Professional</p>
+                <p className={s.intro}>Information Security Professional at Siemens working across cybersecurity, industrial networking, and infrastructure. I build tools and systems that help analyze, test, and secure complex networked environments.</p>
                 <div className={s.actions}><a className={s.button} href={pdf} download>Download Resume <span aria-hidden="true">↓</span></a><SocialLinks /></div>
                 <dl className={s.facts}>{[["Location", "Canada"], ["Focus", "OT Security"], ["Degree", "BSc Software Engineering"], ["Experience", "3+ Years"]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
             </section>
@@ -59,16 +60,17 @@ export default function Resume() {
                 <ol className={s.timeline}>{[
                     ["2022", "Software Developer", "UNB", "Full-stack tools for academic advising and accreditation."],
                     ["2023", "Software Developer", "Siemens", "Industrial labs, networking, and product compatibility testing."],
-                    ["2023 — PRESENT", "Junior Cybersecurity Application Specialist", "Siemens", "Protocol analysis, Zeek plugins, and secure product tooling."],
+                    ["PREVIOUS", "Junior Application Cybersecurity Specialist", "Siemens", "Protocol analysis, Zeek plugins, and secure product tooling."],
+                    ["PRESENT", "Information Security Professional", "Siemens", "Progressed from Junior Application Cybersecurity Specialist."],
                 ].map(([year, title, org, detail]) => <li key={title}><span className={s.year}>{year}</span><div className={s.timelinePoint} /><h3>{title}</h3><p className={s.organization}>{org}</p><p>{detail}</p></li>)}</ol>
             </section>
             <section data-fade className={s.section} id="experience">
                 <SectionTitle number="02" label="Experience" />
-                {roles.map(role => <article className={s.role} key={role.company}><div className={s.roleMeta}><p className={s.eyebrow}>{role.date}</p><h3>{role.company}</h3><p>Canada</p></div><div className={s.roleContent}><h3>{role.title}</h3><p className={s.roleSummary}>{role.summary}</p><ul>{role.bullets.map((bullet, index) => <li key={index}>{bullet}</li>)}</ul><p className={s.stack}>{role.tech}</p></div></article>)}
+                {roles.map(role => <article className={s.role} key={`${role.company}-${role.title}`}><div className={s.roleMeta}><p className={s.eyebrow}>{role.date}</p><h3>{role.company}</h3><p>Canada</p></div><div className={s.roleContent}><h3>{role.title}</h3><p className={s.roleSummary}>{role.summary}</p>{role.bullets.length > 0 && <ul>{role.bullets.map((bullet, index) => <li key={index}>{bullet}</li>)}</ul>}{role.tech && <p className={s.stack}>{role.tech}</p>}</div></article>)}
             </section>
             <section data-fade className={s.section} id="work">
                 <SectionTitle number="03" label="Projects" />
-                {resumeSelectedProjects.map((project, index) => <article className={s.project} key={project.title}>
+                {resumeSelectedProjects.map((project, index) => <article className={`${s.project} ${index % 2 === 1 ? s.projectMirrored : ""}`} key={project.title}>
                     <div><p className={s.eyebrow}>PROJECT_0{index + 1} / {index === 0 ? "OT SECURITY" : "FULL-STACK DEVELOPMENT"}</p><h3>{index === 0 ? "Industrial Protocol Analysis & Zeek Plugin Development" : "Expense Recorder"}</h3><p>{index === 0 ? "Protocol-aware cybersecurity monitoring for industrial OPC UA environments. Research with PLCs and Wireshark informed a Zeek plugin that turns network traffic into useful security logs for SINEC Security Monitor." : "A personal finance application for recording expenses, tracking budgets, and reviewing spending. Built across a Next.js frontend, Flask API, and PostgreSQL database hosted with Supabase."}</p><p className={s.stack}>{index === 0 ? "Zeek · C++ · OPC UA · Wireshark · PLCs" : "Next.js · React · Flask · Python · PostgreSQL · Supabase"}</p><Link className={s.textLink} href={index === 0 ? "/projects/industrial-protocol-analysis" : "/projects/expense-recorder"}>View project <span aria-hidden="true">→</span></Link></div>
                     <Link className={s.projectVisual} href={index === 0 ? "/projects/industrial-protocol-analysis" : "/projects/expense-recorder"} aria-label={`View ${index === 0 ? "Industrial Protocol Analysis" : "Expense Recorder"} project`}><img src={project.image} alt={index === 0 ? "Industrial Protocol Analysis project illustration" : "Expense Recorder application dashboard"} loading="lazy" /></Link>
                 </article>)}

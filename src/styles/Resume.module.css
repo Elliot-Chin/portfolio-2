@@ -36,7 +36,7 @@
 .sectionHeader .eyebrow { margin-bottom: 12px; }
 .sectionHeader .eyebrow span { color: var(--orange); }
 .sectionHeader h2 { font-size: clamp(1.65rem,3vw,2.3rem); font-weight: 600; letter-spacing: -.045em; line-height: 1.25; margin: 0; }
-.timeline { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(3,1fr); }
+.timeline { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); }
 .timeline li { position: relative; padding-right: 40px; }
 .year { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
 .timelinePoint { position: relative; height: 1px; background: #34475e; margin: 23px 0 25px; width: calc(100% + 40px); }
@@ -59,6 +59,10 @@
 .stack { font-size: 11px !important; font-family: 'Space Mono', monospace; color: var(--muted); line-height: 1.9 !important; margin: 24px 0 0; }
 .project { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; }
 .project + .project { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 40px; }
+@media (min-width: 601px) {
+    .projectMirrored > div { grid-column: 2; grid-row: 1; }
+    .projectMirrored > .projectVisual { grid-column: 1; grid-row: 1; }
+}
 .project .eyebrow { font-size: 10px; margin-bottom: 15px; }
 .project h3 { font-size: 26px; font-weight: 600; letter-spacing: -.04em; line-height: 1.35; margin: 0 0 18px; }
 .project p:not(.eyebrow):not(.stack) { font-size: 14px; line-height: 1.8; color: var(--muted); margin: 0; }

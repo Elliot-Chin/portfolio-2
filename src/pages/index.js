@@ -37,11 +37,11 @@ export default function Home() {
     const containerRef = useRef(null)
     useHomeGridPage(containerRef)
     return <main className={s.page} ref={containerRef}>
-        <SeoHead title="Elliot Chin — Software Developer & Cybersecurity Engineer" description="Software developer and cybersecurity engineer working across industrial systems, networking, infrastructure, and full-stack software." path="/" />
+        <SeoHead title="Elliot Chin — Information Security Professional" description="Information Security Professional at Siemens working across cybersecurity, industrial systems, networking, and infrastructure." path="/" />
         <a className={s.skipLink} href="#selected-work">Skip to selected projects</a>
         <div className={s.container}>
             <section className={s.hero} aria-labelledby="name">
-                <div className={s.heroCopy}><p className={s.annotation}>~/elliot-chin</p><h1 id="name"><TypedText text="Elliot Chin" /><span>.</span></h1><p className={s.identity}>Software Developer &amp;<br />Cybersecurity Engineer</p><p className={s.description}>Building software, security tooling, and infrastructure for complex networked environments—from web applications to industrial protocols and OT systems.</p><div className={s.actions}><Link className={s.primaryButton} href="/projects">View Projects <span aria-hidden="true">→</span></Link><ArrowLink href="/resume">Resume</ArrowLink></div><div className={s.socials}><SocialLinks /></div></div>
+                <div className={s.heroCopy}><p className={s.annotation}>~/elliot-chin</p><h1 id="name"><TypedText text="Elliot Chin" /><span>.</span></h1><p className={s.identity}>Information Security Professional</p><p className={s.description}>Working across cybersecurity, industrial networking, and infrastructure at Siemens. Building tools and systems to analyze, test, and secure complex networked environments.</p><div className={s.actions}><Link className={s.primaryButton} href="/projects">View Projects <span aria-hidden="true">→</span></Link><ArrowLink href="/resume">Resume</ArrowLink></div><div className={s.socials}><SocialLinks /></div></div>
                 <HomeModel />
                 <dl className={s.facts}>{[["Current","At Siemens"],["Focus","OT security"],["Domain","Software + security"],["Location","Canada"]].map(([label,value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
             </section>

@@ -4,7 +4,7 @@ function makeSkillBadgeIcon(text, background = "#10233d", foreground = "#f8fafc"
 }
 
 export const resumeSummary =
-    "Software developer with experience across cybersecurity, OT/industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows/Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network/security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
+    "Information Security Professional with experience across cybersecurity, OT/industrial networking, infrastructure management, full-stack application development, and applied AI research support. Skilled in building technical solutions for networked and industrial environments, maintaining virtualized lab infrastructure, troubleshooting Windows/Linux systems, and supporting research and development for cybersecurity use cases and products. Experienced with industrial communication systems, network segmentation, packet analysis, real-time web application development, and exploratory AI workflows for network/security analysis. Interested in roles that combine cybersecurity, networking, software development, AI-enabled tooling, and system architecture."
 
 export const resumeContactLinks = [
     { label: "Email", value: "contact@elliotc.dev", href: "mailto:contact@elliotc.dev", iconKey: "Email" },
@@ -22,10 +22,17 @@ export const resumeHighlights = [
 
 export const resumeExperience = [
     {
+        title: "Information Security Professional",
+        company: "Siemens",
+        location: "Canada",
+        duration: "Current",
+        bullets: [],
+    },
+    {
         title: "Junior Application Cybersecurity Specialist",
         company: "Siemens",
         location: "Canada",
-        duration: "June 2023 - Current",
+        duration: "From June 2023",
         bullets: [
             "Lead compatibility testing for SINEC Security Monitor across lab configurations, validating integration behavior, deployment scenarios, and product functionality in representative OT environments.",
             "Analyze industrial protocols including PROFINET, OPC UA, S7 communication, and IEC 104 using Wireshark and UAExpert.",
@@ -72,10 +79,17 @@ export const resumeCareerNodes = [
         accent: "muted",
     },
     {
-        years: "2023 - Current",
+        years: "Previous",
         code: "03_SEC",
-        title: "Cybersecurity",
+        title: "Junior Application Cybersecurity Specialist",
         summary: "Focused on industrial protocol analysis, Zeek plugin development, OT lab operations, and secure product tooling.",
+        accent: "muted",
+    },
+    {
+        years: "Current",
+        code: "04_ISP",
+        title: "Information Security Professional",
+        summary: "Progressed from Junior Application Cybersecurity Specialist at Siemens.",
         accent: "primary",
     },
 ]

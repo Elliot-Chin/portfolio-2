@@ -5,9 +5,9 @@ export const heroContent = {
         "Infrastructure hardening.",
     ],
     title: "Elliot Chin",
-    role: "JR. Cybersecurity application Specialist",
+    role: "Information Security Professional",
     summary:
-        "Software developer with experience across cybersecurity, OT/industrial networking, infrastructure management, full-stack application development, and applied AI research support. Specialized in bridging the gap between legacy industrial stability and modern digital security architectures.",
+        "Information Security Professional with experience across cybersecurity, OT/industrial networking, infrastructure management, full-stack application development, and applied AI research support. Specialized in bridging the gap between legacy industrial stability and modern digital security architectures.",
     statusLabel: "System_Active // Secure_Link_Established",
 }
 
