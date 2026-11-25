@@ -4,7 +4,7 @@ export const industrialProtocolAnalysisPageData = {
         slug: "~/projects/sinec-security-monitor/opcua-plugin",
         eyebrow: "Siemens / SINEC Security Monitor / Zeek / OPC UA",
         duration: "Research & development",
-        year: "2024-2026",
+        year: "2026",
         TLDR:
             "Development of a Zeek-based plugin for Siemens SINEC Security Monitor to inspect OPC UA traffic, generate event-specific logs, and support OT-focused detection logic for industrial network monitoring.",
         command: "build zeek-plugin --target sinec_security_monitor --protocol opcua",

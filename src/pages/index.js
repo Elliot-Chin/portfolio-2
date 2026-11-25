@@ -10,7 +10,7 @@ import { caseStudies } from "@/data/caseStudies"
 import { resumeContactLinks } from "@/data/resume"
 import s from "@/styles/Home.module.css"
 
-const selectedProjects = ["industrial-protocol-analysis", "expense-recorder", "trip-scheduler"].map(slug => caseStudies.find(project => project.slug === slug))
+const selectedProjects = ["trip-scheduler", "industrial-protocol-analysis", "expense-recorder"].map(slug => caseStudies.find(project => project.slug === slug))
 const socials = resumeContactLinks.filter(link => ["GitHub", "LinkedIn"].includes(link.label))
 const capabilities = [
     ["Software engineering", "Building full-stack applications, backend services, internal tools, and automation.", "Python · C++ · JavaScript · Next.js · React · Flask · REST APIs"],

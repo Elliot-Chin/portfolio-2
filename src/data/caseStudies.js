@@ -6,6 +6,7 @@ import { ai4securityProject } from "./project-pages/ai4security"
 const section = (id, title, text, extra = {}) => ({ id, title, text, ...extra })
 const challenge = (title, problem, approach, result) => ({ title, problem, approach, result })
 const shots = items => items.map(item => ({ src: item.image || item.src, title: item.title || item.alt, caption: item.description }))
+const projectPriority = project => project.slug === "trip-scheduler" ? -1 : project.slug === "automated-musicians" ? 1 : 0
 
 const projectCovers = {
     "industrial-protocol-analysis": "/projects/ipa/Logo.png",
@@ -22,7 +23,7 @@ export const caseStudies = [
         title: "Industrial Protocol Analysis & Zeek Plugin Development", shortTitle: "Industrial Protocol Analysis",
         tagline: "Protocol-aware security monitoring for industrial networks.",
         summary: "Turning OPC UA traffic from real industrial systems into structured security events for Siemens SINEC Security Monitor.",
-        role: "Software developer / cybersecurity", domain: "OT security", timeline: "2024–2026", type: "Professional R&D",
+        role: "Software developer / cybersecurity", domain: "OT security", timeline: "2026", type: "Professional R&D",
         stack: ["Zeek", "C++", "OPC UA", "Wireshark", "UAExpert", "PLCs"],
         contribution: "I researched OPC UA traffic, developed the C++ Zeek plugin, mapped protocol behavior to events, and defined test scenarios for monitoring and detection validation.",
         heroFlow: ["PLC / OPC UA server", "Network capture", "Zeek OPC UA analyzer", "Security events & logs", "SINEC Security Monitor"],
@@ -181,5 +182,6 @@ export const caseStudies = [
             section("lessons", "Lessons learned", null, { bullets: ["Internal tools need a continuing business owner as well as a technical plan.", "A phased scope makes partial delivery and changing priorities easier to evaluate.", "Workflow, permissions, and data governance belong in the initial design."] }),
         ],
     },
-].map(project => ({ ...project, cover: projectCovers[project.slug] }))
+].sort((a, b) => projectPriority(a) - projectPriority(b))
+    .map(project => ({ ...project, cover: projectCovers[project.slug] }))
 export const getCaseStudy = slug => caseStudies.find(project => project.slug === slug)

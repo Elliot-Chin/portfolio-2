@@ -26,7 +26,14 @@ export const resumeExperience = [
         company: "Siemens",
         location: "Canada",
         duration: "Current",
-        bullets: [],
+        bullets: [
+            "Work with business stakeholders to identify security needs, evaluate existing processes, and define requirements that support business operations.",
+            "Support the planning, design, and implementation of security initiatives, evaluating technical solutions and coordinating remediation with business teams, technical teams, and management.",
+            "Help implement security measures aligned with organizational policies and guidelines, translating information security requirements into practical business solutions.",
+            "Develop, document, and harmonize security processes, policies, and procedures across application security, cloud security, enterprise IT, and secure software development.",
+            "Support security change management, stakeholder consultation, and awareness initiatives to help teams adopt information security requirements.",
+            "Analyze emerging cybersecurity trends and technologies to identify security implications and opportunities for improvement.",
+        ],
     },
     {
         title: "Junior Application Cybersecurity Specialist",
@@ -89,7 +96,7 @@ export const resumeCareerNodes = [
         years: "Current",
         code: "04_ISP",
         title: "Information Security Professional",
-        summary: "Progressed from Junior Application Cybersecurity Specialist at Siemens.",
+        summary: "Security governance, consulting, and process improvement aligned with business needs at Siemens.",
         accent: "primary",
     },
 ]

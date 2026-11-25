@@ -10,7 +10,14 @@ import s from "@/styles/Resume.module.css"
 const pdf = "/wtr/Elliot_Chin_Resume.pdf"
 const socials = resumeContactLinks.filter(link => ["GitHub", "LinkedIn"].includes(link.label))
 const roles = [
-    { date: "PRESENT", company: "Siemens", title: "Information Security Professional", summary: "Progressed from Junior Application Cybersecurity Specialist to Information Security Professional.", bullets: [], tech: "" },
+    { date: "PRESENT", company: "Siemens", title: "Information Security Professional", summary: "Information security governance, process improvement, and consulting to align security requirements and technical solutions with business objectives and operational needs.", bullets: [
+        <>Work with <strong>business stakeholders</strong> to identify security needs, evaluate existing processes, and define requirements that support business operations.</>,
+        <>Support the <strong>planning, design, and implementation of security initiatives</strong>, evaluating technical solutions and coordinating remediation with business teams, technical teams, and management.</>,
+        <>Help implement <strong>security measures aligned with organizational policies and guidelines</strong>, translating information security requirements into practical business solutions.</>,
+        <>Develop, document, and harmonize <strong>security processes, policies, and procedures</strong> across application security, cloud security, enterprise IT, and secure software development.</>,
+        <>Support <strong>security change management, stakeholder consultation, and awareness initiatives</strong> to help teams adopt information security requirements.</>,
+        <>Analyze <strong>emerging cybersecurity trends and technologies</strong> to identify security implications and opportunities for improvement.</>,
+    ], tech: "Security Governance · Security Consulting · Process Improvement · Application Security · Cloud Security" },
     { date: "FROM JUN 2023", company: "Siemens", title: "Junior Application Cybersecurity Specialist", summary: "Engineering and research across OT cybersecurity, industrial communication, and the infrastructure behind secure networked systems.", bullets: [
         <><strong>Analyze industrial protocols</strong> including OPC UA, PROFINET, S7, and IEC 104 using Wireshark and UAExpert.</>,
         <>Develop <strong>Zeek packet-analysis plugins in C++</strong> to parse industrial traffic and produce event-specific logs for cybersecurity monitoring.</>,
@@ -61,8 +68,8 @@ export default function Resume() {
                     ["2022", "Software Developer", "UNB", "Full-stack tools for academic advising and accreditation."],
                     ["2023", "Software Developer", "Siemens", "Industrial labs, networking, and product compatibility testing."],
                     ["PREVIOUS", "Junior Application Cybersecurity Specialist", "Siemens", "Protocol analysis, Zeek plugins, and secure product tooling."],
-                    ["PRESENT", "Information Security Professional", "Siemens", "Progressed from Junior Application Cybersecurity Specialist."],
-                ].map(([year, title, org, detail]) => <li key={title}><span className={s.year}>{year}</span><div className={s.timelinePoint} /><h3>{title}</h3><p className={s.organization}>{org}</p><p>{detail}</p></li>)}</ol>
+                    ["PRESENT", "Information Security Professional", "Siemens", "Security governance, consulting, and process improvement aligned with business needs."],
+                ].map(([year, title, org, detail]) => <li key={`${org}-${title}`}><span className={s.year}>{year}</span><div aria-hidden="true" className={`${s.timelinePoint} ${year === "PRESENT" ? s.timelinePointCurrent : ""}`} /><h3>{title}</h3><p className={s.organization}>{org}</p><p>{detail}</p></li>)}</ol>
             </section>
             <section data-fade className={s.section} id="experience">
                 <SectionTitle number="02" label="Experience" />
